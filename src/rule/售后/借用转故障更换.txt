@@ -1,0 +1,38 @@
+String chanpinpzid = (String) context.get("atzchanpinpz.id");
+  	   List <Fi_atzxiangmupzmx_F255ebeb600000001zSub> pzmxList = new ArrayList();
+  	   if(chanpinpzid != null){
+  	     logger.debug("chanpinpzid==========="+chanpinpzid);
+  	     List<Atzpeizhimx> pzmxs = dataset.getList("Atzpeizhimx","chanpinpzid="+chanpinpzid);
+  	     if(pzmxs != null && pzmxs.size() > 0){
+  	    	Atzxiaoshoubm xiaoshoubm = null;
+  	    	Atzshengchancj sccj = null;
+  	    	 for(Atzpeizhimx pzmx : pzmxs){
+  	    		Fi_atzxiangmupzmx_F255ebeb600000001zSub xmpzmx = new Fi_atzxiangmupzmx_F255ebeb600000001zSub();
+  	    		 xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class, pzmx.getBujianh());
+  	    		 xmpzmx.setAtzxiangmupzmx_bujianh(xiaoshoubm.getId());//销售编码id
+  	    		 xmpzmx.setAtzxiaoshoubm_wuliaoms(xiaoshoubm.getWuliaoms());
+  	    		 if(pzmx.getChangjia()!=null){
+  	    			 sccj = (Atzshengchancj) dataset.getObject(Atzshengchancj.class, pzmx.getChangjia());
+  	    			 xmpzmx.setAtzshengchancj_changjiaxh(sccj.getChangjiaxh());
+  	    		 }
+  	    		 xmpzmx.setAtzxiangmupzmx_changjia(pzmx.getChangjia());
+  	    		 
+  	    		 //fahuomx.setAtzfahuosbqdmx_xiaoshoubmidRef(xiaoshoubm);
+  	    		 xmpzmx.setAtzxiangmupzmx_chandi(pzmx.getChandi());
+  	    		 xmpzmx.setAtzxiangmupzmx_danwei(pzmx.getDanwei());
+  	    		 xmpzmx.setAtzxiangmupzmx_muluj(pzmx.getMuluj());
+  	    		 xmpzmx.setAtzxiangmupzmx_zhekou(pzmx.getZhekou());
+  	    		 xmpzmx.setAtzxiangmupzmx_danjia(pzmx.getDanjia());
+  	    		 xmpzmx.setAtzxiangmupzmx_heji(pzmx.getHeji());
+  	    		 xmpzmx.setAtzxiangmupzmx_beizhu(pzmx.getBeizhu());
+  	    		 xmpzmx.setAtzxiangmupzmx_shuliang(pzmx.getShuliang());
+  	    		 pzmxList.add(xmpzmx);
+  	    	 }
+  	    	//初始化单据编号、制单人、制单日期等信息
+  	    	Atzxiangmupzqd xmpzqd = new Atzxiangmupzqd();
+
+  	    	context.set("instance.atzxiangmupzqd",xmpzqd);
+  	    	context.set("instancelist.atzxiangmupzmx", pzmxList);
+  	     }
+  	   }
+  	   return "OK";

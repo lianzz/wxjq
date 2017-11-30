@@ -1,0 +1,1305 @@
+/**
+* Copyright   :Actiz
+* Version     :ODE6.0
+* Net Address :www.qyes.com
+* Author      :Actiz
+* Build Time  :2017-06-15 13:52:37.626
+*/
+package com.actiz.platform.application.formdatafacility.model2;
+import java.util.Date;
+import com.actiz.platform.application.formdatafacility.resource.BizTypeSupport;
+import com.actiz.platform.common.formdatafacility.util.SimpleObject;
+import com.actiz.resource.entity.application.IAppEntityObject;
+import java.sql.Timestamp;
+import java.sql.Blob;
+public class F8afb334700000001z implements IAppEntityObject{
+	private Long atzhetong_id;
+	
+			 		private Long atzdepartment_id;
+					 		private Integer atzdepartment_cengci;
+					 		private String atzdepartment_orgcode = "";
+					 		private String atzdepartment_orgname = "";
+					 		private String atzdepartment_yewulx = "";
+					 		private Long atzdepartment_managerid;
+					 		private String atzdepartment_tel = "";
+					 		private Long atzdepartment_fudepartid;
+					 		private String atzdepartment_lujing;
+					 		private Integer atzdepartment_statuss = 0;
+					 		private String atzdepartment_lurur = "";
+					 		private Date atzdepartment_lururq;
+					 		private String atzdepartment_zuihouxgr = "";
+					 		private Date atzdepartment_zuihouxgrq;
+					 		private Long atzdepartment_lururid;
+					 		private Long atzdepartment_zuihouxgrid;
+					 		private Long atzemployee_id;
+					 		private String atzemployee_ygseq = "";
+					 		private String atzemployee_empcode = "";
+					 		private String atzemployee_name = "";
+					 		private String atzemployee_sex = "";
+					 		private String atzemployee_mobile = "";
+					 		private String atzemployee_tel = "";
+					 		private String atzemployee_email = "";
+					 		private String atzemployee_faxno = "";
+					 		private String atzemployee_ftel = "";
+					 		private String atzemployee_pemail = "";
+					 		private Date atzemployee_birthday;
+					 		private String atzemployee_degree = "";
+					 		private String atzemployee_photo;
+					 		private Date atzemployee_regdate;
+					 		private Date atzemployee_createtime;
+					 		private Date atzemployee_lmodifytime;
+					 		private String atzemployee_remark;
+					 		private Integer atzemployee_status = 0;
+					 		private Long atzemployee_gangweiid;
+					 		private Long atzemployee_bumenid;
+					 		private String atzemployee_qq = "";
+					 		private String atzemployee_msn = "";
+					 		private String atzemployee_zhengzhimm = "";
+					 		private String atzemployee_wenhuacd = "";
+					 		private String atzemployee_biyeyx = "";
+					 		private String atzemployee_zhuanye = "";
+					 		private String atzemployee_ldhetonglx = "";
+					 		private Date atzemployee_hetongqssj;
+					 		private Date atzemployee_hetongzzsj;
+					 		private String atzemployee_shenfenzhm = "";
+					 		private Date atzemployee_cjgongzuosj;
+					 		private Date atzemployee_jgongsisj;
+					 		private Date atzemployee_jbumensj;
+					 		private String atzemployee_zhaopinqd = "";
+					 		private String atzemployee_dangangs = "";
+					 		private String atzemployee_hunfou = "";
+					 		private String atzemployee_sfyxh = "";
+					 		private String atzemployee_xiaohaixm = "";
+					 		private Date atzemployee_xiaohainy;
+					 		private String atzemployee_xiaohaixb = "";
+					 		private String atzemployee_hukouszd = "";
+					 		private String atzemployee_xjuzhudz = "";
+					 		private String atzemployee_ygjiashuxm = "";
+					 		private String atzemployee_lxdizhi = "";
+					 		private String atzemployee_youbian = "";
+					 		private String atzemployee_lianxifs = "";
+					 		private String atzemployee_zhicheng = "";
+					 		private Date atzemployee_zcpingdingsj;
+					 		private Date atzemployee_zcpsyouxianq;
+					 		private String atzemployee_zcnianshenqk = "";
+					 		private String atzemployee_zcdengji = "";
+					 		private Double atzemployee_tiaoxiusj = 0.0;
+					 		private Double atzemployee_kxsnj = 0.0;
+					 		private String atzemployee_lurur = "";
+					 		private Date atzemployee_lururq;
+					 		private String atzemployee_zuihouxgr = "";
+					 		private Date atzemployee_zuihouxgrq;
+					 		private Long atzemployee_lururid;
+					 		private Long atzemployee_zuihouxgrid;
+					 		private String atzemployee_jiashudh = "";
+					 		private String atzemployee_yuangongz = "";
+					 		private String atzemployee_youwu = "";
+					 		private String atzemployee_gangweizj = "";
+					 		private String atzemployee_sfgx = "";
+					 		private String atzemployee_xingquah = "";
+					 		private String atzemployee_ghgzk = "";
+					 		private String atzemployee_shifoulz = "";
+					 		private Long atzhetong_actizversion;
+					 			 		private String atzhetong_hetongmc = "";
+					 		private String atzhetong_hetongbh = "";
+					 		private String atzhetong_maifanghth = "";
+					 		private Long atzhetong_kehuid;
+					 		private String atzhetong_zuizhongyh = "";
+					 		private Date atzhetong_qiandingrq;
+					 		private String atzhetong_qiandingdd = "";
+					 		private Date atzhetong_kaishizxrq;
+					 		private String atzhetong_zhixingdd = "";
+					 		private String atzhetong_hetongyy = "";
+					 		private String atzhetong_chanpinyysf = "";
+					 		private Double atzhetong_hetongje = 0.0;
+					 		private Long atzhetong_wubizl;
+					 		private Double atzhetong_dangshihl = 0.0;
+					 		private Double atzhetong_hetongwbje = 0.0;
+					 		private String atzhetong_hetongxz = "";
+					 		private String atzhetong_hetonglx = "";
+					 		private String atzhetong_yunyings = "";
+					 		private String atzhetong_hetongfj;
+					 		private String atzhetong_shenhezt = "0";
+					 		private String atzhetong_shenheyj;
+					 		private String atzhetong_pingshenzt = "";
+					 		private String atzhetong_shifougd = "";
+					 		private String atzhetong_shifouws = "";
+					 		private Long atzhetong_duiyingjh;
+					 		private String atzhetong_shifoujyht = "";
+					 		private String atzhetong_shifouxynbps = "";
+					 		private String atzhetong_zhuxiaozt = "";
+					 		private String atzhetong_shifouxqwbht = "2";
+					 		private Long atzhetong_kehujlshr;
+					 		private Long atzhetong_lururid;
+					 		private String atzhetong_lurur = "";
+					 		private Date atzhetong_lururq;
+					 		private String atzhetong_zuihouxgr = "";
+					 		private Date atzhetong_zuihouxgrq;
+					 		private String atzhetong_daohuozt = "";
+					 		private Date atzhetong_daohuosj;
+					 		private String atzhetong_chuyanzt = "";
+					 		private Date atzhetong_chuyansj;
+					 		private String atzhetong_yijiaozt = "";
+					 		private Date atzhetong_yijiaosj;
+					 		private String atzhetong_zhongyanzt = "";
+					 		private Date atzhetong_zhongyansj;
+					 		private String atzhetong_fukuanzt = "";
+					 		private String atzhetong_beizhu;
+					 		private String atzhetong_zhuxiaoyy;
+					 		private String atzhetong_shifoudl = "";
+					 		private Double atzhetong_shijije = 0.0;
+					 		private String atzhetong_shifouls = "";
+					 		private String atzhetong_chanpinlx = "";
+					 		private String atzhetong_shifousf = "";
+					 		private String atzhetong_disanfkh = "";
+					 		private String atzhetong_kehulxr = "";
+					 		private Long atzhetong_bkbht;
+					 		private Long atzhetong_kuangjiaht;
+					 		private String atzhetong_xiangmumc = "";
+					 		private String atzhetong_xiaoshouqy = "";
+					 		private Long atzhetong_duiyingls;
+					 		private String atzhetong_xiangmujl = "";
+					 		private Double atzhetong_yikpje = 0.0;
+					 		private String atzhetong_hetongnbps = "";
+					 		private Double atzhetong_weikpje = 0.0;
+					 		private Integer atzhetong_pingshencs = 0;
+					 		private String atzhetong_xiaoshoujh = "";
+					 		private Long atzhetong_xiaoshoujl;
+					 		private Long atzhetong_daqu;
+					 		private Long atzhetong_gcxmjl;
+					 		private String atzhetong_xmbh = "";
+					 		private String atzhetong_sjh = "";
+					 		private String atzhetong_oahth = "";
+					 		private String atzhetong_sfztb = "";
+					 		private Long atzhetong_toubiaodid;
+					 		private String atzhetong_chanpinzs = "";
+					 		private String atzhetong_suoshuhy = "";
+					 		private Long atzhetong_zuihouxgrid;
+					 		private String atzhetong_htfjsmj;
+					 		private String atzhetong_sfbz = "";
+					 		private Date atzhetong_pswcsj;
+					 		private String atzhetong_htpsxlh = "";
+					 		private Double atzhetong_ysje = 0.0;
+					 		private Double atzhetong_wsje = 0.0;
+					 		private String atzhetong_fhzt = "";
+					 		private String atzhetong_kpzt = "";
+					 		private String atzhetong_gcyszt = "";
+					 		private String atzhetong_skzt = "";
+					 		private String atzhetong_sfgb = "";
+					 		private String atzhetong_sjlx = "";
+					 		private String atzhetong_lxlx = "";
+					 		private String atzhetong_hezuohb = "";
+					 		private String atzhetong_jibenqk;
+					 		private String atzhetong_xiangmuzq = "";
+					 		private String atzhetong_touruzy;
+					 		private String atzhetong_jihuifx = "";
+					 		private String atzhetong_daquyj;
+					 		private String atzhetong_xsfzyj;
+					 		private String atzhetong_sybzjlyj = "";
+					 		private Long atzhetong_czxiaoshoufz;
+					 		public void setAtzdepartment_id(Long atzdepartment_id){
+			this.atzdepartment_id = atzdepartment_id;
+		}
+			 	public Long getAtzdepartment_id(){
+	  		return atzdepartment_id;
+	  	}
+	    		 		public void setAtzdepartment_cengci(Integer atzdepartment_cengci){
+			this.atzdepartment_cengci = atzdepartment_cengci;
+		}
+			 	public Integer getAtzdepartment_cengci(){
+	  		return atzdepartment_cengci;
+	  	}
+	    		 		public void setAtzdepartment_orgcode(String atzdepartment_orgcode){
+			this.atzdepartment_orgcode = atzdepartment_orgcode;
+		}
+			 	public String getAtzdepartment_orgcode(){
+	  		return atzdepartment_orgcode;
+	  	}
+	    		 		public void setAtzdepartment_orgname(String atzdepartment_orgname){
+			this.atzdepartment_orgname = atzdepartment_orgname;
+		}
+			 	public String getAtzdepartment_orgname(){
+	  		return atzdepartment_orgname;
+	  	}
+	    		 		public void setAtzdepartment_yewulx(String atzdepartment_yewulx){
+			this.atzdepartment_yewulx = atzdepartment_yewulx;
+		}
+			 	public String getAtzdepartment_yewulx(){
+	  		return atzdepartment_yewulx;
+	  	}
+	    		 		public void setAtzdepartment_managerid(Long atzdepartment_managerid){
+			this.atzdepartment_managerid = atzdepartment_managerid;
+		}
+			 	public Long getAtzdepartment_managerid(){
+	  		return atzdepartment_managerid;
+	  	}
+	    		 		public void setAtzdepartment_tel(String atzdepartment_tel){
+			this.atzdepartment_tel = atzdepartment_tel;
+		}
+			 	public String getAtzdepartment_tel(){
+	  		return atzdepartment_tel;
+	  	}
+	    		 		public void setAtzdepartment_fudepartid(Long atzdepartment_fudepartid){
+			this.atzdepartment_fudepartid = atzdepartment_fudepartid;
+		}
+			 	public Long getAtzdepartment_fudepartid(){
+	  		return atzdepartment_fudepartid;
+	  	}
+	    		 		public void setAtzdepartment_lujing(String atzdepartment_lujing){
+			this.atzdepartment_lujing = atzdepartment_lujing;
+		}
+			 	public String getAtzdepartment_lujing(){
+	  		return atzdepartment_lujing;
+	  	}
+	    		 		public void setAtzdepartment_statuss(Integer atzdepartment_statuss){
+			this.atzdepartment_statuss = atzdepartment_statuss;
+		}
+			 	public Integer getAtzdepartment_statuss(){
+	  		return atzdepartment_statuss;
+	  	}
+	    		 		public void setAtzdepartment_lurur(String atzdepartment_lurur){
+			this.atzdepartment_lurur = atzdepartment_lurur;
+		}
+			 	public String getAtzdepartment_lurur(){
+	  		return atzdepartment_lurur;
+	  	}
+	    		 		public void setAtzdepartment_lururq(Date atzdepartment_lururq){
+			this.atzdepartment_lururq = atzdepartment_lururq;
+		}
+			 	public Date getAtzdepartment_lururq(){
+	  		return atzdepartment_lururq;
+	  	}
+	    		 		public void setAtzdepartment_zuihouxgr(String atzdepartment_zuihouxgr){
+			this.atzdepartment_zuihouxgr = atzdepartment_zuihouxgr;
+		}
+			 	public String getAtzdepartment_zuihouxgr(){
+	  		return atzdepartment_zuihouxgr;
+	  	}
+	    		 		public void setAtzdepartment_zuihouxgrq(Date atzdepartment_zuihouxgrq){
+			this.atzdepartment_zuihouxgrq = atzdepartment_zuihouxgrq;
+		}
+			 	public Date getAtzdepartment_zuihouxgrq(){
+	  		return atzdepartment_zuihouxgrq;
+	  	}
+	    		 		public void setAtzdepartment_lururid(Long atzdepartment_lururid){
+			this.atzdepartment_lururid = atzdepartment_lururid;
+		}
+			 	public Long getAtzdepartment_lururid(){
+	  		return atzdepartment_lururid;
+	  	}
+	    		 		public void setAtzdepartment_zuihouxgrid(Long atzdepartment_zuihouxgrid){
+			this.atzdepartment_zuihouxgrid = atzdepartment_zuihouxgrid;
+		}
+			 	public Long getAtzdepartment_zuihouxgrid(){
+	  		return atzdepartment_zuihouxgrid;
+	  	}
+	    		 		public void setAtzemployee_id(Long atzemployee_id){
+			this.atzemployee_id = atzemployee_id;
+		}
+			 	public Long getAtzemployee_id(){
+	  		return atzemployee_id;
+	  	}
+	    		 		public void setAtzemployee_ygseq(String atzemployee_ygseq){
+			this.atzemployee_ygseq = atzemployee_ygseq;
+		}
+			 	public String getAtzemployee_ygseq(){
+	  		return atzemployee_ygseq;
+	  	}
+	    		 		public void setAtzemployee_empcode(String atzemployee_empcode){
+			this.atzemployee_empcode = atzemployee_empcode;
+		}
+			 	public String getAtzemployee_empcode(){
+	  		return atzemployee_empcode;
+	  	}
+	    		 		public void setAtzemployee_name(String atzemployee_name){
+			this.atzemployee_name = atzemployee_name;
+		}
+			 	public String getAtzemployee_name(){
+	  		return atzemployee_name;
+	  	}
+	    		 		public void setAtzemployee_sex(String atzemployee_sex){
+			this.atzemployee_sex = atzemployee_sex;
+		}
+			 	public String getAtzemployee_sex(){
+	  		return atzemployee_sex;
+	  	}
+	    		 		public void setAtzemployee_mobile(String atzemployee_mobile){
+			this.atzemployee_mobile = atzemployee_mobile;
+		}
+			 	public String getAtzemployee_mobile(){
+	  		return atzemployee_mobile;
+	  	}
+	    		 		public void setAtzemployee_tel(String atzemployee_tel){
+			this.atzemployee_tel = atzemployee_tel;
+		}
+			 	public String getAtzemployee_tel(){
+	  		return atzemployee_tel;
+	  	}
+	    		 		public void setAtzemployee_email(String atzemployee_email){
+			this.atzemployee_email = atzemployee_email;
+		}
+			 	public String getAtzemployee_email(){
+	  		return atzemployee_email;
+	  	}
+	    		 		public void setAtzemployee_faxno(String atzemployee_faxno){
+			this.atzemployee_faxno = atzemployee_faxno;
+		}
+			 	public String getAtzemployee_faxno(){
+	  		return atzemployee_faxno;
+	  	}
+	    		 		public void setAtzemployee_ftel(String atzemployee_ftel){
+			this.atzemployee_ftel = atzemployee_ftel;
+		}
+			 	public String getAtzemployee_ftel(){
+	  		return atzemployee_ftel;
+	  	}
+	    		 		public void setAtzemployee_pemail(String atzemployee_pemail){
+			this.atzemployee_pemail = atzemployee_pemail;
+		}
+			 	public String getAtzemployee_pemail(){
+	  		return atzemployee_pemail;
+	  	}
+	    		 		public void setAtzemployee_birthday(Date atzemployee_birthday){
+			this.atzemployee_birthday = atzemployee_birthday;
+		}
+			 	public Date getAtzemployee_birthday(){
+	  		return atzemployee_birthday;
+	  	}
+	    		 		public void setAtzemployee_degree(String atzemployee_degree){
+			this.atzemployee_degree = atzemployee_degree;
+		}
+			 	public String getAtzemployee_degree(){
+	  		return atzemployee_degree;
+	  	}
+	    		 		public void setAtzemployee_photo(String atzemployee_photo){
+			this.atzemployee_photo = atzemployee_photo;
+		}
+			 	public String getAtzemployee_photo(){
+	  		return atzemployee_photo;
+	  	}
+	    		 		public void setAtzemployee_regdate(Date atzemployee_regdate){
+			this.atzemployee_regdate = atzemployee_regdate;
+		}
+			 	public Date getAtzemployee_regdate(){
+	  		return atzemployee_regdate;
+	  	}
+	    		 		public void setAtzemployee_createtime(Date atzemployee_createtime){
+			this.atzemployee_createtime = atzemployee_createtime;
+		}
+			 	public Date getAtzemployee_createtime(){
+	  		return atzemployee_createtime;
+	  	}
+	    		 		public void setAtzemployee_lmodifytime(Date atzemployee_lmodifytime){
+			this.atzemployee_lmodifytime = atzemployee_lmodifytime;
+		}
+			 	public Date getAtzemployee_lmodifytime(){
+	  		return atzemployee_lmodifytime;
+	  	}
+	    		 		public void setAtzemployee_remark(String atzemployee_remark){
+			this.atzemployee_remark = atzemployee_remark;
+		}
+			 	public String getAtzemployee_remark(){
+	  		return atzemployee_remark;
+	  	}
+	    		 		public void setAtzemployee_status(Integer atzemployee_status){
+			this.atzemployee_status = atzemployee_status;
+		}
+			 	public Integer getAtzemployee_status(){
+	  		return atzemployee_status;
+	  	}
+	    		 		public void setAtzemployee_gangweiid(Long atzemployee_gangweiid){
+			this.atzemployee_gangweiid = atzemployee_gangweiid;
+		}
+			 	public Long getAtzemployee_gangweiid(){
+	  		return atzemployee_gangweiid;
+	  	}
+	    		 		public void setAtzemployee_bumenid(Long atzemployee_bumenid){
+			this.atzemployee_bumenid = atzemployee_bumenid;
+		}
+			 	public Long getAtzemployee_bumenid(){
+	  		return atzemployee_bumenid;
+	  	}
+	    		 		public void setAtzemployee_qq(String atzemployee_qq){
+			this.atzemployee_qq = atzemployee_qq;
+		}
+			 	public String getAtzemployee_qq(){
+	  		return atzemployee_qq;
+	  	}
+	    		 		public void setAtzemployee_msn(String atzemployee_msn){
+			this.atzemployee_msn = atzemployee_msn;
+		}
+			 	public String getAtzemployee_msn(){
+	  		return atzemployee_msn;
+	  	}
+	    		 		public void setAtzemployee_zhengzhimm(String atzemployee_zhengzhimm){
+			this.atzemployee_zhengzhimm = atzemployee_zhengzhimm;
+		}
+			 	public String getAtzemployee_zhengzhimm(){
+	  		return atzemployee_zhengzhimm;
+	  	}
+	    		 		public void setAtzemployee_wenhuacd(String atzemployee_wenhuacd){
+			this.atzemployee_wenhuacd = atzemployee_wenhuacd;
+		}
+			 	public String getAtzemployee_wenhuacd(){
+	  		return atzemployee_wenhuacd;
+	  	}
+	    		 		public void setAtzemployee_biyeyx(String atzemployee_biyeyx){
+			this.atzemployee_biyeyx = atzemployee_biyeyx;
+		}
+			 	public String getAtzemployee_biyeyx(){
+	  		return atzemployee_biyeyx;
+	  	}
+	    		 		public void setAtzemployee_zhuanye(String atzemployee_zhuanye){
+			this.atzemployee_zhuanye = atzemployee_zhuanye;
+		}
+			 	public String getAtzemployee_zhuanye(){
+	  		return atzemployee_zhuanye;
+	  	}
+	    		 		public void setAtzemployee_ldhetonglx(String atzemployee_ldhetonglx){
+			this.atzemployee_ldhetonglx = atzemployee_ldhetonglx;
+		}
+			 	public String getAtzemployee_ldhetonglx(){
+	  		return atzemployee_ldhetonglx;
+	  	}
+	    		 		public void setAtzemployee_hetongqssj(Date atzemployee_hetongqssj){
+			this.atzemployee_hetongqssj = atzemployee_hetongqssj;
+		}
+			 	public Date getAtzemployee_hetongqssj(){
+	  		return atzemployee_hetongqssj;
+	  	}
+	    		 		public void setAtzemployee_hetongzzsj(Date atzemployee_hetongzzsj){
+			this.atzemployee_hetongzzsj = atzemployee_hetongzzsj;
+		}
+			 	public Date getAtzemployee_hetongzzsj(){
+	  		return atzemployee_hetongzzsj;
+	  	}
+	    		 		public void setAtzemployee_shenfenzhm(String atzemployee_shenfenzhm){
+			this.atzemployee_shenfenzhm = atzemployee_shenfenzhm;
+		}
+			 	public String getAtzemployee_shenfenzhm(){
+	  		return atzemployee_shenfenzhm;
+	  	}
+	    		 		public void setAtzemployee_cjgongzuosj(Date atzemployee_cjgongzuosj){
+			this.atzemployee_cjgongzuosj = atzemployee_cjgongzuosj;
+		}
+			 	public Date getAtzemployee_cjgongzuosj(){
+	  		return atzemployee_cjgongzuosj;
+	  	}
+	    		 		public void setAtzemployee_jgongsisj(Date atzemployee_jgongsisj){
+			this.atzemployee_jgongsisj = atzemployee_jgongsisj;
+		}
+			 	public Date getAtzemployee_jgongsisj(){
+	  		return atzemployee_jgongsisj;
+	  	}
+	    		 		public void setAtzemployee_jbumensj(Date atzemployee_jbumensj){
+			this.atzemployee_jbumensj = atzemployee_jbumensj;
+		}
+			 	public Date getAtzemployee_jbumensj(){
+	  		return atzemployee_jbumensj;
+	  	}
+	    		 		public void setAtzemployee_zhaopinqd(String atzemployee_zhaopinqd){
+			this.atzemployee_zhaopinqd = atzemployee_zhaopinqd;
+		}
+			 	public String getAtzemployee_zhaopinqd(){
+	  		return atzemployee_zhaopinqd;
+	  	}
+	    		 		public void setAtzemployee_dangangs(String atzemployee_dangangs){
+			this.atzemployee_dangangs = atzemployee_dangangs;
+		}
+			 	public String getAtzemployee_dangangs(){
+	  		return atzemployee_dangangs;
+	  	}
+	    		 		public void setAtzemployee_hunfou(String atzemployee_hunfou){
+			this.atzemployee_hunfou = atzemployee_hunfou;
+		}
+			 	public String getAtzemployee_hunfou(){
+	  		return atzemployee_hunfou;
+	  	}
+	    		 		public void setAtzemployee_sfyxh(String atzemployee_sfyxh){
+			this.atzemployee_sfyxh = atzemployee_sfyxh;
+		}
+			 	public String getAtzemployee_sfyxh(){
+	  		return atzemployee_sfyxh;
+	  	}
+	    		 		public void setAtzemployee_xiaohaixm(String atzemployee_xiaohaixm){
+			this.atzemployee_xiaohaixm = atzemployee_xiaohaixm;
+		}
+			 	public String getAtzemployee_xiaohaixm(){
+	  		return atzemployee_xiaohaixm;
+	  	}
+	    		 		public void setAtzemployee_xiaohainy(Date atzemployee_xiaohainy){
+			this.atzemployee_xiaohainy = atzemployee_xiaohainy;
+		}
+			 	public Date getAtzemployee_xiaohainy(){
+	  		return atzemployee_xiaohainy;
+	  	}
+	    		 		public void setAtzemployee_xiaohaixb(String atzemployee_xiaohaixb){
+			this.atzemployee_xiaohaixb = atzemployee_xiaohaixb;
+		}
+			 	public String getAtzemployee_xiaohaixb(){
+	  		return atzemployee_xiaohaixb;
+	  	}
+	    		 		public void setAtzemployee_hukouszd(String atzemployee_hukouszd){
+			this.atzemployee_hukouszd = atzemployee_hukouszd;
+		}
+			 	public String getAtzemployee_hukouszd(){
+	  		return atzemployee_hukouszd;
+	  	}
+	    		 		public void setAtzemployee_xjuzhudz(String atzemployee_xjuzhudz){
+			this.atzemployee_xjuzhudz = atzemployee_xjuzhudz;
+		}
+			 	public String getAtzemployee_xjuzhudz(){
+	  		return atzemployee_xjuzhudz;
+	  	}
+	    		 		public void setAtzemployee_ygjiashuxm(String atzemployee_ygjiashuxm){
+			this.atzemployee_ygjiashuxm = atzemployee_ygjiashuxm;
+		}
+			 	public String getAtzemployee_ygjiashuxm(){
+	  		return atzemployee_ygjiashuxm;
+	  	}
+	    		 		public void setAtzemployee_lxdizhi(String atzemployee_lxdizhi){
+			this.atzemployee_lxdizhi = atzemployee_lxdizhi;
+		}
+			 	public String getAtzemployee_lxdizhi(){
+	  		return atzemployee_lxdizhi;
+	  	}
+	    		 		public void setAtzemployee_youbian(String atzemployee_youbian){
+			this.atzemployee_youbian = atzemployee_youbian;
+		}
+			 	public String getAtzemployee_youbian(){
+	  		return atzemployee_youbian;
+	  	}
+	    		 		public void setAtzemployee_lianxifs(String atzemployee_lianxifs){
+			this.atzemployee_lianxifs = atzemployee_lianxifs;
+		}
+			 	public String getAtzemployee_lianxifs(){
+	  		return atzemployee_lianxifs;
+	  	}
+	    		 		public void setAtzemployee_zhicheng(String atzemployee_zhicheng){
+			this.atzemployee_zhicheng = atzemployee_zhicheng;
+		}
+			 	public String getAtzemployee_zhicheng(){
+	  		return atzemployee_zhicheng;
+	  	}
+	    		 		public void setAtzemployee_zcpingdingsj(Date atzemployee_zcpingdingsj){
+			this.atzemployee_zcpingdingsj = atzemployee_zcpingdingsj;
+		}
+			 	public Date getAtzemployee_zcpingdingsj(){
+	  		return atzemployee_zcpingdingsj;
+	  	}
+	    		 		public void setAtzemployee_zcpsyouxianq(Date atzemployee_zcpsyouxianq){
+			this.atzemployee_zcpsyouxianq = atzemployee_zcpsyouxianq;
+		}
+			 	public Date getAtzemployee_zcpsyouxianq(){
+	  		return atzemployee_zcpsyouxianq;
+	  	}
+	    		 		public void setAtzemployee_zcnianshenqk(String atzemployee_zcnianshenqk){
+			this.atzemployee_zcnianshenqk = atzemployee_zcnianshenqk;
+		}
+			 	public String getAtzemployee_zcnianshenqk(){
+	  		return atzemployee_zcnianshenqk;
+	  	}
+	    		 		public void setAtzemployee_zcdengji(String atzemployee_zcdengji){
+			this.atzemployee_zcdengji = atzemployee_zcdengji;
+		}
+			 	public String getAtzemployee_zcdengji(){
+	  		return atzemployee_zcdengji;
+	  	}
+	    		 		public void setAtzemployee_tiaoxiusj(Double atzemployee_tiaoxiusj){
+			this.atzemployee_tiaoxiusj = atzemployee_tiaoxiusj;
+		}
+			 	public Double getAtzemployee_tiaoxiusj(){
+	  		return atzemployee_tiaoxiusj;
+	  	}
+	    		 		public void setAtzemployee_kxsnj(Double atzemployee_kxsnj){
+			this.atzemployee_kxsnj = atzemployee_kxsnj;
+		}
+			 	public Double getAtzemployee_kxsnj(){
+	  		return atzemployee_kxsnj;
+	  	}
+	    		 		public void setAtzemployee_lurur(String atzemployee_lurur){
+			this.atzemployee_lurur = atzemployee_lurur;
+		}
+			 	public String getAtzemployee_lurur(){
+	  		return atzemployee_lurur;
+	  	}
+	    		 		public void setAtzemployee_lururq(Date atzemployee_lururq){
+			this.atzemployee_lururq = atzemployee_lururq;
+		}
+			 	public Date getAtzemployee_lururq(){
+	  		return atzemployee_lururq;
+	  	}
+	    		 		public void setAtzemployee_zuihouxgr(String atzemployee_zuihouxgr){
+			this.atzemployee_zuihouxgr = atzemployee_zuihouxgr;
+		}
+			 	public String getAtzemployee_zuihouxgr(){
+	  		return atzemployee_zuihouxgr;
+	  	}
+	    		 		public void setAtzemployee_zuihouxgrq(Date atzemployee_zuihouxgrq){
+			this.atzemployee_zuihouxgrq = atzemployee_zuihouxgrq;
+		}
+			 	public Date getAtzemployee_zuihouxgrq(){
+	  		return atzemployee_zuihouxgrq;
+	  	}
+	    		 		public void setAtzemployee_lururid(Long atzemployee_lururid){
+			this.atzemployee_lururid = atzemployee_lururid;
+		}
+			 	public Long getAtzemployee_lururid(){
+	  		return atzemployee_lururid;
+	  	}
+	    		 		public void setAtzemployee_zuihouxgrid(Long atzemployee_zuihouxgrid){
+			this.atzemployee_zuihouxgrid = atzemployee_zuihouxgrid;
+		}
+			 	public Long getAtzemployee_zuihouxgrid(){
+	  		return atzemployee_zuihouxgrid;
+	  	}
+	    		 		public void setAtzemployee_jiashudh(String atzemployee_jiashudh){
+			this.atzemployee_jiashudh = atzemployee_jiashudh;
+		}
+			 	public String getAtzemployee_jiashudh(){
+	  		return atzemployee_jiashudh;
+	  	}
+	    		 		public void setAtzemployee_yuangongz(String atzemployee_yuangongz){
+			this.atzemployee_yuangongz = atzemployee_yuangongz;
+		}
+			 	public String getAtzemployee_yuangongz(){
+	  		return atzemployee_yuangongz;
+	  	}
+	    		 		public void setAtzemployee_youwu(String atzemployee_youwu){
+			this.atzemployee_youwu = atzemployee_youwu;
+		}
+			 	public String getAtzemployee_youwu(){
+	  		return atzemployee_youwu;
+	  	}
+	    		 		public void setAtzemployee_gangweizj(String atzemployee_gangweizj){
+			this.atzemployee_gangweizj = atzemployee_gangweizj;
+		}
+			 	public String getAtzemployee_gangweizj(){
+	  		return atzemployee_gangweizj;
+	  	}
+	    		 		public void setAtzemployee_sfgx(String atzemployee_sfgx){
+			this.atzemployee_sfgx = atzemployee_sfgx;
+		}
+			 	public String getAtzemployee_sfgx(){
+	  		return atzemployee_sfgx;
+	  	}
+	    		 		public void setAtzemployee_xingquah(String atzemployee_xingquah){
+			this.atzemployee_xingquah = atzemployee_xingquah;
+		}
+			 	public String getAtzemployee_xingquah(){
+	  		return atzemployee_xingquah;
+	  	}
+	    		 		public void setAtzemployee_ghgzk(String atzemployee_ghgzk){
+			this.atzemployee_ghgzk = atzemployee_ghgzk;
+		}
+			 	public String getAtzemployee_ghgzk(){
+	  		return atzemployee_ghgzk;
+	  	}
+	    		 		public void setAtzemployee_shifoulz(String atzemployee_shifoulz){
+			this.atzemployee_shifoulz = atzemployee_shifoulz;
+		}
+			 	public String getAtzemployee_shifoulz(){
+	  		return atzemployee_shifoulz;
+	  	}
+	    		 		public void setAtzhetong_actizversion(Long atzhetong_actizversion){
+			this.atzhetong_actizversion = atzhetong_actizversion;
+		}
+			 	public Long getAtzhetong_actizversion(){
+	  		return atzhetong_actizversion;
+	  	}
+	    		   		 		public void setAtzhetong_hetongmc(String atzhetong_hetongmc){
+			this.atzhetong_hetongmc = atzhetong_hetongmc;
+		}
+			 	public String getAtzhetong_hetongmc(){
+	  		return atzhetong_hetongmc;
+	  	}
+	    		 		public void setAtzhetong_hetongbh(String atzhetong_hetongbh){
+			this.atzhetong_hetongbh = atzhetong_hetongbh;
+		}
+			 	public String getAtzhetong_hetongbh(){
+	  		return atzhetong_hetongbh;
+	  	}
+	    		 		public void setAtzhetong_maifanghth(String atzhetong_maifanghth){
+			this.atzhetong_maifanghth = atzhetong_maifanghth;
+		}
+			 	public String getAtzhetong_maifanghth(){
+	  		return atzhetong_maifanghth;
+	  	}
+	    		 		public void setAtzhetong_kehuid(Long atzhetong_kehuid){
+			this.atzhetong_kehuid = atzhetong_kehuid;
+		}
+			 	public Long getAtzhetong_kehuid(){
+	  		return atzhetong_kehuid;
+	  	}
+	    		 		public void setAtzhetong_zuizhongyh(String atzhetong_zuizhongyh){
+			this.atzhetong_zuizhongyh = atzhetong_zuizhongyh;
+		}
+			 	public String getAtzhetong_zuizhongyh(){
+	  		return atzhetong_zuizhongyh;
+	  	}
+	    		 		public void setAtzhetong_qiandingrq(Date atzhetong_qiandingrq){
+			this.atzhetong_qiandingrq = atzhetong_qiandingrq;
+		}
+			 	public Date getAtzhetong_qiandingrq(){
+	  		return atzhetong_qiandingrq;
+	  	}
+	    		 		public void setAtzhetong_qiandingdd(String atzhetong_qiandingdd){
+			this.atzhetong_qiandingdd = atzhetong_qiandingdd;
+		}
+			 	public String getAtzhetong_qiandingdd(){
+	  		return atzhetong_qiandingdd;
+	  	}
+	    		 		public void setAtzhetong_kaishizxrq(Date atzhetong_kaishizxrq){
+			this.atzhetong_kaishizxrq = atzhetong_kaishizxrq;
+		}
+			 	public Date getAtzhetong_kaishizxrq(){
+	  		return atzhetong_kaishizxrq;
+	  	}
+	    		 		public void setAtzhetong_zhixingdd(String atzhetong_zhixingdd){
+			this.atzhetong_zhixingdd = atzhetong_zhixingdd;
+		}
+			 	public String getAtzhetong_zhixingdd(){
+	  		return atzhetong_zhixingdd;
+	  	}
+	    		 		public void setAtzhetong_hetongyy(String atzhetong_hetongyy){
+			this.atzhetong_hetongyy = atzhetong_hetongyy;
+		}
+			 	public String getAtzhetong_hetongyy(){
+	  		return atzhetong_hetongyy;
+	  	}
+	    		 		public void setAtzhetong_chanpinyysf(String atzhetong_chanpinyysf){
+			this.atzhetong_chanpinyysf = atzhetong_chanpinyysf;
+		}
+			 	public String getAtzhetong_chanpinyysf(){
+	  		return atzhetong_chanpinyysf;
+	  	}
+	    		 		public void setAtzhetong_hetongje(Double atzhetong_hetongje){
+			this.atzhetong_hetongje = atzhetong_hetongje;
+		}
+			 	public Double getAtzhetong_hetongje(){
+	  		return atzhetong_hetongje;
+	  	}
+	    		 		public void setAtzhetong_wubizl(Long atzhetong_wubizl){
+			this.atzhetong_wubizl = atzhetong_wubizl;
+		}
+			 	public Long getAtzhetong_wubizl(){
+	  		return atzhetong_wubizl;
+	  	}
+	    		 		public void setAtzhetong_dangshihl(Double atzhetong_dangshihl){
+			this.atzhetong_dangshihl = atzhetong_dangshihl;
+		}
+			 	public Double getAtzhetong_dangshihl(){
+	  		return atzhetong_dangshihl;
+	  	}
+	    		 		public void setAtzhetong_hetongwbje(Double atzhetong_hetongwbje){
+			this.atzhetong_hetongwbje = atzhetong_hetongwbje;
+		}
+			 	public Double getAtzhetong_hetongwbje(){
+	  		return atzhetong_hetongwbje;
+	  	}
+	    		 		public void setAtzhetong_hetongxz(String atzhetong_hetongxz){
+			this.atzhetong_hetongxz = atzhetong_hetongxz;
+		}
+			 	public String getAtzhetong_hetongxz(){
+	  		return atzhetong_hetongxz;
+	  	}
+	    		 		public void setAtzhetong_hetonglx(String atzhetong_hetonglx){
+			this.atzhetong_hetonglx = atzhetong_hetonglx;
+		}
+			 	public String getAtzhetong_hetonglx(){
+	  		return atzhetong_hetonglx;
+	  	}
+	    		 		public void setAtzhetong_yunyings(String atzhetong_yunyings){
+			this.atzhetong_yunyings = atzhetong_yunyings;
+		}
+			 	public String getAtzhetong_yunyings(){
+	  		return atzhetong_yunyings;
+	  	}
+	    		 		public void setAtzhetong_hetongfj(String atzhetong_hetongfj){
+			this.atzhetong_hetongfj = atzhetong_hetongfj;
+		}
+			 	public String getAtzhetong_hetongfj(){
+	  		return atzhetong_hetongfj;
+	  	}
+	    		 		public void setAtzhetong_shenhezt(String atzhetong_shenhezt){
+			this.atzhetong_shenhezt = atzhetong_shenhezt;
+		}
+			 	public String getAtzhetong_shenhezt(){
+	  		return atzhetong_shenhezt;
+	  	}
+	    		 		public void setAtzhetong_shenheyj(String atzhetong_shenheyj){
+			this.atzhetong_shenheyj = atzhetong_shenheyj;
+		}
+			 	public String getAtzhetong_shenheyj(){
+	  		return atzhetong_shenheyj;
+	  	}
+	    		 		public void setAtzhetong_pingshenzt(String atzhetong_pingshenzt){
+			this.atzhetong_pingshenzt = atzhetong_pingshenzt;
+		}
+			 	public String getAtzhetong_pingshenzt(){
+	  		return atzhetong_pingshenzt;
+	  	}
+	    		 		public void setAtzhetong_shifougd(String atzhetong_shifougd){
+			this.atzhetong_shifougd = atzhetong_shifougd;
+		}
+			 	public String getAtzhetong_shifougd(){
+	  		return atzhetong_shifougd;
+	  	}
+	    		 		public void setAtzhetong_shifouws(String atzhetong_shifouws){
+			this.atzhetong_shifouws = atzhetong_shifouws;
+		}
+			 	public String getAtzhetong_shifouws(){
+	  		return atzhetong_shifouws;
+	  	}
+	    		 		public void setAtzhetong_duiyingjh(Long atzhetong_duiyingjh){
+			this.atzhetong_duiyingjh = atzhetong_duiyingjh;
+		}
+			 	public Long getAtzhetong_duiyingjh(){
+	  		return atzhetong_duiyingjh;
+	  	}
+	    		 		public void setAtzhetong_shifoujyht(String atzhetong_shifoujyht){
+			this.atzhetong_shifoujyht = atzhetong_shifoujyht;
+		}
+			 	public String getAtzhetong_shifoujyht(){
+	  		return atzhetong_shifoujyht;
+	  	}
+	    		 		public void setAtzhetong_shifouxynbps(String atzhetong_shifouxynbps){
+			this.atzhetong_shifouxynbps = atzhetong_shifouxynbps;
+		}
+			 	public String getAtzhetong_shifouxynbps(){
+	  		return atzhetong_shifouxynbps;
+	  	}
+	    		 		public void setAtzhetong_zhuxiaozt(String atzhetong_zhuxiaozt){
+			this.atzhetong_zhuxiaozt = atzhetong_zhuxiaozt;
+		}
+			 	public String getAtzhetong_zhuxiaozt(){
+	  		return atzhetong_zhuxiaozt;
+	  	}
+	    		 		public void setAtzhetong_shifouxqwbht(String atzhetong_shifouxqwbht){
+			this.atzhetong_shifouxqwbht = atzhetong_shifouxqwbht;
+		}
+			 	public String getAtzhetong_shifouxqwbht(){
+	  		return atzhetong_shifouxqwbht;
+	  	}
+	    		 		public void setAtzhetong_kehujlshr(Long atzhetong_kehujlshr){
+			this.atzhetong_kehujlshr = atzhetong_kehujlshr;
+		}
+			 	public Long getAtzhetong_kehujlshr(){
+	  		return atzhetong_kehujlshr;
+	  	}
+	    		 		public void setAtzhetong_lururid(Long atzhetong_lururid){
+			this.atzhetong_lururid = atzhetong_lururid;
+		}
+			 	public Long getAtzhetong_lururid(){
+	  		return atzhetong_lururid;
+	  	}
+	    		 		public void setAtzhetong_lurur(String atzhetong_lurur){
+			this.atzhetong_lurur = atzhetong_lurur;
+		}
+			 	public String getAtzhetong_lurur(){
+	  		return atzhetong_lurur;
+	  	}
+	    		 		public void setAtzhetong_lururq(Date atzhetong_lururq){
+			this.atzhetong_lururq = atzhetong_lururq;
+		}
+			 	public Date getAtzhetong_lururq(){
+	  		return atzhetong_lururq;
+	  	}
+	    		 		public void setAtzhetong_zuihouxgr(String atzhetong_zuihouxgr){
+			this.atzhetong_zuihouxgr = atzhetong_zuihouxgr;
+		}
+			 	public String getAtzhetong_zuihouxgr(){
+	  		return atzhetong_zuihouxgr;
+	  	}
+	    		 		public void setAtzhetong_zuihouxgrq(Date atzhetong_zuihouxgrq){
+			this.atzhetong_zuihouxgrq = atzhetong_zuihouxgrq;
+		}
+			 	public Date getAtzhetong_zuihouxgrq(){
+	  		return atzhetong_zuihouxgrq;
+	  	}
+	    		 		public void setAtzhetong_daohuozt(String atzhetong_daohuozt){
+			this.atzhetong_daohuozt = atzhetong_daohuozt;
+		}
+			 	public String getAtzhetong_daohuozt(){
+	  		return atzhetong_daohuozt;
+	  	}
+	    		 		public void setAtzhetong_daohuosj(Date atzhetong_daohuosj){
+			this.atzhetong_daohuosj = atzhetong_daohuosj;
+		}
+			 	public Date getAtzhetong_daohuosj(){
+	  		return atzhetong_daohuosj;
+	  	}
+	    		 		public void setAtzhetong_chuyanzt(String atzhetong_chuyanzt){
+			this.atzhetong_chuyanzt = atzhetong_chuyanzt;
+		}
+			 	public String getAtzhetong_chuyanzt(){
+	  		return atzhetong_chuyanzt;
+	  	}
+	    		 		public void setAtzhetong_chuyansj(Date atzhetong_chuyansj){
+			this.atzhetong_chuyansj = atzhetong_chuyansj;
+		}
+			 	public Date getAtzhetong_chuyansj(){
+	  		return atzhetong_chuyansj;
+	  	}
+	    		 		public void setAtzhetong_yijiaozt(String atzhetong_yijiaozt){
+			this.atzhetong_yijiaozt = atzhetong_yijiaozt;
+		}
+			 	public String getAtzhetong_yijiaozt(){
+	  		return atzhetong_yijiaozt;
+	  	}
+	    		 		public void setAtzhetong_yijiaosj(Date atzhetong_yijiaosj){
+			this.atzhetong_yijiaosj = atzhetong_yijiaosj;
+		}
+			 	public Date getAtzhetong_yijiaosj(){
+	  		return atzhetong_yijiaosj;
+	  	}
+	    		 		public void setAtzhetong_zhongyanzt(String atzhetong_zhongyanzt){
+			this.atzhetong_zhongyanzt = atzhetong_zhongyanzt;
+		}
+			 	public String getAtzhetong_zhongyanzt(){
+	  		return atzhetong_zhongyanzt;
+	  	}
+	    		 		public void setAtzhetong_zhongyansj(Date atzhetong_zhongyansj){
+			this.atzhetong_zhongyansj = atzhetong_zhongyansj;
+		}
+			 	public Date getAtzhetong_zhongyansj(){
+	  		return atzhetong_zhongyansj;
+	  	}
+	    		 		public void setAtzhetong_fukuanzt(String atzhetong_fukuanzt){
+			this.atzhetong_fukuanzt = atzhetong_fukuanzt;
+		}
+			 	public String getAtzhetong_fukuanzt(){
+	  		return atzhetong_fukuanzt;
+	  	}
+	    		 		public void setAtzhetong_beizhu(String atzhetong_beizhu){
+			this.atzhetong_beizhu = atzhetong_beizhu;
+		}
+			 	public String getAtzhetong_beizhu(){
+	  		return atzhetong_beizhu;
+	  	}
+	    		 		public void setAtzhetong_zhuxiaoyy(String atzhetong_zhuxiaoyy){
+			this.atzhetong_zhuxiaoyy = atzhetong_zhuxiaoyy;
+		}
+			 	public String getAtzhetong_zhuxiaoyy(){
+	  		return atzhetong_zhuxiaoyy;
+	  	}
+	    		 		public void setAtzhetong_shifoudl(String atzhetong_shifoudl){
+			this.atzhetong_shifoudl = atzhetong_shifoudl;
+		}
+			 	public String getAtzhetong_shifoudl(){
+	  		return atzhetong_shifoudl;
+	  	}
+	    		 		public void setAtzhetong_shijije(Double atzhetong_shijije){
+			this.atzhetong_shijije = atzhetong_shijije;
+		}
+			 	public Double getAtzhetong_shijije(){
+	  		return atzhetong_shijije;
+	  	}
+	    		 		public void setAtzhetong_shifouls(String atzhetong_shifouls){
+			this.atzhetong_shifouls = atzhetong_shifouls;
+		}
+			 	public String getAtzhetong_shifouls(){
+	  		return atzhetong_shifouls;
+	  	}
+	    		 		public void setAtzhetong_chanpinlx(String atzhetong_chanpinlx){
+			this.atzhetong_chanpinlx = atzhetong_chanpinlx;
+		}
+			 	public String getAtzhetong_chanpinlx(){
+	  		return atzhetong_chanpinlx;
+	  	}
+	    		 		public void setAtzhetong_shifousf(String atzhetong_shifousf){
+			this.atzhetong_shifousf = atzhetong_shifousf;
+		}
+			 	public String getAtzhetong_shifousf(){
+	  		return atzhetong_shifousf;
+	  	}
+	    		 		public void setAtzhetong_disanfkh(String atzhetong_disanfkh){
+			this.atzhetong_disanfkh = atzhetong_disanfkh;
+		}
+			 	public String getAtzhetong_disanfkh(){
+	  		return atzhetong_disanfkh;
+	  	}
+	    		 		public void setAtzhetong_kehulxr(String atzhetong_kehulxr){
+			this.atzhetong_kehulxr = atzhetong_kehulxr;
+		}
+			 	public String getAtzhetong_kehulxr(){
+	  		return atzhetong_kehulxr;
+	  	}
+	    		 		public void setAtzhetong_bkbht(Long atzhetong_bkbht){
+			this.atzhetong_bkbht = atzhetong_bkbht;
+		}
+			 	public Long getAtzhetong_bkbht(){
+	  		return atzhetong_bkbht;
+	  	}
+	    		 		public void setAtzhetong_kuangjiaht(Long atzhetong_kuangjiaht){
+			this.atzhetong_kuangjiaht = atzhetong_kuangjiaht;
+		}
+			 	public Long getAtzhetong_kuangjiaht(){
+	  		return atzhetong_kuangjiaht;
+	  	}
+	    		 		public void setAtzhetong_xiangmumc(String atzhetong_xiangmumc){
+			this.atzhetong_xiangmumc = atzhetong_xiangmumc;
+		}
+			 	public String getAtzhetong_xiangmumc(){
+	  		return atzhetong_xiangmumc;
+	  	}
+	    		 		public void setAtzhetong_xiaoshouqy(String atzhetong_xiaoshouqy){
+			this.atzhetong_xiaoshouqy = atzhetong_xiaoshouqy;
+		}
+			 	public String getAtzhetong_xiaoshouqy(){
+	  		return atzhetong_xiaoshouqy;
+	  	}
+	    		 		public void setAtzhetong_duiyingls(Long atzhetong_duiyingls){
+			this.atzhetong_duiyingls = atzhetong_duiyingls;
+		}
+			 	public Long getAtzhetong_duiyingls(){
+	  		return atzhetong_duiyingls;
+	  	}
+	    		 		public void setAtzhetong_xiangmujl(String atzhetong_xiangmujl){
+			this.atzhetong_xiangmujl = atzhetong_xiangmujl;
+		}
+			 	public String getAtzhetong_xiangmujl(){
+	  		return atzhetong_xiangmujl;
+	  	}
+	    		 		public void setAtzhetong_yikpje(Double atzhetong_yikpje){
+			this.atzhetong_yikpje = atzhetong_yikpje;
+		}
+			 	public Double getAtzhetong_yikpje(){
+	  		return atzhetong_yikpje;
+	  	}
+	    		 		public void setAtzhetong_hetongnbps(String atzhetong_hetongnbps){
+			this.atzhetong_hetongnbps = atzhetong_hetongnbps;
+		}
+			 	public String getAtzhetong_hetongnbps(){
+	  		return atzhetong_hetongnbps;
+	  	}
+	    		 		public void setAtzhetong_weikpje(Double atzhetong_weikpje){
+			this.atzhetong_weikpje = atzhetong_weikpje;
+		}
+			 	public Double getAtzhetong_weikpje(){
+	  		return atzhetong_weikpje;
+	  	}
+	    		 		public void setAtzhetong_pingshencs(Integer atzhetong_pingshencs){
+			this.atzhetong_pingshencs = atzhetong_pingshencs;
+		}
+			 	public Integer getAtzhetong_pingshencs(){
+	  		return atzhetong_pingshencs;
+	  	}
+	    		 		public void setAtzhetong_xiaoshoujh(String atzhetong_xiaoshoujh){
+			this.atzhetong_xiaoshoujh = atzhetong_xiaoshoujh;
+		}
+			 	public String getAtzhetong_xiaoshoujh(){
+	  		return atzhetong_xiaoshoujh;
+	  	}
+	    		 		public void setAtzhetong_xiaoshoujl(Long atzhetong_xiaoshoujl){
+			this.atzhetong_xiaoshoujl = atzhetong_xiaoshoujl;
+		}
+			 	public Long getAtzhetong_xiaoshoujl(){
+	  		return atzhetong_xiaoshoujl;
+	  	}
+	    		 		public void setAtzhetong_daqu(Long atzhetong_daqu){
+			this.atzhetong_daqu = atzhetong_daqu;
+		}
+			 	public Long getAtzhetong_daqu(){
+	  		return atzhetong_daqu;
+	  	}
+	    		 		public void setAtzhetong_gcxmjl(Long atzhetong_gcxmjl){
+			this.atzhetong_gcxmjl = atzhetong_gcxmjl;
+		}
+			 	public Long getAtzhetong_gcxmjl(){
+	  		return atzhetong_gcxmjl;
+	  	}
+	    		 		public void setAtzhetong_xmbh(String atzhetong_xmbh){
+			this.atzhetong_xmbh = atzhetong_xmbh;
+		}
+			 	public String getAtzhetong_xmbh(){
+	  		return atzhetong_xmbh;
+	  	}
+	    		 		public void setAtzhetong_sjh(String atzhetong_sjh){
+			this.atzhetong_sjh = atzhetong_sjh;
+		}
+			 	public String getAtzhetong_sjh(){
+	  		return atzhetong_sjh;
+	  	}
+	    		 		public void setAtzhetong_oahth(String atzhetong_oahth){
+			this.atzhetong_oahth = atzhetong_oahth;
+		}
+			 	public String getAtzhetong_oahth(){
+	  		return atzhetong_oahth;
+	  	}
+	    		 		public void setAtzhetong_sfztb(String atzhetong_sfztb){
+			this.atzhetong_sfztb = atzhetong_sfztb;
+		}
+			 	public String getAtzhetong_sfztb(){
+	  		return atzhetong_sfztb;
+	  	}
+	    		 		public void setAtzhetong_toubiaodid(Long atzhetong_toubiaodid){
+			this.atzhetong_toubiaodid = atzhetong_toubiaodid;
+		}
+			 	public Long getAtzhetong_toubiaodid(){
+	  		return atzhetong_toubiaodid;
+	  	}
+	    		 		public void setAtzhetong_chanpinzs(String atzhetong_chanpinzs){
+			this.atzhetong_chanpinzs = atzhetong_chanpinzs;
+		}
+			 	public String getAtzhetong_chanpinzs(){
+	  		return atzhetong_chanpinzs;
+	  	}
+	    		 		public void setAtzhetong_suoshuhy(String atzhetong_suoshuhy){
+			this.atzhetong_suoshuhy = atzhetong_suoshuhy;
+		}
+			 	public String getAtzhetong_suoshuhy(){
+	  		return atzhetong_suoshuhy;
+	  	}
+	    		 		public void setAtzhetong_zuihouxgrid(Long atzhetong_zuihouxgrid){
+			this.atzhetong_zuihouxgrid = atzhetong_zuihouxgrid;
+		}
+			 	public Long getAtzhetong_zuihouxgrid(){
+	  		return atzhetong_zuihouxgrid;
+	  	}
+	    		 		public void setAtzhetong_htfjsmj(String atzhetong_htfjsmj){
+			this.atzhetong_htfjsmj = atzhetong_htfjsmj;
+		}
+			 	public String getAtzhetong_htfjsmj(){
+	  		return atzhetong_htfjsmj;
+	  	}
+	    		 		public void setAtzhetong_sfbz(String atzhetong_sfbz){
+			this.atzhetong_sfbz = atzhetong_sfbz;
+		}
+			 	public String getAtzhetong_sfbz(){
+	  		return atzhetong_sfbz;
+	  	}
+	    		 		public void setAtzhetong_pswcsj(Date atzhetong_pswcsj){
+			this.atzhetong_pswcsj = atzhetong_pswcsj;
+		}
+			 	public Date getAtzhetong_pswcsj(){
+	  		return atzhetong_pswcsj;
+	  	}
+	    		 		public void setAtzhetong_htpsxlh(String atzhetong_htpsxlh){
+			this.atzhetong_htpsxlh = atzhetong_htpsxlh;
+		}
+			 	public String getAtzhetong_htpsxlh(){
+	  		return atzhetong_htpsxlh;
+	  	}
+	    		 		public void setAtzhetong_ysje(Double atzhetong_ysje){
+			this.atzhetong_ysje = atzhetong_ysje;
+		}
+			 	public Double getAtzhetong_ysje(){
+	  		return atzhetong_ysje;
+	  	}
+	    		 		public void setAtzhetong_wsje(Double atzhetong_wsje){
+			this.atzhetong_wsje = atzhetong_wsje;
+		}
+			 	public Double getAtzhetong_wsje(){
+	  		return atzhetong_wsje;
+	  	}
+	    		 		public void setAtzhetong_fhzt(String atzhetong_fhzt){
+			this.atzhetong_fhzt = atzhetong_fhzt;
+		}
+			 	public String getAtzhetong_fhzt(){
+	  		return atzhetong_fhzt;
+	  	}
+	    		 		public void setAtzhetong_kpzt(String atzhetong_kpzt){
+			this.atzhetong_kpzt = atzhetong_kpzt;
+		}
+			 	public String getAtzhetong_kpzt(){
+	  		return atzhetong_kpzt;
+	  	}
+	    		 		public void setAtzhetong_gcyszt(String atzhetong_gcyszt){
+			this.atzhetong_gcyszt = atzhetong_gcyszt;
+		}
+			 	public String getAtzhetong_gcyszt(){
+	  		return atzhetong_gcyszt;
+	  	}
+	    		 		public void setAtzhetong_skzt(String atzhetong_skzt){
+			this.atzhetong_skzt = atzhetong_skzt;
+		}
+			 	public String getAtzhetong_skzt(){
+	  		return atzhetong_skzt;
+	  	}
+	    		 		public void setAtzhetong_sfgb(String atzhetong_sfgb){
+			this.atzhetong_sfgb = atzhetong_sfgb;
+		}
+			 	public String getAtzhetong_sfgb(){
+	  		return atzhetong_sfgb;
+	  	}
+	    		 		public void setAtzhetong_sjlx(String atzhetong_sjlx){
+			this.atzhetong_sjlx = atzhetong_sjlx;
+		}
+			 	public String getAtzhetong_sjlx(){
+	  		return atzhetong_sjlx;
+	  	}
+	    		 		public void setAtzhetong_lxlx(String atzhetong_lxlx){
+			this.atzhetong_lxlx = atzhetong_lxlx;
+		}
+			 	public String getAtzhetong_lxlx(){
+	  		return atzhetong_lxlx;
+	  	}
+	    		 		public void setAtzhetong_hezuohb(String atzhetong_hezuohb){
+			this.atzhetong_hezuohb = atzhetong_hezuohb;
+		}
+			 	public String getAtzhetong_hezuohb(){
+	  		return atzhetong_hezuohb;
+	  	}
+	    		 		public void setAtzhetong_jibenqk(String atzhetong_jibenqk){
+			this.atzhetong_jibenqk = atzhetong_jibenqk;
+		}
+			 	public String getAtzhetong_jibenqk(){
+	  		return atzhetong_jibenqk;
+	  	}
+	    		 		public void setAtzhetong_xiangmuzq(String atzhetong_xiangmuzq){
+			this.atzhetong_xiangmuzq = atzhetong_xiangmuzq;
+		}
+			 	public String getAtzhetong_xiangmuzq(){
+	  		return atzhetong_xiangmuzq;
+	  	}
+	    		 		public void setAtzhetong_touruzy(String atzhetong_touruzy){
+			this.atzhetong_touruzy = atzhetong_touruzy;
+		}
+			 	public String getAtzhetong_touruzy(){
+	  		return atzhetong_touruzy;
+	  	}
+	    		 		public void setAtzhetong_jihuifx(String atzhetong_jihuifx){
+			this.atzhetong_jihuifx = atzhetong_jihuifx;
+		}
+			 	public String getAtzhetong_jihuifx(){
+	  		return atzhetong_jihuifx;
+	  	}
+	    		 		public void setAtzhetong_daquyj(String atzhetong_daquyj){
+			this.atzhetong_daquyj = atzhetong_daquyj;
+		}
+			 	public String getAtzhetong_daquyj(){
+	  		return atzhetong_daquyj;
+	  	}
+	    		 		public void setAtzhetong_xsfzyj(String atzhetong_xsfzyj){
+			this.atzhetong_xsfzyj = atzhetong_xsfzyj;
+		}
+			 	public String getAtzhetong_xsfzyj(){
+	  		return atzhetong_xsfzyj;
+	  	}
+	    		 		public void setAtzhetong_sybzjlyj(String atzhetong_sybzjlyj){
+			this.atzhetong_sybzjlyj = atzhetong_sybzjlyj;
+		}
+			 	public String getAtzhetong_sybzjlyj(){
+	  		return atzhetong_sybzjlyj;
+	  	}
+	    		 		public void setAtzhetong_czxiaoshoufz(Long atzhetong_czxiaoshoufz){
+			this.atzhetong_czxiaoshoufz = atzhetong_czxiaoshoufz;
+		}
+			 	public Long getAtzhetong_czxiaoshoufz(){
+	  		return atzhetong_czxiaoshoufz;
+	  	}
+	    	  	  public Long getAtzhetong_id(){
+  	  	return atzhetong_id;
+  	  }
+  	  public void setAtzhetong_id(Long atzhetong_id){
+  	  	this.atzhetong_id = atzhetong_id;
+  	  }
+	  public Long getId(){
+	  	return getAtzhetong_id();
+	  }
+	public String getObjectLabel(){
+		return "";
+	}
+	
+}

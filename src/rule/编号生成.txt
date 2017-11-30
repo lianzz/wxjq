@@ -1,0 +1,25 @@
+// 生成单据编号
+paramMap.put("danjulx", "22");
+String rValue = execAdjustmentRule("A-生成编码规则-05", null, context, dataset,
+		request, paramMap);
+if(rValue.equals("请先设置编码规则") || rValue.equals("流水号溢出")) {
+	returnMsg.set("NO", "流水号溢出，请联系系统管理员！");
+	return returnMsg;
+} else if("Error".equals(rValue)) {
+	returnMsg.set("NO", "编号生成异常，请联系系统管理员！");
+	return returnMsg;
+}
+instance.setBianhao(rValue);//编号
+
+// 生成正式单据编号
+paramMap.put("danjulx", "22");
+String rValue = execAdjustmentRule("A-生成正式编码规则-05", null, context, dataset,
+		request, paramMap);
+if(rValue.equals("请先设置编码规则") || rValue.equals("流水号溢出")) {
+	returnMsg.set("NO", "流水号溢出，请联系系统管理员！");
+	return returnMsg;
+} else if("Error".equals(rValue)) {
+	returnMsg.set("NO", "编号生成异常，请联系系统管理员！");
+	return returnMsg;
+}
+instance.setBianhao(rValue);//编号
