@@ -29,8 +29,6 @@ public class 发货通知单 extends RuleEngine {
 		if (params != null && !"null".equals(params)) {
 			Atzhetong hetong = (Atzhetong) dataset.getObject(Atzhetong.class, Long.parseLong(params));
 			if (hetong != null) {
-				// Atzhetong ht = (Atzhetong) dataset.getObject(Atzhetong.class,
-				// ywzc.getHetongid());
 				Atzkehu kh = (Atzkehu) dataset.getObject(Atzkehu.class, hetong.getKehuid());
 				if (kh != null) {
 					result = result + kh.getId() + "," + kh.getKehumc();
