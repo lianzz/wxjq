@@ -41,6 +41,36 @@ public class Atzhetongcpqd implements Serializable,IPojo
   	        
       return this.chanpinid;     	
    }
+ 	 	 private Long chanpindl;
+	 public void setChanpindl(Long chanpindl)
+	 {
+		  this.chanpindl = chanpindl;
+	 }
+   public Long getChanpindl()
+   { 	    
+  	        
+      return this.chanpindl;     	
+   }
+ 	 	 private Long chanpinpzid;
+	 public void setChanpinpzid(Long chanpinpzid)
+	 {
+		  this.chanpinpzid = chanpinpzid;
+	 }
+   public Long getChanpinpzid()
+   { 	    
+  	        
+      return this.chanpinpzid;     	
+   }
+ 	 	 private Double danjia;
+	 public void setDanjia(Double danjia)
+	 {
+		  this.danjia = danjia;
+	 }
+   public Double getDanjia()
+   { 	    
+  	        
+      return this.danjia;     	
+   }
  	 	 private Long hetongid;
 	 public void setHetongid(Long hetongid)
 	 {
@@ -70,6 +100,26 @@ public class Atzhetongcpqd implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzchanpinn getChanpinidRef()
    {
      	return this.chanpinidRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzchanpindl chanpindlRef;
+	 public void setChanpindlRef(com.actiz.platform.application.dataset.pojo.Atzchanpindl chanpindlRef)
+	 {
+		  this.chanpindlRef = chanpindlRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzchanpindl getChanpindlRef()
+   {
+     	return this.chanpindlRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzchanpinpz chanpinpzidRef;
+	 public void setChanpinpzidRef(com.actiz.platform.application.dataset.pojo.Atzchanpinpz chanpinpzidRef)
+	 {
+		  this.chanpinpzidRef = chanpinpzidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzchanpinpz getChanpinpzidRef()
+   {
+     	return this.chanpinpzidRef;
    }
  
 	 private com.actiz.platform.application.dataset.pojo.Atzhetong hetongidRef;

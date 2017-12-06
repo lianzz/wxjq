@@ -95,6 +95,16 @@ public class Atzzxwj implements Serializable,IPojo
   	        
       return this.sfywh;     	
    }
+ 	 	 private String wjlb;
+	 public void setWjlb(String wjlb)
+	 {
+		  this.wjlb = wjlb;
+	 }
+   public String getWjlb()
+   { 	    
+  	        
+      return this.wjlb;     	
+   }
  	 	 private Date youxiaorq;
 	 public void setYouxiaorq(Date youxiaorq)
 	 {

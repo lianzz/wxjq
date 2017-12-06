@@ -168,6 +168,18 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		}
 
 		if ("0".equals(shzt)) {
+			/**此段插入代码维护业务支持联系单跟踪信息
+		      *  @zjl
+		      */
+		      Long yewuzcdid=instance.getYewuzcd();
+		      if(yewuzcdid!=null){
+		        Atzyewuzc ywzc=(Atzyewuzc)dataset.getObject(Atzyewuzc.class,yewuzcdid);
+		        if(ywzc!=null){
+		          ywzc.setYwzt("3");
+		         
+		        }
+
+		      }
 			// 审核已通过
 			instance.setDanjuzt("3");
 			// 生成单据编号
@@ -215,6 +227,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					sbqd.setJhfhsl(0d);
 					sbqd.setTuikusl(0d);
 					sbqd.setJhtksl(0d);
+                  sbqd.setJhdtksl(0d);
 					sbqd.setLururq(new Date());
 					sbqd.setHetongid(hetongid);
 					sbqd.setPzmxid(pzmx.getId());
@@ -238,6 +251,8 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 						sbqd.setJhfhsl(0d);
 						sbqd.setTuikusl(0d);
 						sbqd.setJhtksl(0d);
+                      
+                  sbqd.setJhdtksl(0d);
 						sbqd.setLururq(new Date());
 						sbqd.setHetongid(hetongid);
 						sbqd.setPzmxid(pzmx.getId());

@@ -91,6 +91,16 @@ public class Atzdepartment implements Serializable,IPojo
   	        
       return this.managerid;     	
    }
+ 	 	 private Long gczgid;
+	 public void setGczgid(Long gczgid)
+	 {
+		  this.gczgid = gczgid;
+	 }
+   public Long getGczgid()
+   { 	    
+  	        
+      return this.gczgid;     	
+   }
  	 	 private String lujing;
 	 public void setLujing(String lujing)
 	 {
@@ -208,6 +218,16 @@ public class Atzdepartment implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzemployee getManageridRef()
    {
      	return this.manageridRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzemployee gczgidRef;
+	 public void setGczgidRef(com.actiz.platform.application.dataset.pojo.Atzemployee gczgidRef)
+	 {
+		  this.gczgidRef = gczgidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzemployee getGczgidRef()
+   {
+     	return this.gczgidRef;
    }
  
 	 private com.actiz.platform.application.dataset.pojo.Atzemployee lururidRef;

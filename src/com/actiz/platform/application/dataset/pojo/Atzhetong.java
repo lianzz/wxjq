@@ -101,12 +101,12 @@ public class Atzhetong implements Serializable,IPojo
   	        
       return this.chanpinyysf;     	
    }
- 	 	 private Long chanpinzs;
-	 public void setChanpinzs(Long chanpinzs)
+ 	 	 private String chanpinzs;
+	 public void setChanpinzs(String chanpinzs)
 	 {
 		  this.chanpinzs = chanpinzs;
 	 }
-   public Long getChanpinzs()
+   public String getChanpinzs()
    { 	    
   	        
       return this.chanpinzs;     	
@@ -239,6 +239,16 @@ public class Atzhetong implements Serializable,IPojo
   	        
       return this.fhzt;     	
    }
+ 	 	 private String fplx;
+	 public void setFplx(String fplx)
+	 {
+		  this.fplx = fplx;
+	 }
+   public String getFplx()
+   { 	    
+  	        
+      return this.fplx;     	
+   }
  	 	 private String fktk;
 	 public void setFktk(String fktk)
 	 {
@@ -278,6 +288,16 @@ public class Atzhetong implements Serializable,IPojo
    { 	    
   	        
       return this.gcyszt;     	
+   }
+ 	 	 private String guishugs;
+	 public void setGuishugs(String guishugs)
+	 {
+		  this.guishugs = guishugs;
+	 }
+   public String getGuishugs()
+   { 	    
+  	        
+      return this.guishugs;     	
    }
  	 	 private String hetongbh;
 	 public void setHetongbh(String hetongbh)
@@ -409,6 +429,16 @@ public class Atzhetong implements Serializable,IPojo
   	        
       return this.jgspzt;     	
    }
+ 	 	 private String jiesulc;
+	 public void setJiesulc(String jiesulc)
+	 {
+		  this.jiesulc = jiesulc;
+	 }
+   public String getJiesulc()
+   { 	    
+  	        
+      return this.jiesulc;     	
+   }
  	 	 private String kpzt;
 	 public void setKpzt(String kpzt)
 	 {
@@ -458,6 +488,16 @@ public class Atzhetong implements Serializable,IPojo
    { 	    
   	        
       return this.kuangjiaht;     	
+   }
+ 	 	 private String lixianglx;
+	 public void setLixianglx(String lixianglx)
+	 {
+		  this.lixianglx = lixianglx;
+	 }
+   public String getLixianglx()
+   { 	    
+  	        
+      return this.lixianglx;     	
    }
  	 	 private String lurur;
 	 public void setLurur(String lurur)
@@ -1142,16 +1182,6 @@ public class Atzhetong implements Serializable,IPojo
      	return this.czxiaoshoufzRef;
    }
  
-	 private com.actiz.platform.application.dataset.pojo.Atzchanpindl chanpinzsRef;
-	 public void setChanpinzsRef(com.actiz.platform.application.dataset.pojo.Atzchanpindl chanpinzsRef)
-	 {
-		  this.chanpinzsRef = chanpinzsRef;
-	 }
-   public com.actiz.platform.application.dataset.pojo.Atzchanpindl getChanpinzsRef()
-   {
-     	return this.chanpinzsRef;
-   }
- 
 	 private com.actiz.platform.application.dataset.pojo.Atzxiangmu cbzxRef;
 	 public void setCbzxRef(com.actiz.platform.application.dataset.pojo.Atzxiangmu cbzxRef)
 	 {
@@ -1270,6 +1300,16 @@ public class Atzhetong implements Serializable,IPojo
   public java.util.Set getAtzgenggaixxSet()
   {
      return this.atzgenggaixxSet;
+  }
+ 
+	private java.util.Set atzhtbglsSet;
+	public void setAtzhtbglsSet(java.util.Set atzhtbglsSet)
+	{
+		 this.atzhtbglsSet = atzhtbglsSet;
+	}
+  public java.util.Set getAtzhtbglsSet()
+  {
+     return this.atzhtbglsSet;
   }
  
 	private java.util.Set atzhtbcxySet;

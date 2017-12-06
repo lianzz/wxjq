@@ -319,6 +319,16 @@ public class Atzfahuotzd implements Serializable,IPojo
   	        
       return this.xitongpz;     	
    }
+ 	 	 private Long xmpzqdid;
+	 public void setXmpzqdid(Long xmpzqdid)
+	 {
+		  this.xmpzqdid = xmpzqdid;
+	 }
+   public Long getXmpzqdid()
+   { 	    
+  	        
+      return this.xmpzqdid;     	
+   }
  	 	 private String xiaoshoujl;
 	 public void setXiaoshoujl(String xiaoshoujl)
 	 {
@@ -450,6 +460,16 @@ public class Atzfahuotzd implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzkehu getKehuidRef()
    {
      	return this.kehuidRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzxiangmupzqd xmpzqdidRef;
+	 public void setXmpzqdidRef(com.actiz.platform.application.dataset.pojo.Atzxiangmupzqd xmpzqdidRef)
+	 {
+		  this.xmpzqdidRef = xmpzqdidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzxiangmupzqd getXmpzqdidRef()
+   {
+     	return this.xmpzqdidRef;
    }
  
 	 private com.actiz.platform.application.dataset.pojo.Atzemployee xiaoshoujlidRef;

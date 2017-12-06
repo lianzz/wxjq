@@ -31,7 +31,17 @@ public class Atzfahuoqingdan implements Serializable,IPojo
 	 {
 		  this.actizversion = actizversion;
 	 } 
-	  	 	 private Date fahuosj;
+	  	 	 private String beizhu;
+	 public void setBeizhu(String beizhu)
+	 {
+		  this.beizhu = beizhu;
+	 }
+   public String getBeizhu()
+   { 	    
+  	        
+      return this.beizhu;     	
+   }
+ 	 	 private Date fahuosj;
 	 public void setFahuosj(Date fahuosj)
 	 {
 		  this.fahuosj = fahuosj;
@@ -114,6 +124,16 @@ public class Atzfahuoqingdan implements Serializable,IPojo
    { 	    
   	        
       return this.xiaoshoubmid;     	
+   }
+ 	 	 private String zt;
+	 public void setZt(String zt)
+	 {
+		  this.zt = zt;
+	 }
+   public String getZt()
+   { 	    
+  	        
+      return this.zt;     	
    }
   
 	 private com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef;

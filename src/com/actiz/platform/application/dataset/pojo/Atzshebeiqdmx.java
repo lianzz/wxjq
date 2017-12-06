@@ -61,16 +61,6 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.danwei;     	
    }
- 	 	 private Double yifhsh;
-	 public void setYifhsh(Double yifhsh)
-	 {
-		  this.yifhsh = yifhsh;
-	 }
-   public Double getYifhsh()
-   { 	    
-  	        
-      return this.yifhsh;     	
-   }
  	 	 private String guigedw;
 	 public void setGuigedw(String guigedw)
 	 {
@@ -175,6 +165,16 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.wuliaoms;     	
    }
+ 	 	 private Double jhfhsl;
+	 public void setJhfhsl(Double jhfhsl)
+	 {
+		  this.jhfhsl = jhfhsl;
+	 }
+   public Double getJhfhsl()
+   { 	    
+  	        
+      return this.jhfhsl;     	
+   }
  	 	 private String xiaoshoubm;
 	 public void setXiaoshoubm(String xiaoshoubm)
 	 {
@@ -195,15 +195,35 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.xiaoshoubmid;     	
    }
- 	 	 private Double jhfhsl;
-	 public void setJhfhsl(Double jhfhsl)
+ 	 	 private Double yichusl;
+	 public void setYichusl(Double yichusl)
 	 {
-		  this.jhfhsl = jhfhsl;
+		  this.yichusl = yichusl;
 	 }
-   public Double getJhfhsl()
+   public Double getYichusl()
    { 	    
   	        
-      return this.jhfhsl;     	
+      return this.yichusl;     	
+   }
+ 	 	 private Double yirusl;
+	 public void setYirusl(Double yirusl)
+	 {
+		  this.yirusl = yirusl;
+	 }
+   public Double getYirusl()
+   { 	    
+  	        
+      return this.yirusl;     	
+   }
+ 	 	 private Double yifhsh;
+	 public void setYifhsh(Double yifhsh)
+	 {
+		  this.yifhsh = yifhsh;
+	 }
+   public Double getYifhsh()
+   { 	    
+  	        
+      return this.yifhsh;     	
    }
   
 	 private com.actiz.platform.application.dataset.pojo.Atzshebeiqd atzshebeiqdidRef;

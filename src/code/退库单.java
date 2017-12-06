@@ -105,19 +105,22 @@ public class 退库单 extends RuleEngine {
 						Atzchurukjhdmx churukjhmx = new Atzchurukjhdmx();
 						churukjhmx.setAtzchurukjhdid(churukjhd.getId());
 						/*
-						List<Atzwuliaojcxx> wuliaoList = dataset.getList("Atzwuliaojcxx",
-								"wuliaosjxz ='0' and xiaoshoubmid =" + hetongtkmx.getXiaoshoubmid()
-										+ " order by banbenpx desc");
-						if (wuliaoList != null && wuliaoList.size() > 0) {
-							Atzwuliaojcxx wuliao = (Atzwuliaojcxx) wuliaoList.get(0);
-							churukjhmx.setWuliaoid(wuliao.getId());
-							churukjhmx.setWuliaobm(wuliao.getWuliaobm());
-							churukjhmx.setWuliaoms(wuliao.getWuliaoms());
-							churukjhmx.setGuigedw(wuliao.getGuigedw());
-							churukjhmx.setDanwei(wuliao.getDanwei());
-						}
-						*/
-						Atzwuliaojcxx wuliao = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class, hetongtkmx.getWuliaobmid());
+						 * List<Atzwuliaojcxx> wuliaoList =
+						 * dataset.getList("Atzwuliaojcxx",
+						 * "wuliaosjxz ='0' and xiaoshoubmid =" +
+						 * hetongtkmx.getXiaoshoubmid() +
+						 * " order by banbenpx desc"); if (wuliaoList != null &&
+						 * wuliaoList.size() > 0) { Atzwuliaojcxx wuliao =
+						 * (Atzwuliaojcxx) wuliaoList.get(0);
+						 * churukjhmx.setWuliaoid(wuliao.getId());
+						 * churukjhmx.setWuliaobm(wuliao.getWuliaobm());
+						 * churukjhmx.setWuliaoms(wuliao.getWuliaoms());
+						 * churukjhmx.setGuigedw(wuliao.getGuigedw());
+						 * churukjhmx.setDanwei(wuliao.getDanwei()); }
+						 */
+						churukjhmx.setXiaoshoubmid(hetongtkmx.getXiaoshoubmid());
+						Atzwuliaojcxx wuliao = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class,
+								hetongtkmx.getWuliaobmid());
 						churukjhmx.setWuliaoid(wuliao.getId());
 						churukjhmx.setWuliaobm(wuliao.getWuliaobm());
 						churukjhmx.setWuliaoms(wuliao.getWuliaoms());
@@ -186,6 +189,12 @@ public class 退库单 extends RuleEngine {
 				return returnMsg;
 			}
 			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), tkmx.getShuliang()));
+			// 提交退库申请,维护发货清单状态
+			if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
+				fhqd.setZt("申请退库");
+			} else {
+				fhqd.setZt("申请退库,数量=" + tkmx.getShuliang());
+			}
 			dataset.update(fhqd);
 		}
 		// 提交流程
@@ -267,7 +276,8 @@ public class 退库单 extends RuleEngine {
 			fahuomx.setAtzwuliaojcxx_wuliaoms(atzwuliaojcxx.getWuliaoms());
 			fahuomx.setAtzwuliaojcxx_guigedw(atzwuliaojcxx.getGuigedw());
 			fahuomx.setAtzwuliaojcxx_danwei(atzwuliaojcxx.getDanwei());
-			fahuomx.setAtzhetongtkmx_shuliang(com.actiz.util.MathUtil.sub(atzfahuoqingdan.getShuliang(), atzfahuoqingdan.getTkshuliang()));
+			fahuomx.setAtzhetongtkmx_shuliang(
+					com.actiz.util.MathUtil.sub(atzfahuoqingdan.getShuliang(), atzfahuoqingdan.getTkshuliang()));
 			fahuomx.setAtzhetongtkmx_sn(atzfahuoqingdan.getSn());
 			fahuomxList.add(fahuomx);
 		}

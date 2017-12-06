@@ -71,6 +71,16 @@ public class Atztoubiao implements Serializable,IPojo
   	        
       return this.bianhao;     	
    }
+ 	 	 private String bhjgpz;
+	 public void setBhjgpz(String bhjgpz)
+	 {
+		  this.bhjgpz = bhjgpz;
+	 }
+   public String getBhjgpz()
+   { 	    
+  	        
+      return this.bhjgpz;     	
+   }
  	 	 private String cgry;
 	 public void setCgry(String cgry)
 	 {
@@ -121,6 +131,16 @@ public class Atztoubiao implements Serializable,IPojo
   	        
       return this.daqumc;     	
    }
+ 	 	 private String dfzbdw;
+	 public void setDfzbdw(String dfzbdw)
+	 {
+		  this.dfzbdw = dfzbdw;
+	 }
+   public String getDfzbdw()
+   { 	    
+  	        
+      return this.dfzbdw;     	
+   }
  	 	 private String fkyj;
 	 public void setFkyj(String fkyj)
 	 {
@@ -141,6 +161,16 @@ public class Atztoubiao implements Serializable,IPojo
   	        
       return this.fujian;     	
    }
+ 	 	 private Long gcjlid;
+	 public void setGcjlid(Long gcjlid)
+	 {
+		  this.gcjlid = gcjlid;
+	 }
+   public Long getGcjlid()
+   { 	    
+  	        
+      return this.gcjlid;     	
+   }
  	 	 private String gcry;
 	 public void setGcry(String gcry)
 	 {
@@ -160,6 +190,16 @@ public class Atztoubiao implements Serializable,IPojo
    { 	    
   	        
       return this.gcygids;     	
+   }
+ 	 	 private String hjgpz;
+	 public void setHjgpz(String hjgpz)
+	 {
+		  this.hjgpz = hjgpz;
+	 }
+   public String getHjgpz()
+   { 	    
+  	        
+      return this.hjgpz;     	
    }
  	 	 private String jsry;
 	 public void setJsry(String jsry)
@@ -279,6 +319,26 @@ public class Atztoubiao implements Serializable,IPojo
   	        
       return this.qxyy;     	
    }
+ 	 	 private String jsfj;
+	 public void setJsfj(String jsfj)
+	 {
+		  this.jsfj = jsfj;
+	 }
+   public String getJsfj()
+   { 	    
+  	        
+      return this.jsfj;     	
+   }
+ 	 	 private String zxfj;
+	 public void setZxfj(String zxfj)
+	 {
+		  this.zxfj = zxfj;
+	 }
+   public String getZxfj()
+   { 	    
+  	        
+      return this.zxfj;     	
+   }
  	 	 private String shengfen;
 	 public void setShengfen(String shengfen)
 	 {
@@ -288,6 +348,26 @@ public class Atztoubiao implements Serializable,IPojo
    { 	    
   	        
       return this.shengfen;     	
+   }
+ 	 	 private Double sjzbje;
+	 public void setSjzbje(Double sjzbje)
+	 {
+		  this.sjzbje = sjzbje;
+	 }
+   public Double getSjzbje()
+   { 	    
+  	        
+      return this.sjzbje;     	
+   }
+ 	 	 private String sfzb;
+	 public void setSfzb(String sfzb)
+	 {
+		  this.sfzb = sfzb;
+	 }
+   public String getSfzb()
+   { 	    
+  	        
+      return this.sfzb;     	
    }
  	 	 private String shixianqu;
 	 public void setShixianqu(String shixianqu)
@@ -308,6 +388,16 @@ public class Atztoubiao implements Serializable,IPojo
    { 	    
   	        
       return this.daquid;     	
+   }
+ 	 	 private String suoshuhy;
+	 public void setSuoshuhy(String suoshuhy)
+	 {
+		  this.suoshuhy = suoshuhy;
+	 }
+   public String getSuoshuhy()
+   { 	    
+  	        
+      return this.suoshuhy;     	
    }
  	 	 private String tblx;
 	 public void setTblx(String tblx)
@@ -413,6 +503,26 @@ public class Atztoubiao implements Serializable,IPojo
   	        
       return this.ysje;     	
    }
+ 	 	 private String zjdfj;
+	 public void setZjdfj(String zjdfj)
+	 {
+		  this.zjdfj = zjdfj;
+	 }
+   public String getZjdfj()
+   { 	    
+  	        
+      return this.zjdfj;     	
+   }
+ 	 	 private Long zbdwid;
+	 public void setZbdwid(Long zbdwid)
+	 {
+		  this.zbdwid = zbdwid;
+	 }
+   public Long getZbdwid()
+   { 	    
+  	        
+      return this.zbdwid;     	
+   }
  	 	 private String zxry;
 	 public void setZxry(String zxry)
 	 {
@@ -497,6 +607,16 @@ public class Atztoubiao implements Serializable,IPojo
    {
      	return this.xsjlidRef;
    }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzkehu zbdwidRef;
+	 public void setZbdwidRef(com.actiz.platform.application.dataset.pojo.Atzkehu zbdwidRef)
+	 {
+		  this.zbdwidRef = zbdwidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzkehu getZbdwidRef()
+   {
+     	return this.zbdwidRef;
+   }
   
 	private java.util.Set atztoubiaoqxSet;
 	public void setAtztoubiaoqxSet(java.util.Set atztoubiaoqxSet)
@@ -506,6 +626,16 @@ public class Atztoubiao implements Serializable,IPojo
   public java.util.Set getAtztoubiaoqxSet()
   {
      return this.atztoubiaoqxSet;
+  }
+ 
+	private java.util.Set atztbxgjlSet;
+	public void setAtztbxgjlSet(java.util.Set atztbxgjlSet)
+	{
+		 this.atztbxgjlSet = atztbxgjlSet;
+	}
+  public java.util.Set getAtztbxgjlSet()
+  {
+     return this.atztbxgjlSet;
   }
   
 				private Long actizcompanyid;

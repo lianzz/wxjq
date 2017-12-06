@@ -61,6 +61,16 @@ public class Atzxiangmupzqd implements Serializable,IPojo
   	        
       return this.danjuzt;     	
    }
+ 	 	 private String fujian;
+	 public void setFujian(String fujian)
+	 {
+		  this.fujian = fujian;
+	 }
+   public String getFujian()
+   { 	    
+  	        
+      return this.fujian;     	
+   }
  	 	 private Long hetongid;
 	 public void setHetongid(Long hetongid)
 	 {

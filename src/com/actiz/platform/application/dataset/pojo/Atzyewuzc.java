@@ -317,6 +317,16 @@ public class Atzyewuzc implements Serializable,IPojo
   	        
       return this.zongrt;     	
    }
+ 	 	 private String ywzt;
+	 public void setYwzt(String ywzt)
+	 {
+		  this.ywzt = ywzt;
+	 }
+   public String getYwzt()
+   { 	    
+  	        
+      return this.ywzt;     	
+   }
  	 	 private String yijian;
 	 public void setYijian(String yijian)
 	 {
@@ -481,7 +491,17 @@ public class Atzyewuzc implements Serializable,IPojo
    {
      	return this.zuihouxgridRef;
    }
-   
+  
+	private java.util.Set atzzhixinggcgzSet;
+	public void setAtzzhixinggcgzSet(java.util.Set atzzhixinggcgzSet)
+	{
+		 this.atzzhixinggcgzSet = atzzhixinggcgzSet;
+	}
+  public java.util.Set getAtzzhixinggcgzSet()
+  {
+     return this.atzzhixinggcgzSet;
+  }
+  
 				private Long actizcompanyid;
 		public Long getActizcompanyid() 
 		{
