@@ -228,6 +228,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					sbqd.setTuikusl(0d);
 					sbqd.setJhtksl(0d);
                   sbqd.setJhdtksl(0d);
+                  sbqd.setSjwfhsl(0d);
 					sbqd.setLururq(new Date());
 					sbqd.setHetongid(hetongid);
 					sbqd.setPzmxid(pzmx.getId());
@@ -253,6 +254,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 						sbqd.setJhtksl(0d);
                       
                   sbqd.setJhdtksl(0d);
+                  sbqd.setSjwfhsl(0d);
 						sbqd.setLururq(new Date());
 						sbqd.setHetongid(hetongid);
 						sbqd.setPzmxid(pzmx.getId());

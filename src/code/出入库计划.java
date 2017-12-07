@@ -2410,6 +2410,7 @@ public class 出入库计划 extends RuleEngine {
 				}
 				atzshebeiqdmx
 						.setYifhsh(com.actiz.util.MathUtil.add(atzshebeiqdmx.getYifhsh(), atzchurukdmx.getShuliang()));
+				atzshebeiqdmx.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 				dataset.update(atzshebeiqdmx);
 				// 生成实际发货清单
 				fahuoqd = new Atzfahuoqingdan();

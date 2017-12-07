@@ -425,6 +425,7 @@ public class 发货通知单 extends RuleEngine {
 			// 维护设备清单已发货量/未发货量
 			atzshebeiqdmx
 					.setJhfhsl(com.actiz.util.MathUtil.add(atzshebeiqdmx.getJhfhsl(), atzfahuosbqdmx.getShuliang()));
+			atzshebeiqdmx.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 			atzshebeiqdmx
 					.setWeifhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getWeifhsl(), atzshebeiqdmx.getJhfhsl()));
 			dataset.update(atzshebeiqdmx);
