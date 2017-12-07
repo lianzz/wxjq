@@ -81,6 +81,26 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.hetongid;     	
    }
+ 	 	 private Double jhdtksl;
+	 public void setJhdtksl(Double jhdtksl)
+	 {
+		  this.jhdtksl = jhdtksl;
+	 }
+   public Double getJhdtksl()
+   { 	    
+  	        
+      return this.jhdtksl;     	
+   }
+ 	 	 private Double weifhsl;
+	 public void setWeifhsl(Double weifhsl)
+	 {
+		  this.weifhsl = weifhsl;
+	 }
+   public Double getWeifhsl()
+   { 	    
+  	        
+      return this.weifhsl;     	
+   }
  	 	 private Date lururq;
 	 public void setLururq(Date lururq)
 	 {
@@ -115,16 +135,6 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.pzmxid;     	
    }
- 	 	 private Double shuliang;
-	 public void setShuliang(Double shuliang)
-	 {
-		  this.shuliang = shuliang;
-	 }
-   public Double getShuliang()
-   { 	    
-  	        
-      return this.shuliang;     	
-   }
  	 	 private Double jhtksl;
 	 public void setJhtksl(Double jhtksl)
 	 {
@@ -145,15 +155,25 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.tuikusl;     	
    }
- 	 	 private Double weifhsl;
-	 public void setWeifhsl(Double weifhsl)
+ 	 	 private Double shuliang;
+	 public void setShuliang(Double shuliang)
 	 {
-		  this.weifhsl = weifhsl;
+		  this.shuliang = shuliang;
 	 }
-   public Double getWeifhsl()
+   public Double getShuliang()
    { 	    
   	        
-      return this.weifhsl;     	
+      return this.shuliang;     	
+   }
+ 	 	 private Double sjwfhsl;
+	 public void setSjwfhsl(Double sjwfhsl)
+	 {
+		  this.sjwfhsl = sjwfhsl;
+	 }
+   public Double getSjwfhsl()
+   { 	    
+  	        
+      return this.sjwfhsl;     	
    }
  	 	 private String wuliaoms;
 	 public void setWuliaoms(String wuliaoms)

@@ -75,6 +75,36 @@ public class Atzfahuoqingdan implements Serializable,IPojo
   	        
       return this.hetongid;     	
    }
+ 	 	 private Long hetongtkid;
+	 public void setHetongtkid(Long hetongtkid)
+	 {
+		  this.hetongtkid = hetongtkid;
+	 }
+   public Long getHetongtkid()
+   { 	    
+  	        
+      return this.hetongtkid;     	
+   }
+ 	 	 private Double tkshuliang;
+	 public void setTkshuliang(Double tkshuliang)
+	 {
+		  this.tkshuliang = tkshuliang;
+	 }
+   public Double getTkshuliang()
+   { 	    
+  	        
+      return this.tkshuliang;     	
+   }
+ 	 	 private Double sjtksl;
+	 public void setSjtksl(Double sjtksl)
+	 {
+		  this.sjtksl = sjtksl;
+	 }
+   public Double getSjtksl()
+   { 	    
+  	        
+      return this.sjtksl;     	
+   }
  	 	 private Double shuliang;
 	 public void setShuliang(Double shuliang)
 	 {
@@ -95,15 +125,19 @@ public class Atzfahuoqingdan implements Serializable,IPojo
   	        
       return this.sn;     	
    }
- 	 	 private Double tkshuliang;
-	 public void setTkshuliang(Double tkshuliang)
+ 	 	 private Date tuihuosj;
+	 public void setTuihuosj(Date tuihuosj)
 	 {
-		  this.tkshuliang = tkshuliang;
+		  this.tuihuosj = tuihuosj;
 	 }
-   public Double getTkshuliang()
+   public Date getTuihuosj()
    { 	    
-  	        
-      return this.tkshuliang;     	
+  	  	    if( this.tuihuosj != null )
+	    {
+	        return (Date)new ActizDate( this.tuihuosj.getTime() );
+	    }
+	          
+      return this.tuihuosj;     	
    }
  	 	 private Long wuliaoid;
 	 public void setWuliaoid(Long wuliaoid)
@@ -154,6 +188,16 @@ public class Atzfahuoqingdan implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzhetong getHetongidRef()
    {
      	return this.hetongidRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzhetongtk hetongtkidRef;
+	 public void setHetongtkidRef(com.actiz.platform.application.dataset.pojo.Atzhetongtk hetongtkidRef)
+	 {
+		  this.hetongtkidRef = hetongtkidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzhetongtk getHetongtkidRef()
+   {
+     	return this.hetongtkidRef;
    }
  
 	 private com.actiz.platform.application.dataset.pojo.Atzwuliaojcxx wuliaoidRef;
