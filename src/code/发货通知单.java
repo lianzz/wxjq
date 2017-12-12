@@ -473,6 +473,7 @@ public class 发货通知单 extends RuleEngine {
 		dataset.update(instance);
 		/**
 		 * 此段插入代码维护业务支持联系单跟踪信息
+		 * 
 		 * @zjl
 		 */
 		Long xmpzqdid = instance.getXmpzqdid();
@@ -854,8 +855,7 @@ public class 发货通知单 extends RuleEngine {
 	private Object 发货通知设备新增后置_选的项目配置清单(Atzfahuotzd instance, IDataSet dataset, IDataContext context,
 			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
 		/**
-		 * A-发货通知设备新增-12 
-		 * 功能：数据校验 销售编码 不能重复 销售编码 在设备清单明细中必须存在
+		 * A-发货通知设备新增-12 功能：数据校验 销售编码 不能重复 销售编码 在设备清单明细中必须存在
 		 */
 		// 合同id
 		Long hetongid = instance.getHetongid();
