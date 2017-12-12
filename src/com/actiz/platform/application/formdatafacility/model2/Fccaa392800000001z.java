@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-22 11:31:39.678
+* Build Time  :2017-11-28 16:03:54.008
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -21,9 +21,6 @@ import java.sql.Blob;
 			
 				
 										private Object atzhetong_daqu;
-			
-				
-										private Object atzhetong_chanpinzs;
 			
 				
 										private Object atzhetong_suoshuhy;
@@ -51,15 +48,6 @@ import java.sql.Blob;
 	  		}
   		  		
   				  		
-  						public void setAtzhetong_chanpinzs(Object atzhetong_chanpinzs){
-				this.atzhetong_chanpinzs = atzhetong_chanpinzs;
-			}
-			
-	  		public Object getAtzhetong_chanpinzs(){
-	  			return atzhetong_chanpinzs;
-	  		}
-  		  		
-  				  		
   						public void setAtzhetong_suoshuhy(Object atzhetong_suoshuhy){
 				this.atzhetong_suoshuhy = atzhetong_suoshuhy;
 			}
@@ -84,8 +72,6 @@ import java.sql.Blob;
 									o.setAtzhetong_hetonglx(getValue(context,"atzhetong.hetonglx"));
 						
 						  									o.setAtzhetong_daqu(getValue(context,"atzdepartment.id"));
-						
-						  									o.setAtzhetong_chanpinzs(getValue(context,"atzhetong.chanpinzs"));
 						
 						  									o.setAtzhetong_suoshuhy(getValue(context,"atzhetong.suoshuhy"));
 						

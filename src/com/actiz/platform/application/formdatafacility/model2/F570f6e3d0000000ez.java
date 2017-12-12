@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:51:59.803
+* Build Time  :2017-11-28 16:03:32.087
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -31,6 +31,7 @@ public class F570f6e3d0000000ez implements IAppEntityObject{
 					 		private Date atzdepartment_zuihouxgrq;
 					 		private Long atzdepartment_lururid;
 					 		private Long atzdepartment_zuihouxgrid;
+					 		private Long atzdepartment_gczgid;
 					 		private Long atztuandui_actizversion;
 					 			 		private Long atztuandui_futuanduiid;
 					 		private Integer atztuandui_cengci;
@@ -134,6 +135,12 @@ public class F570f6e3d0000000ez implements IAppEntityObject{
 		}
 			 	public Long getAtzdepartment_zuihouxgrid(){
 	  		return atzdepartment_zuihouxgrid;
+	  	}
+	    		 		public void setAtzdepartment_gczgid(Long atzdepartment_gczgid){
+			this.atzdepartment_gczgid = atzdepartment_gczgid;
+		}
+			 	public Long getAtzdepartment_gczgid(){
+	  		return atzdepartment_gczgid;
 	  	}
 	    		 		public void setAtztuandui_actizversion(Long atztuandui_actizversion){
 			this.atztuandui_actizversion = atztuandui_actizversion;

@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-17 16:59:55.183
+* Build Time  :2017-11-28 15:58:53.318
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -31,24 +31,30 @@ public class F75fdf01000000001z implements IAppEntityObject{
 					 		private Date atzdepartment_zuihouxgrq;
 					 		private Long atzdepartment_lururid;
 					 		private Long atzdepartment_zuihouxgrid;
+					 		private Long atzdepartment_gczgid;
 					 		private Long atztoubiao_actizversion;
 					 			 		private String atztoubiao_bianhao = "";
 					 		private Long atztoubiao_xsjlid;
 					 		private String atztoubiao_xsjlxm = "";
 					 		private Long atztoubiao_daquid;
 					 		private String atztoubiao_daqumc = "";
+					 		private String atztoubiao_shengfen = "";
+					 		private String atztoubiao_shixianqu = "";
 					 		private Long atztoubiao_xiangmuid;
 					 		private String atztoubiao_xmbh = "";
+					 		private String atztoubiao_tbxmmc = "";
 					 		private String atztoubiao_tblx = "";
 					 		private String atztoubiao_cplx = "";
+					 		private String atztoubiao_suoshuhy = "";
 					 		private Double atztoubiao_ysje = 0.0;
 					 		private Date atztoubiao_tbrq;
 					 		private Date atztoubiao_kbrq;
 					 		private String atztoubiao_tbzt = "";
 					 		private String atztoubiao_fkyj;
 					 		private String atztoubiao_fujian;
+					 		private String atztoubiao_zjdfj;
 					 		private String atztoubiao_beizhu;
-					 		private String atztoubiao_tbdjzt = "";
+					 		private String atztoubiao_tbdjzt = "1";
 					 		private Integer atztoubiao_zuidashhj = 1;
 					 		private String atztoubiao_qxyy = "";
 					 		private String atztoubiao_qxjtyy;
@@ -69,6 +75,16 @@ public class F75fdf01000000001z implements IAppEntityObject{
 					 		private String atztoubiao_qtygids = "";
 					 		private String atztoubiao_qxqzt = "";
 					 		private String atztoubiao_lcyshrids = "";
+					 		private Long atztoubiao_managerid;
+					 		private Long atztoubiao_gcjlid;
+					 		private String atztoubiao_sfzb = "";
+					 		private String atztoubiao_dfzbdw = "";
+					 		private Long atztoubiao_zbdwid;
+					 		private Double atztoubiao_sjzbje = 0.0;
+					 		private String atztoubiao_hjgpz;
+					 		private String atztoubiao_bhjgpz;
+					 		private String atztoubiao_zxfj;
+					 		private String atztoubiao_jsfj;
 					 		private Long atzemployee_id;
 					 		private String atzemployee_ygseq = "";
 					 		private String atzemployee_empcode = "";
@@ -137,19 +153,6 @@ public class F75fdf01000000001z implements IAppEntityObject{
 					 		private String atzemployee_xingquah = "";
 					 		private String atzemployee_ghgzk = "";
 					 		private String atzemployee_shifoulz = "";
-					 		private Long atzxiangmu_id;
-					 		private String atzxiangmu_xiangmubh = "";
-					 		private String atzxiangmu_xiangmumc = "";
-					 		private String atzxiangmu_guishucbzx = "";
-					 		private String atzxiangmu_lurur = "";
-					 		private Date atzxiangmu_lururq;
-					 		private String atzxiangmu_zuihouxgr = "";
-					 		private Date atzxiangmu_zuihouxgrq;
-					 		private String atzxiangmu_beizhu;
-					 		private Long atzxiangmu_xiangmujl;
-					 		private String atzxiangmu_xiangmuzt = "";
-					 		private Long atzxiangmu_lururid;
-					 		private Long atzxiangmu_zuihouxgrid;
 					 		public void setAtzdepartment_id(Long atzdepartment_id){
 			this.atzdepartment_id = atzdepartment_id;
 		}
@@ -246,6 +249,12 @@ public class F75fdf01000000001z implements IAppEntityObject{
 			 	public Long getAtzdepartment_zuihouxgrid(){
 	  		return atzdepartment_zuihouxgrid;
 	  	}
+	    		 		public void setAtzdepartment_gczgid(Long atzdepartment_gczgid){
+			this.atzdepartment_gczgid = atzdepartment_gczgid;
+		}
+			 	public Long getAtzdepartment_gczgid(){
+	  		return atzdepartment_gczgid;
+	  	}
 	    		 		public void setAtztoubiao_actizversion(Long atztoubiao_actizversion){
 			this.atztoubiao_actizversion = atztoubiao_actizversion;
 		}
@@ -282,6 +291,18 @@ public class F75fdf01000000001z implements IAppEntityObject{
 			 	public String getAtztoubiao_daqumc(){
 	  		return atztoubiao_daqumc;
 	  	}
+	    		 		public void setAtztoubiao_shengfen(String atztoubiao_shengfen){
+			this.atztoubiao_shengfen = atztoubiao_shengfen;
+		}
+			 	public String getAtztoubiao_shengfen(){
+	  		return atztoubiao_shengfen;
+	  	}
+	    		 		public void setAtztoubiao_shixianqu(String atztoubiao_shixianqu){
+			this.atztoubiao_shixianqu = atztoubiao_shixianqu;
+		}
+			 	public String getAtztoubiao_shixianqu(){
+	  		return atztoubiao_shixianqu;
+	  	}
 	    		 		public void setAtztoubiao_xiangmuid(Long atztoubiao_xiangmuid){
 			this.atztoubiao_xiangmuid = atztoubiao_xiangmuid;
 		}
@@ -294,6 +315,12 @@ public class F75fdf01000000001z implements IAppEntityObject{
 			 	public String getAtztoubiao_xmbh(){
 	  		return atztoubiao_xmbh;
 	  	}
+	    		 		public void setAtztoubiao_tbxmmc(String atztoubiao_tbxmmc){
+			this.atztoubiao_tbxmmc = atztoubiao_tbxmmc;
+		}
+			 	public String getAtztoubiao_tbxmmc(){
+	  		return atztoubiao_tbxmmc;
+	  	}
 	    		 		public void setAtztoubiao_tblx(String atztoubiao_tblx){
 			this.atztoubiao_tblx = atztoubiao_tblx;
 		}
@@ -305,6 +332,12 @@ public class F75fdf01000000001z implements IAppEntityObject{
 		}
 			 	public String getAtztoubiao_cplx(){
 	  		return atztoubiao_cplx;
+	  	}
+	    		 		public void setAtztoubiao_suoshuhy(String atztoubiao_suoshuhy){
+			this.atztoubiao_suoshuhy = atztoubiao_suoshuhy;
+		}
+			 	public String getAtztoubiao_suoshuhy(){
+	  		return atztoubiao_suoshuhy;
 	  	}
 	    		 		public void setAtztoubiao_ysje(Double atztoubiao_ysje){
 			this.atztoubiao_ysje = atztoubiao_ysje;
@@ -341,6 +374,12 @@ public class F75fdf01000000001z implements IAppEntityObject{
 		}
 			 	public String getAtztoubiao_fujian(){
 	  		return atztoubiao_fujian;
+	  	}
+	    		 		public void setAtztoubiao_zjdfj(String atztoubiao_zjdfj){
+			this.atztoubiao_zjdfj = atztoubiao_zjdfj;
+		}
+			 	public String getAtztoubiao_zjdfj(){
+	  		return atztoubiao_zjdfj;
 	  	}
 	    		 		public void setAtztoubiao_beizhu(String atztoubiao_beizhu){
 			this.atztoubiao_beizhu = atztoubiao_beizhu;
@@ -473,6 +512,66 @@ public class F75fdf01000000001z implements IAppEntityObject{
 		}
 			 	public String getAtztoubiao_lcyshrids(){
 	  		return atztoubiao_lcyshrids;
+	  	}
+	    		 		public void setAtztoubiao_managerid(Long atztoubiao_managerid){
+			this.atztoubiao_managerid = atztoubiao_managerid;
+		}
+			 	public Long getAtztoubiao_managerid(){
+	  		return atztoubiao_managerid;
+	  	}
+	    		 		public void setAtztoubiao_gcjlid(Long atztoubiao_gcjlid){
+			this.atztoubiao_gcjlid = atztoubiao_gcjlid;
+		}
+			 	public Long getAtztoubiao_gcjlid(){
+	  		return atztoubiao_gcjlid;
+	  	}
+	    		 		public void setAtztoubiao_sfzb(String atztoubiao_sfzb){
+			this.atztoubiao_sfzb = atztoubiao_sfzb;
+		}
+			 	public String getAtztoubiao_sfzb(){
+	  		return atztoubiao_sfzb;
+	  	}
+	    		 		public void setAtztoubiao_dfzbdw(String atztoubiao_dfzbdw){
+			this.atztoubiao_dfzbdw = atztoubiao_dfzbdw;
+		}
+			 	public String getAtztoubiao_dfzbdw(){
+	  		return atztoubiao_dfzbdw;
+	  	}
+	    		 		public void setAtztoubiao_zbdwid(Long atztoubiao_zbdwid){
+			this.atztoubiao_zbdwid = atztoubiao_zbdwid;
+		}
+			 	public Long getAtztoubiao_zbdwid(){
+	  		return atztoubiao_zbdwid;
+	  	}
+	    		 		public void setAtztoubiao_sjzbje(Double atztoubiao_sjzbje){
+			this.atztoubiao_sjzbje = atztoubiao_sjzbje;
+		}
+			 	public Double getAtztoubiao_sjzbje(){
+	  		return atztoubiao_sjzbje;
+	  	}
+	    		 		public void setAtztoubiao_hjgpz(String atztoubiao_hjgpz){
+			this.atztoubiao_hjgpz = atztoubiao_hjgpz;
+		}
+			 	public String getAtztoubiao_hjgpz(){
+	  		return atztoubiao_hjgpz;
+	  	}
+	    		 		public void setAtztoubiao_bhjgpz(String atztoubiao_bhjgpz){
+			this.atztoubiao_bhjgpz = atztoubiao_bhjgpz;
+		}
+			 	public String getAtztoubiao_bhjgpz(){
+	  		return atztoubiao_bhjgpz;
+	  	}
+	    		 		public void setAtztoubiao_zxfj(String atztoubiao_zxfj){
+			this.atztoubiao_zxfj = atztoubiao_zxfj;
+		}
+			 	public String getAtztoubiao_zxfj(){
+	  		return atztoubiao_zxfj;
+	  	}
+	    		 		public void setAtztoubiao_jsfj(String atztoubiao_jsfj){
+			this.atztoubiao_jsfj = atztoubiao_jsfj;
+		}
+			 	public String getAtztoubiao_jsfj(){
+	  		return atztoubiao_jsfj;
 	  	}
 	    		 		public void setAtzemployee_id(Long atzemployee_id){
 			this.atzemployee_id = atzemployee_id;
@@ -881,84 +980,6 @@ public class F75fdf01000000001z implements IAppEntityObject{
 		}
 			 	public String getAtzemployee_shifoulz(){
 	  		return atzemployee_shifoulz;
-	  	}
-	    		 		public void setAtzxiangmu_id(Long atzxiangmu_id){
-			this.atzxiangmu_id = atzxiangmu_id;
-		}
-			 	public Long getAtzxiangmu_id(){
-	  		return atzxiangmu_id;
-	  	}
-	    		 		public void setAtzxiangmu_xiangmubh(String atzxiangmu_xiangmubh){
-			this.atzxiangmu_xiangmubh = atzxiangmu_xiangmubh;
-		}
-			 	public String getAtzxiangmu_xiangmubh(){
-	  		return atzxiangmu_xiangmubh;
-	  	}
-	    		 		public void setAtzxiangmu_xiangmumc(String atzxiangmu_xiangmumc){
-			this.atzxiangmu_xiangmumc = atzxiangmu_xiangmumc;
-		}
-			 	public String getAtzxiangmu_xiangmumc(){
-	  		return atzxiangmu_xiangmumc;
-	  	}
-	    		 		public void setAtzxiangmu_guishucbzx(String atzxiangmu_guishucbzx){
-			this.atzxiangmu_guishucbzx = atzxiangmu_guishucbzx;
-		}
-			 	public String getAtzxiangmu_guishucbzx(){
-	  		return atzxiangmu_guishucbzx;
-	  	}
-	    		 		public void setAtzxiangmu_lurur(String atzxiangmu_lurur){
-			this.atzxiangmu_lurur = atzxiangmu_lurur;
-		}
-			 	public String getAtzxiangmu_lurur(){
-	  		return atzxiangmu_lurur;
-	  	}
-	    		 		public void setAtzxiangmu_lururq(Date atzxiangmu_lururq){
-			this.atzxiangmu_lururq = atzxiangmu_lururq;
-		}
-			 	public Date getAtzxiangmu_lururq(){
-	  		return atzxiangmu_lururq;
-	  	}
-	    		 		public void setAtzxiangmu_zuihouxgr(String atzxiangmu_zuihouxgr){
-			this.atzxiangmu_zuihouxgr = atzxiangmu_zuihouxgr;
-		}
-			 	public String getAtzxiangmu_zuihouxgr(){
-	  		return atzxiangmu_zuihouxgr;
-	  	}
-	    		 		public void setAtzxiangmu_zuihouxgrq(Date atzxiangmu_zuihouxgrq){
-			this.atzxiangmu_zuihouxgrq = atzxiangmu_zuihouxgrq;
-		}
-			 	public Date getAtzxiangmu_zuihouxgrq(){
-	  		return atzxiangmu_zuihouxgrq;
-	  	}
-	    		 		public void setAtzxiangmu_beizhu(String atzxiangmu_beizhu){
-			this.atzxiangmu_beizhu = atzxiangmu_beizhu;
-		}
-			 	public String getAtzxiangmu_beizhu(){
-	  		return atzxiangmu_beizhu;
-	  	}
-	    		 		public void setAtzxiangmu_xiangmujl(Long atzxiangmu_xiangmujl){
-			this.atzxiangmu_xiangmujl = atzxiangmu_xiangmujl;
-		}
-			 	public Long getAtzxiangmu_xiangmujl(){
-	  		return atzxiangmu_xiangmujl;
-	  	}
-	    		 		public void setAtzxiangmu_xiangmuzt(String atzxiangmu_xiangmuzt){
-			this.atzxiangmu_xiangmuzt = atzxiangmu_xiangmuzt;
-		}
-			 	public String getAtzxiangmu_xiangmuzt(){
-	  		return atzxiangmu_xiangmuzt;
-	  	}
-	    		 		public void setAtzxiangmu_lururid(Long atzxiangmu_lururid){
-			this.atzxiangmu_lururid = atzxiangmu_lururid;
-		}
-			 	public Long getAtzxiangmu_lururid(){
-	  		return atzxiangmu_lururid;
-	  	}
-	    		 		public void setAtzxiangmu_zuihouxgrid(Long atzxiangmu_zuihouxgrid){
-			this.atzxiangmu_zuihouxgrid = atzxiangmu_zuihouxgrid;
-		}
-			 	public Long getAtzxiangmu_zuihouxgrid(){
-	  		return atzxiangmu_zuihouxgrid;
 	  	}
 	    	  	  public Long getAtztoubiao_id(){
   	  	return atztoubiao_id;

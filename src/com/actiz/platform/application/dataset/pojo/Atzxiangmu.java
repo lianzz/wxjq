@@ -51,6 +51,16 @@ public class Atzxiangmu implements Serializable,IPojo
   	        
       return this.guishucbzx;     	
    }
+ 	 	 private String guishugs;
+	 public void setGuishugs(String guishugs)
+	 {
+		  this.guishugs = guishugs;
+	 }
+   public String getGuishugs()
+   { 	    
+  	        
+      return this.guishugs;     	
+   }
  	 	 private String lurur;
 	 public void setLurur(String lurur)
 	 {

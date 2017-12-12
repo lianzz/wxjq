@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:56:37.891
+* Build Time  :2017-11-28 16:08:37.823
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -31,6 +31,7 @@ public class F0e86b1480000002fz implements IAppEntityObject{
 					 		private Date atzdepartment_zuihouxgrq;
 					 		private Long atzdepartment_lururid;
 					 		private Long atzdepartment_zuihouxgrid;
+					 		private Long atzdepartment_gczgid;
 					 		private Long atzkehu_id;
 					 		private String atzkehu_kehumc = "";
 					 		private String atzkehu_kehuzyx = "";
@@ -163,6 +164,8 @@ public class F0e86b1480000002fz implements IAppEntityObject{
 					 		private Long atzyewuzc_zuihouxgrid;
 					 		private Long atzyewuzc_xiangmumc;
 					 		private Long atzyewuzc_hetongid;
+					 		private String atzyewuzc_yewuzclx = "";
+					 		private String atzyewuzc_ywzt = "";
 					 		public void setAtzdepartment_id(Long atzdepartment_id){
 			this.atzdepartment_id = atzdepartment_id;
 		}
@@ -258,6 +261,12 @@ public class F0e86b1480000002fz implements IAppEntityObject{
 		}
 			 	public Long getAtzdepartment_zuihouxgrid(){
 	  		return atzdepartment_zuihouxgrid;
+	  	}
+	    		 		public void setAtzdepartment_gczgid(Long atzdepartment_gczgid){
+			this.atzdepartment_gczgid = atzdepartment_gczgid;
+		}
+			 	public Long getAtzdepartment_gczgid(){
+	  		return atzdepartment_gczgid;
 	  	}
 	    		 		public void setAtzkehu_id(Long atzkehu_id){
 			this.atzkehu_id = atzkehu_id;
@@ -1050,6 +1059,18 @@ public class F0e86b1480000002fz implements IAppEntityObject{
 		}
 			 	public Long getAtzyewuzc_hetongid(){
 	  		return atzyewuzc_hetongid;
+	  	}
+	    		 		public void setAtzyewuzc_yewuzclx(String atzyewuzc_yewuzclx){
+			this.atzyewuzc_yewuzclx = atzyewuzc_yewuzclx;
+		}
+			 	public String getAtzyewuzc_yewuzclx(){
+	  		return atzyewuzc_yewuzclx;
+	  	}
+	    		 		public void setAtzyewuzc_ywzt(String atzyewuzc_ywzt){
+			this.atzyewuzc_ywzt = atzyewuzc_ywzt;
+		}
+			 	public String getAtzyewuzc_ywzt(){
+	  		return atzyewuzc_ywzt;
 	  	}
 	    	  	  public Long getAtzyewuzc_id(){
   	  	return atzyewuzc_id;

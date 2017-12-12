@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-23 14:54:11.234
+* Build Time  :2017-11-28 16:03:11.868
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -25,10 +25,10 @@ import java.sql.Blob;
 			private String atzhetongtkmx_sn = "";
 			private String atzwuliaojcxx_danwei = "";
 			private String atzwuliaojcxx_guigedw = "";
-			private Long atzhetongtkmx_hetongtkid;
 			private Long atzhetongtkmx_xiaoshoubmid;
-			private String atzhetongtkmx_beizhu = "";
 			private Long atzhetongtkmx_fahuoqdid;
+			private Long atzhetongtkmx_hetongtkid;
+			private String atzhetongtkmx_beizhu = "";
 			private String atzwuliaojcxx_abcfl = "";
 			private Long atzwuliaojcxx_wuliaolbid;
 			private Long atzwuliaojcxx_wuliaozlbid;
@@ -132,13 +132,6 @@ import java.sql.Blob;
   		public String getAtzwuliaojcxx_guigedw(){
   			return atzwuliaojcxx_guigedw;
   		}
-  			public void setAtzhetongtkmx_hetongtkid(Long atzhetongtkmx_hetongtkid){
-			this.atzhetongtkmx_hetongtkid = atzhetongtkmx_hetongtkid;
-		}
-		
-  		public Long getAtzhetongtkmx_hetongtkid(){
-  			return atzhetongtkmx_hetongtkid;
-  		}
   			public void setAtzhetongtkmx_xiaoshoubmid(Long atzhetongtkmx_xiaoshoubmid){
 			this.atzhetongtkmx_xiaoshoubmid = atzhetongtkmx_xiaoshoubmid;
 		}
@@ -146,19 +139,26 @@ import java.sql.Blob;
   		public Long getAtzhetongtkmx_xiaoshoubmid(){
   			return atzhetongtkmx_xiaoshoubmid;
   		}
-  			public void setAtzhetongtkmx_beizhu(String atzhetongtkmx_beizhu){
-			this.atzhetongtkmx_beizhu = atzhetongtkmx_beizhu;
-		}
-		
-  		public String getAtzhetongtkmx_beizhu(){
-  			return atzhetongtkmx_beizhu;
-  		}
   			public void setAtzhetongtkmx_fahuoqdid(Long atzhetongtkmx_fahuoqdid){
 			this.atzhetongtkmx_fahuoqdid = atzhetongtkmx_fahuoqdid;
 		}
 		
   		public Long getAtzhetongtkmx_fahuoqdid(){
   			return atzhetongtkmx_fahuoqdid;
+  		}
+  			public void setAtzhetongtkmx_hetongtkid(Long atzhetongtkmx_hetongtkid){
+			this.atzhetongtkmx_hetongtkid = atzhetongtkmx_hetongtkid;
+		}
+		
+  		public Long getAtzhetongtkmx_hetongtkid(){
+  			return atzhetongtkmx_hetongtkid;
+  		}
+  			public void setAtzhetongtkmx_beizhu(String atzhetongtkmx_beizhu){
+			this.atzhetongtkmx_beizhu = atzhetongtkmx_beizhu;
+		}
+		
+  		public String getAtzhetongtkmx_beizhu(){
+  			return atzhetongtkmx_beizhu;
   		}
   			public void setAtzwuliaojcxx_abcfl(String atzwuliaojcxx_abcfl){
 			this.atzwuliaojcxx_abcfl = atzwuliaojcxx_abcfl;

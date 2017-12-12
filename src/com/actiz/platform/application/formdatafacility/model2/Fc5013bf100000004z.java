@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 16:42:05.833
+* Build Time  :2017-12-07 12:00:53.362
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -34,9 +34,14 @@ import java.sql.Blob;
 			private Double atzshebeiqdmx_jhfhsl = 0.0;
 			private Double atzshebeiqdmx_weifhsl = 0.0;
 			private Double atzshebeiqdmx_yifhsh = 0.0;
+			private Double atzshebeiqdmx_jhtksl = 0.0;
+			private Double atzshebeiqdmx_jhdtksl = 0.0;
 			private Double atzshebeiqdmx_tuikusl = 0.0;
+			private Double atzshebeiqdmx_yichusl = 0.0;
+			private Double atzshebeiqdmx_yirusl = 0.0;
 			private Date atzshebeiqdmx_lururq;
 			private Long atzshebeiqdmx_pzmxid;
+			private Double atzshebeiqdmx_sjwfhsl = 0.0;
 			private String atzxiaoshoubm_bianma = "";
 			private String atzxiaoshoubm_lurur = "";
 			private Date atzxiaoshoubm_lururq;
@@ -170,12 +175,40 @@ import java.sql.Blob;
   		public Double getAtzshebeiqdmx_yifhsh(){
   			return atzshebeiqdmx_yifhsh;
   		}
+  			public void setAtzshebeiqdmx_jhtksl(Double atzshebeiqdmx_jhtksl){
+			this.atzshebeiqdmx_jhtksl = atzshebeiqdmx_jhtksl;
+		}
+		
+  		public Double getAtzshebeiqdmx_jhtksl(){
+  			return atzshebeiqdmx_jhtksl;
+  		}
+  			public void setAtzshebeiqdmx_jhdtksl(Double atzshebeiqdmx_jhdtksl){
+			this.atzshebeiqdmx_jhdtksl = atzshebeiqdmx_jhdtksl;
+		}
+		
+  		public Double getAtzshebeiqdmx_jhdtksl(){
+  			return atzshebeiqdmx_jhdtksl;
+  		}
   			public void setAtzshebeiqdmx_tuikusl(Double atzshebeiqdmx_tuikusl){
 			this.atzshebeiqdmx_tuikusl = atzshebeiqdmx_tuikusl;
 		}
 		
   		public Double getAtzshebeiqdmx_tuikusl(){
   			return atzshebeiqdmx_tuikusl;
+  		}
+  			public void setAtzshebeiqdmx_yichusl(Double atzshebeiqdmx_yichusl){
+			this.atzshebeiqdmx_yichusl = atzshebeiqdmx_yichusl;
+		}
+		
+  		public Double getAtzshebeiqdmx_yichusl(){
+  			return atzshebeiqdmx_yichusl;
+  		}
+  			public void setAtzshebeiqdmx_yirusl(Double atzshebeiqdmx_yirusl){
+			this.atzshebeiqdmx_yirusl = atzshebeiqdmx_yirusl;
+		}
+		
+  		public Double getAtzshebeiqdmx_yirusl(){
+  			return atzshebeiqdmx_yirusl;
   		}
   			public void setAtzshebeiqdmx_lururq(Date atzshebeiqdmx_lururq){
 			this.atzshebeiqdmx_lururq = atzshebeiqdmx_lururq;
@@ -190,6 +223,13 @@ import java.sql.Blob;
 		
   		public Long getAtzshebeiqdmx_pzmxid(){
   			return atzshebeiqdmx_pzmxid;
+  		}
+  			public void setAtzshebeiqdmx_sjwfhsl(Double atzshebeiqdmx_sjwfhsl){
+			this.atzshebeiqdmx_sjwfhsl = atzshebeiqdmx_sjwfhsl;
+		}
+		
+  		public Double getAtzshebeiqdmx_sjwfhsl(){
+  			return atzshebeiqdmx_sjwfhsl;
   		}
   			public void setAtzxiaoshoubm_bianma(String atzxiaoshoubm_bianma){
 			this.atzxiaoshoubm_bianma = atzxiaoshoubm_bianma;

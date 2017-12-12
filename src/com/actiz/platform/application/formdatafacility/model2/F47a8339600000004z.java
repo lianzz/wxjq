@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:57:00.652
+* Build Time  :2017-11-28 16:09:01.204
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -79,6 +79,8 @@ public class F47a8339600000004z implements IAppEntityObject{
 					 		private Long atzyewuzc_zuihouxgrid;
 					 		private Long atzyewuzc_xiangmumc;
 					 		private Long atzyewuzc_hetongid;
+					 		private String atzyewuzc_yewuzclx = "";
+					 		private String atzyewuzc_ywzt = "";
 					 		private Long atzxiangmupzqd_actizversion;
 					 			 		private String atzxiangmupzqd_bianhao = "";
 					 		private String atzxiangmupzqd_qingdanmc = "";
@@ -98,6 +100,7 @@ public class F47a8339600000004z implements IAppEntityObject{
 					 		private String atzxiangmupzqd_shifouyfh = "";
 					 		private Long atzxiangmupzqd_hetongid;
 					 		private Long atzxiangmupzqd_shenher;
+					 		private String atzxiangmupzqd_fujian;
 					 		public void setAtzkehu_id(Long atzkehu_id){
 			this.atzkehu_id = atzkehu_id;
 		}
@@ -482,6 +485,18 @@ public class F47a8339600000004z implements IAppEntityObject{
 			 	public Long getAtzyewuzc_hetongid(){
 	  		return atzyewuzc_hetongid;
 	  	}
+	    		 		public void setAtzyewuzc_yewuzclx(String atzyewuzc_yewuzclx){
+			this.atzyewuzc_yewuzclx = atzyewuzc_yewuzclx;
+		}
+			 	public String getAtzyewuzc_yewuzclx(){
+	  		return atzyewuzc_yewuzclx;
+	  	}
+	    		 		public void setAtzyewuzc_ywzt(String atzyewuzc_ywzt){
+			this.atzyewuzc_ywzt = atzyewuzc_ywzt;
+		}
+			 	public String getAtzyewuzc_ywzt(){
+	  		return atzyewuzc_ywzt;
+	  	}
 	    		 		public void setAtzxiangmupzqd_actizversion(Long atzxiangmupzqd_actizversion){
 			this.atzxiangmupzqd_actizversion = atzxiangmupzqd_actizversion;
 		}
@@ -595,6 +610,12 @@ public class F47a8339600000004z implements IAppEntityObject{
 		}
 			 	public Long getAtzxiangmupzqd_shenher(){
 	  		return atzxiangmupzqd_shenher;
+	  	}
+	    		 		public void setAtzxiangmupzqd_fujian(String atzxiangmupzqd_fujian){
+			this.atzxiangmupzqd_fujian = atzxiangmupzqd_fujian;
+		}
+			 	public String getAtzxiangmupzqd_fujian(){
+	  		return atzxiangmupzqd_fujian;
 	  	}
 	    	  	  public Long getAtzxiangmupzqd_id(){
   	  	return atzxiangmupzqd_id;

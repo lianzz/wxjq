@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:58:28.216
+* Build Time  :2017-11-28 16:10:31.927
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;

@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:48:58.896
+* Build Time  :2017-11-28 16:00:07.947
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -36,6 +36,9 @@ import java.sql.Blob;
 			
 				
 										private Object atzyewuzc_hetongid;
+			
+				
+										private Object atzyewuzc_ywzt;
 			
 				
 										private Object atzyewuzc_id;
@@ -105,6 +108,15 @@ import java.sql.Blob;
 	  		}
   		  		
   				  		
+  						public void setAtzyewuzc_ywzt(Object atzyewuzc_ywzt){
+				this.atzyewuzc_ywzt = atzyewuzc_ywzt;
+			}
+			
+	  		public Object getAtzyewuzc_ywzt(){
+	  			return atzyewuzc_ywzt;
+	  		}
+  		  		
+  				  		
   						public void setAtzyewuzc_id(Object atzyewuzc_id){
 				this.atzyewuzc_id = atzyewuzc_id;
 			}
@@ -130,6 +142,8 @@ import java.sql.Blob;
 						  									o.setAtzyewuzc_xmmingcheng(getValue(context,"atzyewuzc.xmmingcheng"));
 						
 						  									o.setAtzyewuzc_hetongid(getValue(context,"atzhetong.id"));
+						
+						  									o.setAtzyewuzc_ywzt(getValue(context,"atzyewuzc.ywzt"));
 						
 						  									o.setAtzyewuzc_id(getValue(context,"atzyewuzc.id"));
 						

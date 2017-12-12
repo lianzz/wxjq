@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:56:07.144
+* Build Time  :2017-12-06 15:54:45.011
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -20,10 +20,10 @@ import java.sql.Blob;
 						private Object atzhetong_lxlx;
 			
 				
-										private Object atzhetong_zuizhongyh;
+										private Object atzhetong_hetongbh;
 			
 				
-										private Object atzhetong_xiangmumc;
+										private Object atzhetong_zuizhongyh;
 			
 				
 										private Object atzhetong_xiaoshoujl;
@@ -48,21 +48,21 @@ import java.sql.Blob;
 	  		}
   		  		
   				  		
+  						public void setAtzhetong_hetongbh(Object atzhetong_hetongbh){
+				this.atzhetong_hetongbh = atzhetong_hetongbh;
+			}
+			
+	  		public Object getAtzhetong_hetongbh(){
+	  			return atzhetong_hetongbh;
+	  		}
+  		  		
+  				  		
   						public void setAtzhetong_zuizhongyh(Object atzhetong_zuizhongyh){
 				this.atzhetong_zuizhongyh = atzhetong_zuizhongyh;
 			}
 			
 	  		public Object getAtzhetong_zuizhongyh(){
 	  			return atzhetong_zuizhongyh;
-	  		}
-  		  		
-  				  		
-  						public void setAtzhetong_xiangmumc(Object atzhetong_xiangmumc){
-				this.atzhetong_xiangmumc = atzhetong_xiangmumc;
-			}
-			
-	  		public Object getAtzhetong_xiangmumc(){
-	  			return atzhetong_xiangmumc;
 	  		}
   		  		
   				  		
@@ -107,9 +107,9 @@ import java.sql.Blob;
   		F7b64261e0000000az o = new F7b64261e0000000az();
 									o.setAtzhetong_lxlx(getValue(context,"atzhetong.lxlx"));
 						
-						  									o.setAtzhetong_zuizhongyh(getValue(context,"atzhetong.zuizhongyh"));
+						  									o.setAtzhetong_hetongbh(getValue(context,"atzhetong.hetongbh"));
 						
-						  									o.setAtzhetong_xiangmumc(getValue(context,"atzhetong.xiangmumc"));
+						  									o.setAtzhetong_zuizhongyh(getValue(context,"atzhetong.zuizhongyh"));
 						
 						  									o.setAtzhetong_xiaoshoujl(getValue(context,"atzemployee.id"));
 						

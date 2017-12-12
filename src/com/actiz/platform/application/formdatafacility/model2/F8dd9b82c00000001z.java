@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:51:57.134
+* Build Time  :2017-11-28 16:03:27.146
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -80,6 +80,9 @@ public class F8dd9b82c00000001z implements IAppEntityObject{
 					 		private String atzfahuotzd_shenqingyy = "";
 					 		private String atzfahuotzd_beizhu;
 					 		private Date atzfahuotzd_yjfhsj;
+					 		private String atzfahuotzd_fahuolxlx = "";
+					 		private Long atzfahuotzd_xiaoshoujlid;
+					 		private Long atzfahuotzd_xmpzqdid;
 					 		public void setAtzkehu_id(Long atzkehu_id){
 			this.atzkehu_id = atzkehu_id;
 		}
@@ -469,6 +472,24 @@ public class F8dd9b82c00000001z implements IAppEntityObject{
 		}
 			 	public Date getAtzfahuotzd_yjfhsj(){
 	  		return atzfahuotzd_yjfhsj;
+	  	}
+	    		 		public void setAtzfahuotzd_fahuolxlx(String atzfahuotzd_fahuolxlx){
+			this.atzfahuotzd_fahuolxlx = atzfahuotzd_fahuolxlx;
+		}
+			 	public String getAtzfahuotzd_fahuolxlx(){
+	  		return atzfahuotzd_fahuolxlx;
+	  	}
+	    		 		public void setAtzfahuotzd_xiaoshoujlid(Long atzfahuotzd_xiaoshoujlid){
+			this.atzfahuotzd_xiaoshoujlid = atzfahuotzd_xiaoshoujlid;
+		}
+			 	public Long getAtzfahuotzd_xiaoshoujlid(){
+	  		return atzfahuotzd_xiaoshoujlid;
+	  	}
+	    		 		public void setAtzfahuotzd_xmpzqdid(Long atzfahuotzd_xmpzqdid){
+			this.atzfahuotzd_xmpzqdid = atzfahuotzd_xmpzqdid;
+		}
+			 	public Long getAtzfahuotzd_xmpzqdid(){
+	  		return atzfahuotzd_xmpzqdid;
 	  	}
 	    	  	  public Long getAtzfahuotzd_id(){
   	  	return atzfahuotzd_id;

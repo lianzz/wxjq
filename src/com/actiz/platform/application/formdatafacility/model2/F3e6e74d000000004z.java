@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-21 16:32:23.876
+* Build Time  :2017-11-28 16:13:21.958
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -33,10 +33,12 @@ public class F3e6e74d000000004z implements IAppEntityObject{
 					 		private Long atzhtshbz_lururid;
 					 		private String atzhtshbz_lurur = "";
 					 		private Date atzhtshbz_lururq;
-					 		private String atzhtshbz_zuihouxgrid = "";
 					 		private String atzhtshbz_zuihouxgr = "";
 					 		private Date atzhtshbz_zuihouxgrq;
 					 		private Double atzhtshbz_sybzjl = 0.0;
+					 		private String atzhtshbz_danjuzt = "";
+					 		private String atzhtshbz_shbzlx = "";
+					 		private Long atzhtshbz_zuihouxgrid;
 					 		public void setAtzxiaoshoubm_id(Long atzxiaoshoubm_id){
 			this.atzxiaoshoubm_id = atzxiaoshoubm_id;
 		}
@@ -145,12 +147,6 @@ public class F3e6e74d000000004z implements IAppEntityObject{
 			 	public Date getAtzhtshbz_lururq(){
 	  		return atzhtshbz_lururq;
 	  	}
-	    		 		public void setAtzhtshbz_zuihouxgrid(String atzhtshbz_zuihouxgrid){
-			this.atzhtshbz_zuihouxgrid = atzhtshbz_zuihouxgrid;
-		}
-			 	public String getAtzhtshbz_zuihouxgrid(){
-	  		return atzhtshbz_zuihouxgrid;
-	  	}
 	    		 		public void setAtzhtshbz_zuihouxgr(String atzhtshbz_zuihouxgr){
 			this.atzhtshbz_zuihouxgr = atzhtshbz_zuihouxgr;
 		}
@@ -168,6 +164,24 @@ public class F3e6e74d000000004z implements IAppEntityObject{
 		}
 			 	public Double getAtzhtshbz_sybzjl(){
 	  		return atzhtshbz_sybzjl;
+	  	}
+	    		 		public void setAtzhtshbz_danjuzt(String atzhtshbz_danjuzt){
+			this.atzhtshbz_danjuzt = atzhtshbz_danjuzt;
+		}
+			 	public String getAtzhtshbz_danjuzt(){
+	  		return atzhtshbz_danjuzt;
+	  	}
+	    		 		public void setAtzhtshbz_shbzlx(String atzhtshbz_shbzlx){
+			this.atzhtshbz_shbzlx = atzhtshbz_shbzlx;
+		}
+			 	public String getAtzhtshbz_shbzlx(){
+	  		return atzhtshbz_shbzlx;
+	  	}
+	    		 		public void setAtzhtshbz_zuihouxgrid(Long atzhtshbz_zuihouxgrid){
+			this.atzhtshbz_zuihouxgrid = atzhtshbz_zuihouxgrid;
+		}
+			 	public Long getAtzhtshbz_zuihouxgrid(){
+	  		return atzhtshbz_zuihouxgrid;
 	  	}
 	    	  	  public Long getAtzhtshbz_id(){
   	  	return atzhtshbz_id;

@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:48:24.433
+* Build Time  :2017-11-28 15:59:27.832
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -40,7 +40,10 @@ import java.sql.Blob;
 			
 				
 							private Object atzwuliaojcxx_daoqirq1;
-								private Object atzwuliaojcxx_id;
+								private Object atzwuliaojcxx_shifousm;
+			
+				
+										private Object atzwuliaojcxx_id;
 			
 				
 					
@@ -121,6 +124,15 @@ import java.sql.Blob;
 	  			return atzwuliaojcxx_daoqirq1;
 	  		}
 		  		
+  						public void setAtzwuliaojcxx_shifousm(Object atzwuliaojcxx_shifousm){
+				this.atzwuliaojcxx_shifousm = atzwuliaojcxx_shifousm;
+			}
+			
+	  		public Object getAtzwuliaojcxx_shifousm(){
+	  			return atzwuliaojcxx_shifousm;
+	  		}
+  		  		
+  				  		
   						public void setAtzwuliaojcxx_id(Object atzwuliaojcxx_id){
 				this.atzwuliaojcxx_id = atzwuliaojcxx_id;
 			}
@@ -149,7 +161,9 @@ import java.sql.Blob;
 						  									o.setAtzwuliaojcxx_daoqirq(getValue(context,"atzwuliaojcxx.daoqirq"));
 						
 										o.setAtzwuliaojcxx_daoqirq1(getValue(context,"atzwuliaojcxx.daoqirq1"));
-			  									o.setAtzwuliaojcxx_id(getValue(context,"atzwuliaojcxx.id"));
+			  									o.setAtzwuliaojcxx_shifousm(getValue(context,"atzwuliaojcxx.shifousm"));
+						
+						  									o.setAtzwuliaojcxx_id(getValue(context,"atzwuliaojcxx.id"));
 						
 						  				return o;
 	}

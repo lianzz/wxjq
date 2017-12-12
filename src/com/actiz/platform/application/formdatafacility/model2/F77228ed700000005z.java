@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-17 16:59:57.062
+* Build Time  :2017-11-28 15:59:15.445
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -20,19 +20,25 @@ import java.sql.Blob;
 						private Object atztoubiao_bianhao;
 			
 				
-										private Object atztoubiao_xiangmuid;
-			
-				
-										private Object atztoubiao_xsjlid;
+										private Object atztoubiao_xsjlxm;
 			
 				
 										private Object atztoubiao_daquid;
+			
+				
+										private Object atztoubiao_shengfen;
+			
+				
+										private Object atztoubiao_tbxmmc;
 			
 				
 										private Object atztoubiao_tblx;
 			
 				
 										private Object atztoubiao_cplx;
+			
+				
+										private Object atztoubiao_tbdjzt;
 			
 				
 										private Object atztoubiao_tbrq;
@@ -43,10 +49,7 @@ import java.sql.Blob;
 			
 				
 							private Object atztoubiao_kbrq1;
-								private Object atztoubiao_tbdjzt;
-			
-				
-										private Object atztoubiao_id;
+								private Object atztoubiao_id;
 			
 				
 					
@@ -59,21 +62,12 @@ import java.sql.Blob;
 	  		}
   		  		
   				  		
-  						public void setAtztoubiao_xiangmuid(Object atztoubiao_xiangmuid){
-				this.atztoubiao_xiangmuid = atztoubiao_xiangmuid;
+  						public void setAtztoubiao_xsjlxm(Object atztoubiao_xsjlxm){
+				this.atztoubiao_xsjlxm = atztoubiao_xsjlxm;
 			}
 			
-	  		public Object getAtztoubiao_xiangmuid(){
-	  			return atztoubiao_xiangmuid;
-	  		}
-  		  		
-  				  		
-  						public void setAtztoubiao_xsjlid(Object atztoubiao_xsjlid){
-				this.atztoubiao_xsjlid = atztoubiao_xsjlid;
-			}
-			
-	  		public Object getAtztoubiao_xsjlid(){
-	  			return atztoubiao_xsjlid;
+	  		public Object getAtztoubiao_xsjlxm(){
+	  			return atztoubiao_xsjlxm;
 	  		}
   		  		
   				  		
@@ -83,6 +77,24 @@ import java.sql.Blob;
 			
 	  		public Object getAtztoubiao_daquid(){
 	  			return atztoubiao_daquid;
+	  		}
+  		  		
+  				  		
+  						public void setAtztoubiao_shengfen(Object atztoubiao_shengfen){
+				this.atztoubiao_shengfen = atztoubiao_shengfen;
+			}
+			
+	  		public Object getAtztoubiao_shengfen(){
+	  			return atztoubiao_shengfen;
+	  		}
+  		  		
+  				  		
+  						public void setAtztoubiao_tbxmmc(Object atztoubiao_tbxmmc){
+				this.atztoubiao_tbxmmc = atztoubiao_tbxmmc;
+			}
+			
+	  		public Object getAtztoubiao_tbxmmc(){
+	  			return atztoubiao_tbxmmc;
 	  		}
   		  		
   				  		
@@ -101,6 +113,15 @@ import java.sql.Blob;
 			
 	  		public Object getAtztoubiao_cplx(){
 	  			return atztoubiao_cplx;
+	  		}
+  		  		
+  				  		
+  						public void setAtztoubiao_tbdjzt(Object atztoubiao_tbdjzt){
+				this.atztoubiao_tbdjzt = atztoubiao_tbdjzt;
+			}
+			
+	  		public Object getAtztoubiao_tbdjzt(){
+	  			return atztoubiao_tbdjzt;
 	  		}
   		  		
   				  		
@@ -136,15 +157,6 @@ import java.sql.Blob;
 	  			return atztoubiao_kbrq1;
 	  		}
 		  		
-  						public void setAtztoubiao_tbdjzt(Object atztoubiao_tbdjzt){
-				this.atztoubiao_tbdjzt = atztoubiao_tbdjzt;
-			}
-			
-	  		public Object getAtztoubiao_tbdjzt(){
-	  			return atztoubiao_tbdjzt;
-	  		}
-  		  		
-  				  		
   						public void setAtztoubiao_id(Object atztoubiao_id){
 				this.atztoubiao_id = atztoubiao_id;
 			}
@@ -159,15 +171,19 @@ import java.sql.Blob;
   		F77228ed700000005z o = new F77228ed700000005z();
 									o.setAtztoubiao_bianhao(getValue(context,"atztoubiao.bianhao"));
 						
-						  									o.setAtztoubiao_xiangmuid(getValue(context,"atzxiangmu.id"));
-						
-						  									o.setAtztoubiao_xsjlid(getValue(context,"atzemployee.id"));
+						  									o.setAtztoubiao_xsjlxm(getValue(context,"atztoubiao.xsjlxm"));
 						
 						  									o.setAtztoubiao_daquid(getValue(context,"atzdepartment.id"));
+						
+						  									o.setAtztoubiao_shengfen(getValue(context,"atztoubiao.shengfen"));
+						
+						  									o.setAtztoubiao_tbxmmc(getValue(context,"atztoubiao.tbxmmc"));
 						
 						  									o.setAtztoubiao_tblx(getValue(context,"atztoubiao.tblx"));
 						
 						  									o.setAtztoubiao_cplx(getValue(context,"atztoubiao.cplx"));
+						
+						  									o.setAtztoubiao_tbdjzt(getValue(context,"atztoubiao.tbdjzt"));
 						
 						  									o.setAtztoubiao_tbrq(getValue(context,"atztoubiao.tbrq"));
 						
@@ -175,9 +191,7 @@ import java.sql.Blob;
 			  									o.setAtztoubiao_kbrq(getValue(context,"atztoubiao.kbrq"));
 						
 										o.setAtztoubiao_kbrq1(getValue(context,"atztoubiao.kbrq1"));
-			  									o.setAtztoubiao_tbdjzt(getValue(context,"atztoubiao.tbdjzt"));
-						
-						  									o.setAtztoubiao_id(getValue(context,"atztoubiao.id"));
+			  									o.setAtztoubiao_id(getValue(context,"atztoubiao.id"));
 						
 						  				return o;
 	}

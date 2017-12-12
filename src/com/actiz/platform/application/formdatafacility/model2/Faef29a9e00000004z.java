@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-17 13:28:59.988
+* Build Time  :2017-11-28 16:11:30.545
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -48,10 +48,7 @@ import java.sql.Blob;
 			
 				
 							private Object atzhetong_weikpje1;
-								private Object atzhetong_chanpinzs;
-			
-				
-										private Object atzhetong_suoshuhy;
+								private Object atzhetong_suoshuhy;
 			
 				
 										private Object atzhetong_htpsxlh;
@@ -181,15 +178,6 @@ import java.sql.Blob;
 	  			return atzhetong_weikpje1;
 	  		}
 		  		
-  						public void setAtzhetong_chanpinzs(Object atzhetong_chanpinzs){
-				this.atzhetong_chanpinzs = atzhetong_chanpinzs;
-			}
-			
-	  		public Object getAtzhetong_chanpinzs(){
-	  			return atzhetong_chanpinzs;
-	  		}
-  		  		
-  				  		
   						public void setAtzhetong_suoshuhy(Object atzhetong_suoshuhy){
 				this.atzhetong_suoshuhy = atzhetong_suoshuhy;
 			}
@@ -283,9 +271,7 @@ import java.sql.Blob;
 			  									o.setAtzhetong_weikpje(getValue(context,"atzhetong.weikpje"));
 						
 										o.setAtzhetong_weikpje1(getValue(context,"atzhetong.weikpje1"));
-			  									o.setAtzhetong_chanpinzs(getValue(context,"atzhetong.chanpinzs"));
-						
-						  									o.setAtzhetong_suoshuhy(getValue(context,"atzhetong.suoshuhy"));
+			  									o.setAtzhetong_suoshuhy(getValue(context,"atzhetong.suoshuhy"));
 						
 						  									o.setAtzhetong_htpsxlh(getValue(context,"atzhetong.htpsxlh"));
 						

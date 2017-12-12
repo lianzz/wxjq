@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:57:22.344
+* Build Time  :2017-11-28 16:09:24.716
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -100,7 +100,6 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 					 		private String atzhetong_kehulxr = "";
 					 		private Long atzhetong_bkbht;
 					 		private Long atzhetong_kuangjiaht;
-					 		private String atzhetong_xiangmumc = "";
 					 		private String atzhetong_xiaoshouqy = "";
 					 		private Long atzhetong_duiyingls;
 					 		private String atzhetong_xiangmujl = "";
@@ -111,13 +110,10 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 					 		private String atzhetong_xiaoshoujh = "";
 					 		private Long atzhetong_xiaoshoujl;
 					 		private Long atzhetong_daqu;
-					 		private Long atzhetong_gcxmjl;
-					 		private String atzhetong_xmbh = "";
 					 		private String atzhetong_sjh = "";
 					 		private String atzhetong_oahth = "";
 					 		private String atzhetong_sfztb = "";
 					 		private Long atzhetong_toubiaodid;
-					 		private String atzhetong_chanpinzs = "";
 					 		private String atzhetong_suoshuhy = "";
 					 		private Long atzhetong_zuihouxgrid;
 					 		private String atzhetong_htfjsmj;
@@ -126,11 +122,11 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 					 		private String atzhetong_htpsxlh = "";
 					 		private Double atzhetong_ysje = 0.0;
 					 		private Double atzhetong_wsje = 0.0;
-					 		private String atzhetong_fhzt = "";
-					 		private String atzhetong_kpzt = "";
-					 		private String atzhetong_gcyszt = "";
-					 		private String atzhetong_skzt = "";
-					 		private String atzhetong_sfgb = "";
+					 		private String atzhetong_fhzt = "3";
+					 		private String atzhetong_kpzt = "1";
+					 		private String atzhetong_gcyszt = "1";
+					 		private String atzhetong_skzt = "1";
+					 		private String atzhetong_sfgb = "2";
 					 		private String atzhetong_sjlx = "";
 					 		private String atzhetong_lxlx = "";
 					 		private String atzhetong_hezuohb = "";
@@ -142,6 +138,21 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 					 		private String atzhetong_xsfzyj;
 					 		private String atzhetong_sybzjlyj = "";
 					 		private Long atzhetong_czxiaoshoufz;
+					 		private String atzhetong_fktk = "";
+					 		private String atzhetong_zzfktk = "";
+					 		private Long atzhetong_cbzx;
+					 		private String atzhetong_sfzzyh = "";
+					 		private String atzhetong_jgspzt = "1";
+					 		private Date atzhetong_oapstgsj;
+					 		private String atzhetong_shoukuanqr = "1";
+					 		private String atzhetong_yxsht = "";
+					 		private String atzhetong_shenhefj;
+					 		private String atzhetong_shenher = "";
+					 		private String atzhetong_fplx = "";
+					 		private String atzhetong_lixianglx = "";
+					 		private String atzhetong_chanpinzs = "";
+					 		private String atzhetong_guishugs = "";
+					 		private String atzhetong_jiesulc = "";
 					 		private Long atzfahuotzd_actizversion;
 					 			 		private String atzfahuotzd_bianhao = "";
 					 		private String atzfahuotzd_linshibh = "";
@@ -178,6 +189,9 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 					 		private String atzfahuotzd_shenqingyy = "";
 					 		private String atzfahuotzd_beizhu;
 					 		private Date atzfahuotzd_yjfhsj;
+					 		private String atzfahuotzd_fahuolxlx = "";
+					 		private Long atzfahuotzd_xiaoshoujlid;
+					 		private Long atzfahuotzd_xmpzqdid;
 					 		public void setAtzkehu_id(Long atzkehu_id){
 			this.atzkehu_id = atzkehu_id;
 		}
@@ -688,12 +702,6 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 			 	public Long getAtzhetong_kuangjiaht(){
 	  		return atzhetong_kuangjiaht;
 	  	}
-	    		 		public void setAtzhetong_xiangmumc(String atzhetong_xiangmumc){
-			this.atzhetong_xiangmumc = atzhetong_xiangmumc;
-		}
-			 	public String getAtzhetong_xiangmumc(){
-	  		return atzhetong_xiangmumc;
-	  	}
 	    		 		public void setAtzhetong_xiaoshouqy(String atzhetong_xiaoshouqy){
 			this.atzhetong_xiaoshouqy = atzhetong_xiaoshouqy;
 		}
@@ -754,18 +762,6 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 			 	public Long getAtzhetong_daqu(){
 	  		return atzhetong_daqu;
 	  	}
-	    		 		public void setAtzhetong_gcxmjl(Long atzhetong_gcxmjl){
-			this.atzhetong_gcxmjl = atzhetong_gcxmjl;
-		}
-			 	public Long getAtzhetong_gcxmjl(){
-	  		return atzhetong_gcxmjl;
-	  	}
-	    		 		public void setAtzhetong_xmbh(String atzhetong_xmbh){
-			this.atzhetong_xmbh = atzhetong_xmbh;
-		}
-			 	public String getAtzhetong_xmbh(){
-	  		return atzhetong_xmbh;
-	  	}
 	    		 		public void setAtzhetong_sjh(String atzhetong_sjh){
 			this.atzhetong_sjh = atzhetong_sjh;
 		}
@@ -789,12 +785,6 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 		}
 			 	public Long getAtzhetong_toubiaodid(){
 	  		return atzhetong_toubiaodid;
-	  	}
-	    		 		public void setAtzhetong_chanpinzs(String atzhetong_chanpinzs){
-			this.atzhetong_chanpinzs = atzhetong_chanpinzs;
-		}
-			 	public String getAtzhetong_chanpinzs(){
-	  		return atzhetong_chanpinzs;
 	  	}
 	    		 		public void setAtzhetong_suoshuhy(String atzhetong_suoshuhy){
 			this.atzhetong_suoshuhy = atzhetong_suoshuhy;
@@ -939,6 +929,96 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 		}
 			 	public Long getAtzhetong_czxiaoshoufz(){
 	  		return atzhetong_czxiaoshoufz;
+	  	}
+	    		 		public void setAtzhetong_fktk(String atzhetong_fktk){
+			this.atzhetong_fktk = atzhetong_fktk;
+		}
+			 	public String getAtzhetong_fktk(){
+	  		return atzhetong_fktk;
+	  	}
+	    		 		public void setAtzhetong_zzfktk(String atzhetong_zzfktk){
+			this.atzhetong_zzfktk = atzhetong_zzfktk;
+		}
+			 	public String getAtzhetong_zzfktk(){
+	  		return atzhetong_zzfktk;
+	  	}
+	    		 		public void setAtzhetong_cbzx(Long atzhetong_cbzx){
+			this.atzhetong_cbzx = atzhetong_cbzx;
+		}
+			 	public Long getAtzhetong_cbzx(){
+	  		return atzhetong_cbzx;
+	  	}
+	    		 		public void setAtzhetong_sfzzyh(String atzhetong_sfzzyh){
+			this.atzhetong_sfzzyh = atzhetong_sfzzyh;
+		}
+			 	public String getAtzhetong_sfzzyh(){
+	  		return atzhetong_sfzzyh;
+	  	}
+	    		 		public void setAtzhetong_jgspzt(String atzhetong_jgspzt){
+			this.atzhetong_jgspzt = atzhetong_jgspzt;
+		}
+			 	public String getAtzhetong_jgspzt(){
+	  		return atzhetong_jgspzt;
+	  	}
+	    		 		public void setAtzhetong_oapstgsj(Date atzhetong_oapstgsj){
+			this.atzhetong_oapstgsj = atzhetong_oapstgsj;
+		}
+			 	public Date getAtzhetong_oapstgsj(){
+	  		return atzhetong_oapstgsj;
+	  	}
+	    		 		public void setAtzhetong_shoukuanqr(String atzhetong_shoukuanqr){
+			this.atzhetong_shoukuanqr = atzhetong_shoukuanqr;
+		}
+			 	public String getAtzhetong_shoukuanqr(){
+	  		return atzhetong_shoukuanqr;
+	  	}
+	    		 		public void setAtzhetong_yxsht(String atzhetong_yxsht){
+			this.atzhetong_yxsht = atzhetong_yxsht;
+		}
+			 	public String getAtzhetong_yxsht(){
+	  		return atzhetong_yxsht;
+	  	}
+	    		 		public void setAtzhetong_shenhefj(String atzhetong_shenhefj){
+			this.atzhetong_shenhefj = atzhetong_shenhefj;
+		}
+			 	public String getAtzhetong_shenhefj(){
+	  		return atzhetong_shenhefj;
+	  	}
+	    		 		public void setAtzhetong_shenher(String atzhetong_shenher){
+			this.atzhetong_shenher = atzhetong_shenher;
+		}
+			 	public String getAtzhetong_shenher(){
+	  		return atzhetong_shenher;
+	  	}
+	    		 		public void setAtzhetong_fplx(String atzhetong_fplx){
+			this.atzhetong_fplx = atzhetong_fplx;
+		}
+			 	public String getAtzhetong_fplx(){
+	  		return atzhetong_fplx;
+	  	}
+	    		 		public void setAtzhetong_lixianglx(String atzhetong_lixianglx){
+			this.atzhetong_lixianglx = atzhetong_lixianglx;
+		}
+			 	public String getAtzhetong_lixianglx(){
+	  		return atzhetong_lixianglx;
+	  	}
+	    		 		public void setAtzhetong_chanpinzs(String atzhetong_chanpinzs){
+			this.atzhetong_chanpinzs = atzhetong_chanpinzs;
+		}
+			 	public String getAtzhetong_chanpinzs(){
+	  		return atzhetong_chanpinzs;
+	  	}
+	    		 		public void setAtzhetong_guishugs(String atzhetong_guishugs){
+			this.atzhetong_guishugs = atzhetong_guishugs;
+		}
+			 	public String getAtzhetong_guishugs(){
+	  		return atzhetong_guishugs;
+	  	}
+	    		 		public void setAtzhetong_jiesulc(String atzhetong_jiesulc){
+			this.atzhetong_jiesulc = atzhetong_jiesulc;
+		}
+			 	public String getAtzhetong_jiesulc(){
+	  		return atzhetong_jiesulc;
 	  	}
 	    		 		public void setAtzfahuotzd_actizversion(Long atzfahuotzd_actizversion){
 			this.atzfahuotzd_actizversion = atzfahuotzd_actizversion;
@@ -1155,6 +1235,24 @@ public class F390c5f8f00000006z implements IAppEntityObject{
 		}
 			 	public Date getAtzfahuotzd_yjfhsj(){
 	  		return atzfahuotzd_yjfhsj;
+	  	}
+	    		 		public void setAtzfahuotzd_fahuolxlx(String atzfahuotzd_fahuolxlx){
+			this.atzfahuotzd_fahuolxlx = atzfahuotzd_fahuolxlx;
+		}
+			 	public String getAtzfahuotzd_fahuolxlx(){
+	  		return atzfahuotzd_fahuolxlx;
+	  	}
+	    		 		public void setAtzfahuotzd_xiaoshoujlid(Long atzfahuotzd_xiaoshoujlid){
+			this.atzfahuotzd_xiaoshoujlid = atzfahuotzd_xiaoshoujlid;
+		}
+			 	public Long getAtzfahuotzd_xiaoshoujlid(){
+	  		return atzfahuotzd_xiaoshoujlid;
+	  	}
+	    		 		public void setAtzfahuotzd_xmpzqdid(Long atzfahuotzd_xmpzqdid){
+			this.atzfahuotzd_xmpzqdid = atzfahuotzd_xmpzqdid;
+		}
+			 	public Long getAtzfahuotzd_xmpzqdid(){
+	  		return atzfahuotzd_xmpzqdid;
 	  	}
 	    	  	  public Long getAtzfahuotzd_id(){
   	  	return atzfahuotzd_id;

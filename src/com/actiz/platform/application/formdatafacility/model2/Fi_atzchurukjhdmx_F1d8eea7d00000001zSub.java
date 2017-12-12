@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:47:35.059
+* Build Time  :2017-11-28 15:58:39.793
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -39,6 +39,7 @@ import java.sql.Blob;
 			private Double atzchurukjhdmx_zaixianl = 0.0;
 			private Date atzchurukjhdmx_lururq;
 			private Date atzchurukjhdmx_yujighrq;
+			private Long atzchurukjhdmx_xiaoshoubmid;
 			private String atzwuliaojcxx_abcfl = "";
 			private Long atzwuliaojcxx_wuliaolbid;
 			private Long atzwuliaojcxx_wuliaozlbid;
@@ -241,6 +242,13 @@ import java.sql.Blob;
 		
   		public Date getAtzchurukjhdmx_yujighrq(){
   			return atzchurukjhdmx_yujighrq;
+  		}
+  			public void setAtzchurukjhdmx_xiaoshoubmid(Long atzchurukjhdmx_xiaoshoubmid){
+			this.atzchurukjhdmx_xiaoshoubmid = atzchurukjhdmx_xiaoshoubmid;
+		}
+		
+  		public Long getAtzchurukjhdmx_xiaoshoubmid(){
+  			return atzchurukjhdmx_xiaoshoubmid;
   		}
   			public void setAtzwuliaojcxx_abcfl(String atzwuliaojcxx_abcfl){
 			this.atzwuliaojcxx_abcfl = atzwuliaojcxx_abcfl;

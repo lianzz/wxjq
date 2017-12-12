@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:52:39.831
+* Build Time  :2017-11-28 16:04:14.999
 */
 
 package com.actiz.platform.application.formdatafacility.model2;
@@ -68,6 +68,7 @@ import java.sql.Blob;
 			private Date atzdepartment_zuihouxgrq;
 			private Long atzdepartment_lururid;
 			private Long atzdepartment_zuihouxgrid;
+			private Long atzdepartment_gczgid;
 			private Long atztdyg_tuanduiid;
 			private Long atztdyg_yuangongid;
 			private String atztdyg_guanxi = "";
@@ -438,6 +439,13 @@ import java.sql.Blob;
 		
   		public Long getAtzdepartment_zuihouxgrid(){
   			return atzdepartment_zuihouxgrid;
+  		}
+  			public void setAtzdepartment_gczgid(Long atzdepartment_gczgid){
+			this.atzdepartment_gczgid = atzdepartment_gczgid;
+		}
+		
+  		public Long getAtzdepartment_gczgid(){
+  			return atzdepartment_gczgid;
   		}
   			public void setAtztdyg_tuanduiid(Long atztdyg_tuanduiid){
 			this.atztdyg_tuanduiid = atztdyg_tuanduiid;

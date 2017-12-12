@@ -3,7 +3,7 @@
 * Version     :ODE6.0
 * Net Address :www.qyes.com
 * Author      :Actiz
-* Build Time  :2017-06-15 13:57:05.056
+* Build Time  :2017-11-28 16:09:05.652
 */
 package com.actiz.platform.application.formdatafacility.model2;
 import java.util.Date;
@@ -31,6 +31,7 @@ import java.sql.Blob;
 					 		private Date atzdepartment_zuihouxgrq;
 					 		private Long atzdepartment_lururid;
 					 		private Long atzdepartment_zuihouxgrid;
+					 		private Long atzdepartment_gczgid;
 					 		private Long atzdepartment1_id;
 					 		private Integer atzdepartment1_cengci;
 					 		private String atzdepartment1_orgcode = "";
@@ -47,6 +48,7 @@ import java.sql.Blob;
 					 		private Date atzdepartment1_zuihouxgrq;
 					 		private Long atzdepartment1_lururid;
 					 		private Long atzdepartment1_zuihouxgrid;
+					 		private Long atzdepartment1_gczgid;
 					 		private Long atzrenshibd_actizversion;
 					 			 		private Long atzrenshibd_yuangong;
 					 		private String atzrenshibd_churuqk = "";
@@ -227,6 +229,12 @@ import java.sql.Blob;
 			 	public Long getAtzdepartment_zuihouxgrid(){
 	  		return atzdepartment_zuihouxgrid;
 	  	}
+	    		 		public void setAtzdepartment_gczgid(Long atzdepartment_gczgid){
+			this.atzdepartment_gczgid = atzdepartment_gczgid;
+		}
+			 	public Long getAtzdepartment_gczgid(){
+	  		return atzdepartment_gczgid;
+	  	}
 	    		 		public void setAtzdepartment1_id(Long atzdepartment1_id){
 			this.atzdepartment1_id = atzdepartment1_id;
 		}
@@ -322,6 +330,12 @@ import java.sql.Blob;
 		}
 			 	public Long getAtzdepartment1_zuihouxgrid(){
 	  		return atzdepartment1_zuihouxgrid;
+	  	}
+	    		 		public void setAtzdepartment1_gczgid(Long atzdepartment1_gczgid){
+			this.atzdepartment1_gczgid = atzdepartment1_gczgid;
+		}
+			 	public Long getAtzdepartment1_gczgid(){
+	  		return atzdepartment1_gczgid;
 	  	}
 	    		 		public void setAtzrenshibd_actizversion(Long atzrenshibd_actizversion){
 			this.atzrenshibd_actizversion = atzrenshibd_actizversion;
