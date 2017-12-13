@@ -1618,11 +1618,14 @@ public class 出入库计划 extends RuleEngine {
 				}
 				Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
 				if (fhqd != null && sbqd != null) {
+					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), tkmx.getShuliang()));
+					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
 					if (sbqd.getTuikusl().compareTo(fhqd.getShuliang()) == 0) {
 						fhqd.setZt("已退库");
 					}else {
 						fhqd.setZt("部分退库,已退数量=" + sbqd.getTuikusl());
 					}
+					dataset.update(fhqd);
 				}
 
 			}

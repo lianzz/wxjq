@@ -6,6 +6,7 @@ import java.sql.*;
 import org.apache.log4j.Logger;
 import com.actiz.bcs.rule.application.engine.*;
 import com.actiz.bcs.rule.application.newengine.util.AProxy;
+import com.actiz.bcs.workflow.application.hbm.NodeDefine;
 import com.actiz.platform.application.dataset.pojo.*;
 import com.actiz.platform.application.formdatafacility.model2.Fi_atzfahuosbqdmx_F608bff2700000009zSub;
 import com.actiz.platform.application.formdatafacility.model2.Fi_atzhetongdbmx_F34f0bccb00000002zSub;
@@ -26,13 +27,179 @@ public class 项目调拨单 extends RuleEngine {
 		return "OK";
 	}
 	
-	private Object AN_合同调拨_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+	private Object AD_合同调拨_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * AD_合同调拨_12
+		 */
+		if(!"1".equals(instance.getDanjuzt())){
+			returnMsg.set("NO", "单据已提交,不能删除");
+			return returnMsg;
+		}
+		dataset.delete(instance);
+		context.remove("atzhetongdb.id");
+		returnMsg.set("OK", "删除成功");
+		return returnMsg;
+	}
+
+	private Object A_合同调拨提交_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * A_合同调拨提交_12
+		 */
+		instance.setDanjuzt("2");
+		//维护调出合同可退库调出数量
+		Atzhetong chuhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getChuhetong());
+		if (chuhetong == null) {
+			returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+			return returnMsg;
+		}
+		String hql = "from Atzhetongdbmx where hetongdbid="+instance.getId();
+		List<Atzhetongdbmx> list = (List<Atzhetongdbmx>)dataset.getListByHql("Atzhetongdbmx", hql);
+		for (int i = 0; i < list.size(); i++) {
+			Atzhetongdbmx dbmx = list.get(i);
+			Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, dbmx.getFahuoqdid());
+			if (fhqd == null) {
+				returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+				return returnMsg;
+			}
+			double sysl = com.actiz.util.MathUtil.sub(fhqd.getShuliang(), fhqd.getTkshuliang());
+			if (dbmx.getShuliang().compareTo(sysl) > 0) {
+				returnMsg.set("NO", "第" + (i + 1) + "行物料明细的调拨数量超过剩余可调拨数量");
+				return returnMsg;
+			}
+			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), dbmx.getShuliang()));
+			dataset.update(fhqd);
+		}
+		String windowId370 = null;
+		if (context != null) {
+			windowId370 = context.getId();
+		}
+		Map map107 = new HashMap();
+		// map107.put("kehujlUser",String.valueOf(user.getId()));
+		Long result370 = WorkflowAppHelper.newProcessInstance(4095188L, map107, request, windowId370);
+		if (result370 <= 0) {
+			returnMsg.set("NO", "流程启动失败，请联系系统管理员！");
+			return returnMsg;
+		}
+		returnMsg.set("OK", "提交成功");
+		return returnMsg;
+	}
+
+	private Object A_合同调拨审核_12(Atzlcshenhejl instance, IDataSet dataset, IDataContext context,
+			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
+		/**
+		 * A_合同调拨审核_12 大区经理审核/销售副总审核/工程项目经理确认
+		 */
+		String dbid = "" + context.get("atzhetongdb.id");
+		String shenhezt = instance.getShenhezt();
+		String shenheyj = instance.getShenheyj();
+		if ("1".equals(shenhezt) && (shenheyj == null || "".equals(shenheyj))) {
+			returnMsg.set("NO", "审核意见不能为空");
+			return returnMsg;
+		}
+		Atzhetongdb db = (Atzhetongdb) dataset.getObject(Atzhetongdb.class, Long.parseLong(dbid));
+		if (db == null) {
+			returnMsg.set("NO", "系统运行出错,请联系管理员!");
+			return returnMsg;
+		}
+		NodeDefine nd = getProcessNodeInfo(context);
+		String ndName = nd.getName();
+		if ("工程项目经理确认".equals(ndName)) {
+			if ("0".equals(shenheyj)) {
+				Atzhetong chuhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getChuhetong());
+				Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getRuhetong());
+				// 完成调拨,统计数据
+				List<Atzhetongdbmx> dbmxList = dataset.getListByHql("Atzhetongdbmx", "from Atzhetongdbmx where hetongdbid="+db.getId());
+				for (Atzhetongdbmx dbmx : dbmxList) {
+					// 维护调出合同设备清单调出数量, 可下达发货通知单数量, 发货清单数量
+					String hql = "from Atzshebeiqdmx where hetongid="+db.getChuhetong()+" and xiaoshoubmid="+dbmx.getXiaoshoubmid();
+					Atzshebeiqdmx qdmx = (Atzshebeiqdmx) dataset.getObject(Atzshebeiqdmx.class, hql);
+					if (qdmx != null) {
+						qdmx.setWeifhsl(com.actiz.util.MathUtil.add(qdmx.getWeifhsl(), dbmx.getShuliang()));
+						qdmx.setYichusl(com.actiz.util.MathUtil.add(qdmx.getYichusl(), dbmx.getShuliang()));
+						dataset.update(qdmx);
+					}
+					// 维护调入合同设备清单调入数量, 可下达发货通知单数量, 发货清单数量 , 调入来源合同号
+					hql = "from Atzshebeiqdmx where hetongid="+db.getRuhetong()+" and xiaoshoubmid="+dbmx.getXiaoshoubmid();
+					Atzshebeiqdmx qdmx1 = (Atzshebeiqdmx) dataset.getObject(Atzshebeiqdmx.class, hql);
+					if (qdmx1 != null) {
+						qdmx1.setWeifhsl(com.actiz.util.MathUtil.sub(qdmx.getWeifhsl(), dbmx.getShuliang()));
+						qdmx1.setYirusl(com.actiz.util.MathUtil.add(qdmx.getYirusl(), dbmx.getShuliang()));
+						dataset.update(qdmx1);
+					}
+					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, dbmx.getFahuoqdid());
+					//维护调出设备剩余数量
+					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), dbmx.getShuliang()));
+					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), dbmx.getShuliang()));
+					fhqd.setBeizhu("调出去处:" + ruhetong.getHetongbh());
+					if (fhqd.getShuliang().compareTo(dbmx.getShuliang()) > 0) {
+						//部分调拨,状态为部分调拨 
+						fhqd.setZt("部分调出");
+					}else{
+						//全部调拨,状态为调拨
+						fhqd.setZt("调出");
+					}
+					dataset.update(fhqd);
+					// 新增一条发货明细,维护来源合同,调拨数量,状态为调拨;
+					Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
+					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());;
+					nfhqd.setHetongid(fhqd.getHetongid());
+					nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
+					nfhqd.setWuliaoid(fhqd.getWuliaoid());
+					nfhqd.setShuliang(dbmx.getShuliang());//调拨数量
+					nfhqd.setSn(fhqd.getSn());
+					nfhqd.setFahuosj(fhqd.getFahuosj());
+					nfhqd.setTkshuliang(0d);
+					nfhqd.setZt("调入");
+					nfhqd.setBeizhu("调入来源:"+chuhetong.getHetongbh());
+					nfhqd.setSjtksl(0d);
+					dataset.add(nfhqd);
+				}
+				db.setDanjuzt("3");
+			} else {
+				db.setDanjuzt("5");
+			}
+			dataset.update(db);
+		}
 		return "OK";
 	}
-	
-	private Object A_选择调拨清单后置_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+
+	private Object AN_合同调拨_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * AN_合同调拨_12
+		 */
+		List<Atzhetongdbmx> dbmxList = (List<Atzhetongdbmx>) context.get("subobjs");
+		if (dbmxList == null || dbmxList.size() <= 0) {
+			returnMsg.set("NO", "无明细，请检查");
+			return returnMsg;
+		}
+		for (int i = 0; i < dbmxList.size(); i++) {
+			Atzhetongdbmx dbmx = dbmxList.get(i);
+			if (dbmx.getSn() != null && !"".equals(dbmx.getSn())) {
+				if (dbmx.getShuliang().compareTo(1D) != 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的sn不为空, 调拨数量只能为1");
+					return returnMsg;
+				}
+			} else {
+				Atzfahuoqingdan fahuoqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
+						dbmx.getFahuoqdid());
+				Double sysl = com.actiz.util.MathUtil.sub(fahuoqd.getShuliang(), fahuoqd.getTkshuliang());
+				if (dbmx.getShuliang().compareTo(sysl) > 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过可调拨数量");
+					return returnMsg;
+				}
+			}
+		}
+		instance.setDanjuzt("1");
+		a.setCreateInfo(instance, request);
+		returnMsg.set("OK", "新增成功");
+		return returnMsg;
+	}
+
+	private Object A_选择调拨清单后置_12(Atzhetongdb instance, IDataSet dataset, IDataContext context,
+			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
 		/**
 		 * A_选择调拨清单后置_12
 		 */
@@ -61,7 +228,7 @@ public class 项目调拨单 extends RuleEngine {
 		List<Fi_atzhetongdbmx_F34f0bccb00000002zSub> dbmxList = new ArrayList();
 		List<String> ids = context.getValueList("atzfahuoqingdan.id");
 		for (String fhqdid : ids) {
-			Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, fhqdid);
+			Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, Long.parseLong(fhqdid));
 			Fi_atzhetongdbmx_F34f0bccb00000002zSub dbmx = new Fi_atzhetongdbmx_F34f0bccb00000002zSub();
 			dbmx.setAtzhetongdbmx_fahuoqdid(fhqd.getId());
 			dbmx.setAtzhetongdbmx_wuliaoid(fhqd.getWuliaoid());
@@ -71,7 +238,7 @@ public class 项目调拨单 extends RuleEngine {
 			dbmx.setAtzwuliaojcxx_wuliaobm(wuliao.getWuliaobm());
 			dbmx.setAtzxiaoshoubm_bianma(xiaoshoubm.getBianma());
 			dbmx.setAtzwuliaojcxx_wuliaoms(wuliao.getWuliaoms());
-			dbmx.setAtzhetongdbmx_shuliang(fhqd.getShuliang());
+			dbmx.setAtzhetongdbmx_shuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), fhqd.getTkshuliang()));
 			dbmx.setAtzhetongdbmx_sn(fhqd.getSn());
 			dbmxList.add(dbmx);
 		}
@@ -83,60 +250,64 @@ public class 项目调拨单 extends RuleEngine {
 		db.setRujl(ruhetong.getXiaoshoujl());
 		if (chuhetong.getDaqu() != ruhetong.getDaqu()) {
 			db.setDblx("2");
-		}else{
+		} else {
 			db.setDblx("1");
 		}
 		context.set("instance.atzhetongdb", db);
 		context.set("instancelist.atzhetongdbmx", dbmxList);
 		return "OK";
-	
+
 	}
-	
-	
-	private Object A_调拨新增页面加载前规则_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
-			Map paramMap, Logger logger) throws Exception {
+
+	private Object A_调拨新增页面加载前规则_12(Atzhetongdb instance, IDataSet dataset, IDataContext context,
+			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
 		/**
 		 * A_调拨新增页面加载前规则_12
 		 */
-		String	dchetongid = (String) context.get("atzhetong.id");
+		String dchetongid = (String) context.get("atzhetong.id");
 		logger.error(dchetongid);
 		context.set("dchetongid", dchetongid);
 		return new HashMap();
 	}
-	
-	private Object A_合同调拨选择调入合同_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
-			Map paramMap, Logger logger) throws Exception {
+
+	private Object A_合同调拨选择调入合同_12(Atzhetongdb instance, IDataSet dataset, IDataContext context,
+			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
 		/**
 		 * A_合同调拨选择调入合同_12
 		 */
 		String hetongid = (String) context.get("atzhetong.id");
 		logger.error(hetongid);
-		
+
 		String dchetongid = (String) context.get("dchetongid");
 		logger.error(dchetongid);
-		//过滤可调拨的发货清单id
-		String hql = "from Atzfahuoqingdan where hetongid="+dchetongid+" and shuliang>0";
+		// 过滤可调拨的发货清单id
+		String hql = "from Atzfahuoqingdan where hetongid=" + dchetongid + " and shuliang>0";
 		List<Atzfahuoqingdan> fhqdlist = dataset.getListByHql("Atzfahuoqingdan", hql);
-		if (fhqdlist == null || fhqdlist.size()<=0) {
+		if (fhqdlist == null || fhqdlist.size() <= 0) {
 			returnMsg.set("NO", "调出合同没有可调拨的设备,请检查");
 			return returnMsg;
 		}
 		String fhqdids = "(";
 		for (Atzfahuoqingdan fhqd : fhqdlist) {
-			List list = dataset.getListByHql("Atzshebeiqdmx", "from Atzshebeiqdmx where xiaoshoubmid="+fhqd.getXiaoshoubmid()+" and hetongid="+hetongid+" and weifhsl >0");
-			logger.error("from Atzshebeiqdmx where xiaoshoubmid="+fhqd.getXiaoshoubmid()+" and hetongid="+hetongid+" and weifhsl >0");
-			if (list != null && list.size()>0) {
-				logger.error(list.size());
-				fhqdids += fhqd.getId()+",";
+			if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) <= 0) {
+				continue;
+			}
+			List list = dataset.getListByHql("Atzshebeiqdmx", "from Atzshebeiqdmx where xiaoshoubmid="
+					+ fhqd.getXiaoshoubmid() + " and hetongid=" + hetongid + " and weifhsl >0");
+			logger.error("from Atzshebeiqdmx where xiaoshoubmid=" + fhqd.getXiaoshoubmid() + " and hetongid=" + hetongid
+					+ " and weifhsl >0");
+			if (list != null && list.size() > 0) {
+				//logger.error(list.size());
+				fhqdids += fhqd.getId() + ",";
 			}
 		}
 		if (fhqdids.length() < 2) {
-			returnMsg.set("NO", "调入合同的配置清单中没有与可调拨设备相匹配的数据\n调拨的设备需在调入合同的配置清单中才可以调拨");
+			returnMsg.set("NO", "调入合同的配置清单中没有与可调拨设备相匹配的数据\\n调拨的设备需在调入合同的配置清单中才可以调拨");
 			return returnMsg;
 		}
-		fhqdids = fhqdids.substring(0, fhqdids.length()-1)+")";
+		fhqdids = fhqdids.substring(0, fhqdids.length() - 1) + ")";
 		context.set("fhqdids", fhqdids);
-		logger.error("fhqdids="+fhqdids);
+		logger.error("fhqdids=" + fhqdids);
 		return "OK";
 	}
 }

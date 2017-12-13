@@ -160,5 +160,9 @@ public class Atzhetongdb implements Serializable,IPojo
 	public void setLastmodifytime(Date lastmodifytime)
 	{
 		this.lastmodifytime = lastmodifytime;
+	}
+	public void setDanjuzt(String string) {
+		// TODO Auto-generated method stub
+		
 	} 
 }
