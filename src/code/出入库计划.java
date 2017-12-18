@@ -27,6 +27,65 @@ public class 出入库计划 extends RuleEngine {
 		return "OK";
 	}
 
+	private Object rukudxz(Atzchurukjhd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * A-入库单-获取未完成的入库计划-10 (1940141) 2012-09-11
+		 */
+
+		String message = null; // 提示信息
+
+		String employeeName = (String) request.getSession().getAttribute("employeeName"); // 操作人
+
+		if (employeeName == null) {
+			message = "系统管理员不能进行业务操作！";
+
+			returnMsg.set("NO", message);
+			return returnMsg;
+		}
+
+		String condition = "danjulx='2' and danjuzt='3' and shifouwc='2' and sfxyjianyan='2' and id in (select atzchurukjhdid from Atzchurukjhdmx group by atzchurukjhdid having sum(weicrksl)>0)";
+
+		List<Atzchurukjhd> rkjhds = dataset.getList("Atzchurukjhd", condition); // 入库计划List
+
+		StringBuffer rkjhdids = new StringBuffer("");
+
+		Atzchurukjhd rkjhd = null; // 入库计划
+
+		Long rkjhdid = null; // 入库计划ID
+
+		if (rkjhds != null && rkjhds.size() > 0) {
+			Double rkjhsl = null; // 计划数量
+			Double rksl = null; // 出库数量
+			for (int i = 0; i < rkjhds.size(); i++) {
+				rkjhd = rkjhds.get(i);
+
+				rkjhdid = rkjhd.getId();
+				/*
+				rkjhsl = Double.parseDouble(dataset.sum("Atzchurukjhdmx", "shuliang", "atzchurukjhdid=" + rkjhdid));
+				rksl = Double.parseDouble(dataset.sum("Atzchurukdmx", "shuliang",
+						"atzchurukdid in (select id from Atzchurukd where danjulx='2' and churukjhdid=" + rkjhdid
+								+ ")"));
+
+				if (rkjhsl > rksl)*/
+					rkjhdids.append(rkjhdid + ",");
+			}
+		}
+
+		String ids = rkjhdids.toString();
+
+		if ("".equals(ids)) {
+			message = "没有未完成的入库计划";
+
+			returnMsg.set("NO", message);
+			return returnMsg;
+		}
+
+		context.set("atzchurukjhd.ids", ids.substring(0, ids.length() - 1));
+
+		return "OK";
+	}
+
 	private Object 入库计划审核(Atzchurukjhd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
@@ -151,11 +210,11 @@ public class 出入库计划 extends RuleEngine {
 			} else {
 				instance.setSfxyjianyan("2"); // 是否需要检验: 否
 			}
-			
+
 			/**
 			 * 入库计划原因为合同退库, 维护计划退库数量
 			 */
-			//start
+			// start
 			if ("10".equals(churukyy)) {
 				for (int i = 0; i < rkjhdmxs.size(); i++) {
 					rkjhdmx = (Atzchurukjhdmx) rkjhdmxs.get(i);
@@ -171,7 +230,8 @@ public class 出入库计划 extends RuleEngine {
 						returnMsg.set("NO", "合同退库, 第" + (i + 1) + "条明细找不到退库单信息,请检查物料或sn信息");
 						return returnMsg;
 					}
-					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
+					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
+							tkmx.getFahuoqdid());
 					if (fhqd != null) {
 						if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
 							fhqd.setZt("计划退库");
@@ -192,7 +252,7 @@ public class 出入库计划 extends RuleEngine {
 				}
 			}
 
-			//end
+			// end
 			instance.setDanjuzt("3"); // 单据状态: 审核已通过
 
 			dataset.update(instance);
@@ -1620,9 +1680,10 @@ public class 出入库计划 extends RuleEngine {
 				if (fhqd != null && sbqd != null) {
 					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), tkmx.getShuliang()));
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
+					fhqd.setSjtksl(com.actiz.util.MathUtil.add(fhqd.getSjtksl(), tkmx.getShuliang()));
 					if (sbqd.getTuikusl().compareTo(fhqd.getShuliang()) == 0) {
 						fhqd.setZt("已退库");
-					}else {
+					} else {
 						fhqd.setZt("部分退库,已退数量=" + sbqd.getTuikusl());
 					}
 					dataset.update(fhqd);
@@ -2413,7 +2474,8 @@ public class 出入库计划 extends RuleEngine {
 				}
 				atzshebeiqdmx
 						.setYifhsh(com.actiz.util.MathUtil.add(atzshebeiqdmx.getYifhsh(), atzchurukdmx.getShuliang()));
-				atzshebeiqdmx.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
+				atzshebeiqdmx
+						.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 				dataset.update(atzshebeiqdmx);
 				// 生成实际发货清单
 				fahuoqd = new Atzfahuoqingdan();

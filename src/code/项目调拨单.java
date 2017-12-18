@@ -71,11 +71,30 @@ public class 项目调拨单 extends RuleEngine {
 			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), dbmx.getShuliang()));
 			dataset.update(fhqd);
 		}
+		// 获取大区经理usrid
+		Bc_auth_usr usr = null;
+		try {
+			Atzemployee xsjl = (Atzemployee) dataset.getObject(Atzemployee.class, chuhetong.getXiaoshoujl());
+			Atzdepartment dep = (Atzdepartment) dataset.getObject(Atzdepartment.class, xsjl.getBumenid());
+			Atzemployee fzr = (Atzemployee) dataset.getObject(Atzemployee.class, dep.getManagerid());
+			usr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr",
+					"from Bc_auth_usr where team_employee_id=(select id from Atztdyg where yuangongid=" + fzr.getId()
+							+ ")");
+			if (usr == null) {
+				throw new RuntimeException("usr is null");
+			}
+		} catch (Exception e) {
+			logger.error(e);
+			returnMsg.set("NO", "查找大区经理出错,请联系管理员");
+			return returnMsg;
+		}
+		
 		String windowId370 = null;
 		if (context != null) {
 			windowId370 = context.getId();
 		}
 		Map map107 = new HashMap();
+		map107.put("daqu", usr.getId());
 		// map107.put("kehujlUser",String.valueOf(user.getId()));
 		Long result370 = WorkflowAppHelper.newProcessInstance(4095188L, map107, request, windowId370);
 		if (result370 <= 0) {
@@ -162,7 +181,14 @@ public class 项目调拨单 extends RuleEngine {
 			}
 			dataset.update(db);
 		}
-		return "OK";
+		boolean result = completeWorkflowTask(request, context);
+		if (!result) {
+			logger.error("合同退库审核流程提交失败，请联系系统管理员");
+			returnMsg.set("NO", "合同退库审核流程提交失败，请联系系统管理员");
+			return returnMsg;
+		}
+		returnMsg.set("OK", "提交成功");
+		return returnMsg;
 	}
 
 	private Object AN_合同调拨_12(Atzhetongdb instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
@@ -248,7 +274,7 @@ public class 项目调拨单 extends RuleEngine {
 		db.setRuhetong(ruhetong.getId());
 		db.setChujl(chuhetong.getXiaoshoujl());
 		db.setRujl(ruhetong.getXiaoshoujl());
-		if (chuhetong.getDaqu() != ruhetong.getDaqu()) {
+		if (chuhetong.getDaqu().compareTo(ruhetong.getDaqu()) != 0) {
 			db.setDblx("2");
 		} else {
 			db.setDblx("1");

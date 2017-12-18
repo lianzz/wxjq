@@ -232,6 +232,29 @@ public class 发货通知单 extends RuleEngine {
 		dataset.add(shenhejl);
 		// String qz = instance.getBianhaoqz();
 		if ("0".equals(instance.getShenhezt())) {
+			/**
+			 * 此段插入代码维护业务支持联系单跟踪信息
+			 * 
+			 * @zjl
+			 */
+			Long xmpzqdid = instance.getXmpzqdid();
+			Long yewuzcdid = null;
+			if (xmpzqdid != null) {
+				Atzxiangmupzqd qd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, xmpzqdid);
+				if (qd != null) {
+					yewuzcdid = qd.getYewuzcd();
+				}
+
+			}
+			if (yewuzcdid != null) {
+				Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+				if (ywzc != null) {
+					ywzc.setYwzt("6");
+
+				}
+
+			}
+
 			instance.setDanjuzt("3");
 
 			List<Atzfahuofwmx> fwmxList = dataset.getList("Atzfahuofwmx", "fahuotzdid =" + instance.getId());
@@ -292,11 +315,19 @@ public class 发货通知单 extends RuleEngine {
 					churukjhd.setRenwuzt("11"); // 维护任务主题“合同发货”
 					churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
 				}
+				/*
 				Long xiangmuid = hetong.getCbzx();
+				
 				if (xiangmuid != null) {
 					churukjhd.setXiangmuid(xiangmuid);// 成本中心
 				} else {
 					churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				}
+				*/
+				//根据合同归属公司, 维护出库计划项目号
+				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu","guishugs="+hetong.getGuishugs()).get(0);
+				if (xm != null) {
+					churukjhd.setXiangmuid(xm.getId());
 				}
 				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
 				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
@@ -307,7 +338,35 @@ public class 发货通知单 extends RuleEngine {
 				churukjhd.setZhidanrq(new Date()); // 制单日期
 				churukjhd.setShifouwc("2"); // 是否完成: 否
 				churukjhd.setShifoufsh("2");// 是否反审核：否
+				churukjhd.setChuruknr(instance.getBianhao()+" "+hetong.getHetongbh()+" "+hetong.getHetongmc());//发货通知单编号(空格)合同编号(空格)合同名称
 				dataset.add(churukjhd);
+				/**
+				 * 此段插入代码维护业务支持联系单跟踪信息
+				 * 
+				 * @zjl
+				 */
+				// Long xmpzqdid=instance.getXmpzqdid();
+				// Long yewuzcdid=null;
+				/*
+				 * if(xmpzqdid！=null){ Atzxiangmupzqd
+				 * qd=(Atzxiangmupzqd)dataset.getObject(Atzxiangmupzqd.class,
+				 * xmpzqdid); if(qd!=null){ yewuzcdid=qd.getYewuzcd(); }
+				 * 
+				 * }
+				 */
+				if (yewuzcdid != null) {
+					Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+					if (ywzc != null) {
+						ywzc.setYwzt("7");
+						Atzzhixinggcgz zxgz = new Atzzhixinggcgz();
+						zxgz.setYewuzcid(yewuzcdid);
+						zxgz.setDanjumc("3");
+						zxgz.setChukujhdid(churukjhd.getId());
+						dataset.add(zxgz);
+
+					}
+
+				}
 
 				List<Atzchurukjhdmx> churukjhdmxList = new ArrayList();
 				List<Atzfahuosbqdmx> fahuomxList = dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" + instance.getId());
@@ -452,7 +511,10 @@ public class 发货通知单 extends RuleEngine {
 			return returnMsg;
 		}
 		Long result229 = null;
-		if ("1".equals(hetong.getSjlx()) && !"3".equals(hetong.getHetonglx())) {
+		if ("3".equals(hetong.getSjlx())) {
+			map229.put("daqujl", usr.getId());
+			result229 = WorkflowAppHelper.newProcessInstance(4072130L, map229, request, windowId229);
+		} else if ("1".equals(hetong.getSjlx()) && !"3".equals(hetong.getHetonglx())) {
 			// 合同发货 且不是零售发货
 			map229.put("daqujl", usr.getId());
 			result229 = WorkflowAppHelper.newProcessInstance(3887048L, map229, request, windowId229);
@@ -483,11 +545,14 @@ public class 发货通知单 extends RuleEngine {
 			if (qd != null) {
 				yewuzcdid = qd.getYewuzcd();
 			}
+
 		}
 		if (yewuzcdid != null) {
 			Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
 			if (ywzc != null) {
+
 				ywzc.setYwzt("5");
+
 			}
 		}
 		return "OK";
@@ -534,55 +599,6 @@ public class 发货通知单 extends RuleEngine {
 			atzfahuosbqdmx.setLururq(new Date());
 		}
 		returnMsg.set("OK", "修改成功");
-		return returnMsg;
-	}
-
-	private Object AN_发货通知单新增_选择设备清单明细后_12(Atzfahuotzd instance, IDataSet dataset, IDataContext context,
-			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
-		/**
-		 * AN_发货通知单新增_选择设备清单明细后_12
-		 */
-		String hetongid = (String) context.get("atzhetong.id");
-		if (hetongid == null || "".equals(hetongid)) {
-			returnMsg.set("NO", "系统运行异常，请联系系统管理员");
-			return returnMsg;
-		}
-		Atzhetong hetong = (Atzhetong) dataset.getObject(Atzhetong.class, Long.parseLong(hetongid));
-		if (hetong == null) {
-			returnMsg.set("NO", "系统运行异常，请联系系统管理员");
-			return returnMsg;
-		}
-		// 判断明细是否符合
-		Atzshebeiqdmx atzshebeiqdmx = null;
-		List<Atzfahuosbqdmx> list = (List<Atzfahuosbqdmx>) context.get("subobjs");
-		for (int i = 0; i < list.size(); i++) {
-			Atzfahuosbqdmx atzfahuosbqdmx = list.get(i);
-			// 判断是否重复
-			List qmlist = dataset.getListByHql("Atzfahuosbqdmx",
-					"from Atzfahuosbqdmx where fahuotzdid=" + instance.getId() + " and xiaoshoubmid="
-							+ atzfahuosbqdmx.getXiaoshoubmid() + " and id != " + atzfahuosbqdmx.getId());
-			if (qmlist != null && qmlist.size() > 0) {
-				returnMsg.set("NO", "第" + (i + 1) + "行的销售编码已存在于该发货通知单中，请检查");
-				return returnMsg;
-			}
-			atzfahuosbqdmx.setFahuotzdid(instance.getId());
-			// 维护冗余字段
-			Atzxiaoshoubm xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class,
-					atzfahuosbqdmx.getXiaoshoubmid());
-			if (xiaoshoubm == null) {
-				logger.error("销售编码查询异常");
-				logger.error("id==" + atzfahuosbqdmx.getXiaoshoubmid());
-				returnMsg.set("NO", "系统异常，请联系系统管理员");
-			}
-			atzfahuosbqdmx.setXiaoshoubm(xiaoshoubm.getBianma());
-			atzfahuosbqdmx.setGuigedw(xiaoshoubm.getGuigedw());
-			atzfahuosbqdmx.setDanwei(xiaoshoubm.getDanwei());
-			atzfahuosbqdmx.setWuliaoms(xiaoshoubm.getWuliaoms());
-			atzfahuosbqdmx.setLururq(new Date());
-		}
-		// 根据发货类型生成编号
-		instance.setFahuotzdlx("1");// 主发货通知单
-		returnMsg.set("OK", "新增成功");
 		return returnMsg;
 	}
 
@@ -852,8 +868,8 @@ public class 发货通知单 extends RuleEngine {
 		return "OK";
 	}
 
-	private Object 发货通知设备新增后置_选的项目配置清单(Atzfahuotzd instance, IDataSet dataset, IDataContext context,
-			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
+	private Object 发货通知设备新增后置(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
 		/**
 		 * A-发货通知设备新增-12 功能：数据校验 销售编码 不能重复 销售编码 在设备清单明细中必须存在
 		 */
@@ -890,6 +906,33 @@ public class 发货通知单 extends RuleEngine {
 			atzfahuosbqdmx.setDanwei(xiaoshoubm.getDanwei());
 			atzfahuosbqdmx.setWuliaoms(xiaoshoubm.getWuliaoms());
 			atzfahuosbqdmx.setLururq(new Date());
+		}
+		// 根据发货类型生成编号
+		/**
+		 * 此段插入代码维护业务支持联系单跟踪信息
+		 * 
+		 * @zjl
+		 */
+		Long xmpzqdid = instance.getXmpzqdid();
+		Long yewuzcdid = null;
+		if (xmpzqdid != null) {
+			Atzxiangmupzqd qd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, xmpzqdid);
+			if (qd != null) {
+				yewuzcdid = qd.getYewuzcd();
+			}
+
+		}
+		if (yewuzcdid != null) {
+			Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+			if (ywzc != null) {
+				ywzc.setYwzt("3");
+				Atzzhixinggcgz zxgz = new Atzzhixinggcgz();
+				zxgz.setYewuzcid(yewuzcdid);
+				zxgz.setDanjumc("2");
+				zxgz.setFahuotzdid(instance.getId());
+				dataset.add(zxgz);
+			}
+
 		}
 		instance.setFahuotzdlx("1");
 		returnMsg.set("OK", "新增成功");
