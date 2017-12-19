@@ -43,8 +43,36 @@ public class 发货通知单 extends RuleEngine {
 	private Object 审核_内控政策(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
-		 * A-发货通知单审核保存后置-内控政策-12
+		 * A-发货通知单审核保存后置-仓库确认-12
 		 */
+		
+		String fahuotzdid = ""+context.get("atzfahuotzd.id");
+		Atzfahuotzd fhtzd = (Atzfahuotzd) dataset.getObject(Atzfahuotzd.class, Long.parseLong(fahuotzdid));
+		if (fhtzd == null) {
+			returnMsg.set("NO", "发货通知单找不到,请联系管理员");
+			return returnMsg;
+		}
+		List<String> ids = context.getValueList("atzfahuosbqdmx.id");
+		logger.debug("ids====="+ids.size());
+		if (ids == null || ids.size() <= 0) {
+			returnMsg.set("NO", "至少选择一条发货通知单明细, 请检查");
+			return returnMsg;
+		}
+		List fhtzdmxList = dataset.getList("Atzfahuosbqdmx","fahuotzdid="+fahuotzdid);
+		logger.debug("fhtzdmxList"+fhtzdmxList.size());
+		if (fhtzdmxList.size() != ids.size()) {
+			//没有全选, 找到未选择的明细
+			for (Iterator iterator = fhtzdmxList.iterator(); iterator.hasNext();) {
+				Atzfahuosbqdmx fhmxx = (Atzfahuosbqdmx) iterator.next();
+				if (!ids.contains(fhmxx.getId().toString())) {
+					logger.debug(fhmxx.getXiaoshoubm());
+				}
+			}
+		}
+		if (ids != null || ids.size()>= 0) {
+			returnMsg.set("ERROR", "ids==="+ids.size());
+			return returnMsg;
+		}
 		if ("1".equals(instance.getShenhezt())
 				&& (instance.getShenheyj() == null || "".equals(instance.getShenheyj()))) {
 			returnMsg.set("NO", "请填写审核意见！");
@@ -64,8 +92,31 @@ public class 发货通知单 extends RuleEngine {
 		dataset.add(shenhejl);
 		String qz = instance.getBianhaoqz();
 		if ("0".equals(instance.getShenhezt())) {
-			instance.setDanjuzt("3");
+			/**
+			 * 此段插入代码维护业务支持联系单跟踪信息
+			 * 
+			 * @zjl
+			 */
+			Long xmpzqdid = instance.getXmpzqdid();
+			Long yewuzcdid = null;
+			if (xmpzqdid != null) {
+				Atzxiangmupzqd qd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, xmpzqdid);
+				if (qd != null) {
+					yewuzcdid = qd.getYewuzcd();
+				}
 
+			}
+			if (yewuzcdid != null) {
+				Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+				if (ywzc != null) {
+					ywzc.setYwzt("6");
+
+				}
+
+			}
+
+			instance.setDanjuzt("3");
+			/*
 			List<Atzfahuofwmx> fwmxList = dataset.getList("Atzfahuofwmx", "fahuotzdid =" + instance.getId());
 			if (fwmxList != null && fwmxList.size() > 0) {
 				for (Iterator iter = fwmxList.iterator(); iter.hasNext();) {
@@ -94,7 +145,7 @@ public class 发货通知单 extends RuleEngine {
 						dataset.add(htgz);
 				}
 			}
-
+	*/
 			paramMap.put("danjulx", "10");
 			String rValue = execAdjustmentRule("A-生成编码规则-05", null, context, dataset, request, paramMap);
 			if (rValue.equals("请先设置编码规则") || rValue.equals("流水号溢出")) {
@@ -124,11 +175,17 @@ public class 发货通知单 extends RuleEngine {
 					churukjhd.setRenwuzt("11"); // 维护任务主题“合同发货”
 					churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
 				}
-				Long xiangmuid = hetong.getCbzx();
-				if (xiangmuid != null) {
-					churukjhd.setXiangmuid(xiangmuid);// 成本中心
-				} else {
-					churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				/*
+				 * Long xiangmuid = hetong.getCbzx();
+				 * 
+				 * if (xiangmuid != null) { churukjhd.setXiangmuid(xiangmuid);//
+				 * 成本中心 } else { churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				 * }
+				 */
+				// 根据合同归属公司, 维护出库计划项目号
+				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs()).get(0);
+				if (xm != null) {
+					churukjhd.setXiangmuid(xm.getId());
 				}
 				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
 				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
@@ -139,7 +196,35 @@ public class 发货通知单 extends RuleEngine {
 				churukjhd.setZhidanrq(new Date()); // 制单日期
 				churukjhd.setShifouwc("2"); // 是否完成: 否
 				churukjhd.setShifoufsh("2");// 是否反审核：否
+				churukjhd.setChuruknr(instance.getBianhao() + " " + hetong.getHetongbh() + " " + hetong.getHetongmc());// 发货通知单编号(空格)合同编号(空格)合同名称
 				dataset.add(churukjhd);
+				/**
+				 * 此段插入代码维护业务支持联系单跟踪信息
+				 * 
+				 * @zjl
+				 */
+				// Long xmpzqdid=instance.getXmpzqdid();
+				// Long yewuzcdid=null;
+				/*
+				 * if(xmpzqdid！=null){ Atzxiangmupzqd
+				 * qd=(Atzxiangmupzqd)dataset.getObject(Atzxiangmupzqd.class,
+				 * xmpzqdid); if(qd!=null){ yewuzcdid=qd.getYewuzcd(); }
+				 * 
+				 * }
+				 */
+				if (yewuzcdid != null) {
+					Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+					if (ywzc != null) {
+						ywzc.setYwzt("7");
+						Atzzhixinggcgz zxgz = new Atzzhixinggcgz();
+						zxgz.setYewuzcid(yewuzcdid);
+						zxgz.setDanjumc("3");
+						zxgz.setChukujhdid(churukjhd.getId());
+						dataset.add(zxgz);
+
+					}
+
+				}
 
 				List<Atzchurukjhdmx> churukjhdmxList = new ArrayList();
 				List<Atzfahuosbqdmx> fahuomxList = dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" + instance.getId());
@@ -316,16 +401,14 @@ public class 发货通知单 extends RuleEngine {
 					churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
 				}
 				/*
-				Long xiangmuid = hetong.getCbzx();
-				
-				if (xiangmuid != null) {
-					churukjhd.setXiangmuid(xiangmuid);// 成本中心
-				} else {
-					churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
-				}
-				*/
-				//根据合同归属公司, 维护出库计划项目号
-				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu","guishugs="+hetong.getGuishugs()).get(0);
+				 * Long xiangmuid = hetong.getCbzx();
+				 * 
+				 * if (xiangmuid != null) { churukjhd.setXiangmuid(xiangmuid);//
+				 * 成本中心 } else { churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				 * }
+				 */
+				// 根据合同归属公司, 维护出库计划项目号
+				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs()).get(0);
 				if (xm != null) {
 					churukjhd.setXiangmuid(xm.getId());
 				}
@@ -338,7 +421,7 @@ public class 发货通知单 extends RuleEngine {
 				churukjhd.setZhidanrq(new Date()); // 制单日期
 				churukjhd.setShifouwc("2"); // 是否完成: 否
 				churukjhd.setShifoufsh("2");// 是否反审核：否
-				churukjhd.setChuruknr(instance.getBianhao()+" "+hetong.getHetongbh()+" "+hetong.getHetongmc());//发货通知单编号(空格)合同编号(空格)合同名称
+				churukjhd.setChuruknr(instance.getBianhao() + " " + hetong.getHetongbh() + " " + hetong.getHetongmc());// 发货通知单编号(空格)合同编号(空格)合同名称
 				dataset.add(churukjhd);
 				/**
 				 * 此段插入代码维护业务支持联系单跟踪信息
