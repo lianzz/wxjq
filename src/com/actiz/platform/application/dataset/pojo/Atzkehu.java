@@ -263,6 +263,20 @@ public class Atzkehu implements Serializable,IPojo
 	          
       return this.shixiaorq;     	
    }
+ 	 	 private Date zzshixiaorq;
+	 public void setZzshixiaorq(Date zzshixiaorq)
+	 {
+		  this.zzshixiaorq = zzshixiaorq;
+	 }
+   public Date getZzshixiaorq()
+   { 	    
+  	  	    if( this.zzshixiaorq != null )
+	    {
+	        return (Date)new ActizDate( this.zzshixiaorq.getTime() );
+	    }
+	          
+      return this.zzshixiaorq;     	
+   }
  	 	 private String youbian;
 	 public void setYoubian(String youbian)
 	 {

@@ -121,6 +121,16 @@ public class Atzxiangmupzmx implements Serializable,IPojo
   	        
       return this.muluj;     	
    }
+ 	 	 private String shifouls;
+	 public void setShifouls(String shifouls)
+	 {
+		  this.shifouls = shifouls;
+	 }
+   public String getShifouls()
+   { 	    
+  	        
+      return this.shifouls;     	
+   }
  	 	 private Double shuliang;
 	 public void setShuliang(Double shuliang)
 	 {

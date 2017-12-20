@@ -135,6 +135,16 @@ public class Atzhetongtk implements Serializable,IPojo
   	        
       return this.shzt;     	
    }
+ 	 	 private String tuikulx;
+	 public void setTuikulx(String tuikulx)
+	 {
+		  this.tuikulx = tuikulx;
+	 }
+   public String getTuikulx()
+   { 	    
+  	        
+      return this.tuikulx;     	
+   }
  	 	 private String tkyy;
 	 public void setTkyy(String tkyy)
 	 {

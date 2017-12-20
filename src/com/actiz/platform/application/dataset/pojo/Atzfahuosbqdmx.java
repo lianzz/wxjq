@@ -51,6 +51,16 @@ public class Atzfahuosbqdmx implements Serializable,IPojo
   	        
       return this.beizhu;     	
    }
+ 	 	 private Long changjia;
+	 public void setChangjia(Long changjia)
+	 {
+		  this.changjia = changjia;
+	 }
+   public Long getChangjia()
+   { 	    
+  	        
+      return this.changjia;     	
+   }
  	 	 private String danwei;
 	 public void setDanwei(String danwei)
 	 {
@@ -176,6 +186,16 @@ public class Atzfahuosbqdmx implements Serializable,IPojo
       return this.wuliaoms;     	
    }
   
+	 private com.actiz.platform.application.dataset.pojo.Atzshengchancj changjiaRef;
+	 public void setChangjiaRef(com.actiz.platform.application.dataset.pojo.Atzshengchancj changjiaRef)
+	 {
+		  this.changjiaRef = changjiaRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzshengchancj getChangjiaRef()
+   {
+     	return this.changjiaRef;
+   }
+ 
 	 private com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef;
 	 public void setFahuotzdidRef(com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef)
 	 {

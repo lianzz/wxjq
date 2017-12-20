@@ -40,225 +40,179 @@ public class 发货通知单 extends RuleEngine {
 		return "OK";
 	}
 
-	private Object 审核_内控政策(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+	private Object 审核_仓库确认(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
 		 * A-发货通知单审核保存后置-仓库确认-12
 		 */
-		
-		String fahuotzdid = ""+context.get("atzfahuotzd.id");
+
+		String fahuotzdid = "" + context.get("atzfahuotzd.id");
 		Atzfahuotzd fhtzd = (Atzfahuotzd) dataset.getObject(Atzfahuotzd.class, Long.parseLong(fahuotzdid));
 		if (fhtzd == null) {
 			returnMsg.set("NO", "发货通知单找不到,请联系管理员");
 			return returnMsg;
 		}
 		List<String> ids = context.getValueList("atzfahuosbqdmx.id");
-		logger.debug("ids====="+ids.size());
+		logger.debug("ids=====" + ids.size());
 		if (ids == null || ids.size() <= 0) {
 			returnMsg.set("NO", "至少选择一条发货通知单明细, 请检查");
 			return returnMsg;
 		}
-		List fhtzdmxList = dataset.getList("Atzfahuosbqdmx","fahuotzdid="+fahuotzdid);
-		logger.debug("fhtzdmxList"+fhtzdmxList.size());
+		List<Atzfahuosbqdmx> nList = new ArrayList<Atzfahuosbqdmx>();// 未选择的明细清单
+		List fhtzdmxList = dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" + fahuotzdid);
+		logger.debug("fhtzdmxList" + fhtzdmxList.size());
 		if (fhtzdmxList.size() != ids.size()) {
-			//没有全选, 找到未选择的明细
+			// 没有全选, 找到未选择的明细
 			for (Iterator iterator = fhtzdmxList.iterator(); iterator.hasNext();) {
 				Atzfahuosbqdmx fhmxx = (Atzfahuosbqdmx) iterator.next();
 				if (!ids.contains(fhmxx.getId().toString())) {
 					logger.debug(fhmxx.getXiaoshoubm());
+					nList.add(fhmxx);
 				}
 			}
 		}
-		if (ids != null || ids.size()>= 0) {
-			returnMsg.set("ERROR", "ids==="+ids.size());
+		if (ids != null || ids.size() >= 0) {
+			returnMsg.set("ERROR", "ids===" + ids.size());
 			return returnMsg;
 		}
-		if ("1".equals(instance.getShenhezt())
-				&& (instance.getShenheyj() == null || "".equals(instance.getShenheyj()))) {
-			returnMsg.set("NO", "请填写审核意见！");
-			return returnMsg;
-		}
+
 		NodeDefine nodeDefine = getProcessNodeInfo(context);
 		if (nodeDefine == null) {
 			returnMsg.set("NO", "流程节点找不到,请联系管理员");
 			return returnMsg;
 		}
-		Atzfahuotzshjl shenhejl = new Atzfahuotzshjl();
-		shenhejl.setAtzfahuotzdid(instance.getId());
-		shenhejl.setShenher(nodeDefine.getName() + "-" + (String) request.getSession().getAttribute("employeeName"));
-		shenhejl.setShenherq(new Date());
-		shenhejl.setShenhezt(instance.getShenhezt());
-		shenhejl.setShenheyj(instance.getShenheyj());
-		dataset.add(shenhejl);
-		String qz = instance.getBianhaoqz();
-		if ("0".equals(instance.getShenhezt())) {
+
+		/**
+		 * 此段插入代码维护业务支持联系单跟踪信息
+		 * 
+		 * @zjl
+		 */
+		Long xmpzqdid = fhtzd.getXmpzqdid();
+		Long yewuzcdid = null;
+		if (xmpzqdid != null) {
+			Atzxiangmupzqd qd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, xmpzqdid);
+			if (qd != null) {
+				yewuzcdid = qd.getYewuzcd();
+			}
+
+		}
+		if (yewuzcdid != null) {
+			Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
+			if (ywzc != null) {
+				ywzc.setYwzt("6");
+
+			}
+
+		}
+
+		fhtzd.setDanjuzt("3");
+		// 生成出库计划
+		paramMap.put("danjulx", "10");
+		String rValue = execAdjustmentRule("A-生成编码规则-05", null, context, dataset, request, paramMap);
+		if (rValue.equals("请先设置编码规则") || rValue.equals("流水号溢出")) {
+			returnMsg.set(rValue, "出库计划单编码规则未设置或者流水号溢出，请联系管理员！");
+			return returnMsg;
+		} else if ("Error".equals(rValue)) {
+			returnMsg.set("ERROR", "出库计划单流水号溢出，请联系管理员！");
+			return returnMsg;
+		} else {
+			// 初始化单据编号、制单人、制单日期等信息
+			Atzchurukjhd churukjhd = new Atzchurukjhd();
+			churukjhd.setBianhao(rValue); // 编号
+			churukjhd.setLinshibh(rValue); // 临时编号
+			churukjhd.setDanjulx("1"); // 出入库单的单据类型，出库
+
+			Atzhetong hetong = (Atzhetong) dataset.getObject(Atzhetong.class, fhtzd.getHetongid());
+			churukjhd.setRenwuzt("11"); // 维护任务主题“合同发货”
+			churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
+			/*
+			 * Long xiangmuid = hetong.getCbzx();
+			 * 
+			 * if (xiangmuid != null) { churukjhd.setXiangmuid(xiangmuid);//
+			 * 成本中心 } else { churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004 }
+			 */
+			// 根据合同归属公司, 维护出库计划项目号
+			Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs()).get(0);
+			if (xm != null) {
+				churukjhd.setXiangmuid(xm.getId());
+			} else {
+				churukjhd.setXiangmuid(1552L);// 默认103004项目号
+			}
+			churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
+			churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
+			churukjhd.setShifouxn("2"); // 是否虚拟出入库，维护否
+			churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
+			// churukjhd.setChuruknr(instance.getZhuti());
+			churukjhd.setZhidanr("admin"); // 制单人,针对于系统自动产生的维护成admin
+			churukjhd.setZhidanrq(new Date()); // 制单日期
+			churukjhd.setShifouwc("2"); // 是否完成: 否
+			churukjhd.setShifoufsh("2");// 是否反审核：否
+			// 发货通知单编号(空格)合同编号(空格)合同名称
+			churukjhd.setChuruknr(instance.getBianhao() + " " + hetong.getHetongbh() + " " + hetong.getHetongmc());
+			dataset.add(churukjhd);
 			/**
 			 * 此段插入代码维护业务支持联系单跟踪信息
 			 * 
 			 * @zjl
 			 */
-			Long xmpzqdid = instance.getXmpzqdid();
-			Long yewuzcdid = null;
-			if (xmpzqdid != null) {
-				Atzxiangmupzqd qd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, xmpzqdid);
-				if (qd != null) {
-					yewuzcdid = qd.getYewuzcd();
-				}
-
-			}
+			// Long xmpzqdid=instance.getXmpzqdid();
+			// Long yewuzcdid=null;
+			/*
+			 * if(xmpzqdid！=null){ Atzxiangmupzqd
+			 * qd=(Atzxiangmupzqd)dataset.getObject(Atzxiangmupzqd.class,
+			 * xmpzqdid); if(qd!=null){ yewuzcdid=qd.getYewuzcd(); }
+			 * 
+			 * }
+			 */
 			if (yewuzcdid != null) {
 				Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
 				if (ywzc != null) {
-					ywzc.setYwzt("6");
+					ywzc.setYwzt("7");
+					Atzzhixinggcgz zxgz = new Atzzhixinggcgz();
+					zxgz.setYewuzcid(yewuzcdid);
+					zxgz.setDanjumc("3");
+					zxgz.setChukujhdid(churukjhd.getId());
+					dataset.add(zxgz);
 
 				}
 
 			}
 
-			instance.setDanjuzt("3");
-			/*
-			List<Atzfahuofwmx> fwmxList = dataset.getList("Atzfahuofwmx", "fahuotzdid =" + instance.getId());
-			if (fwmxList != null && fwmxList.size() > 0) {
-				for (Iterator iter = fwmxList.iterator(); iter.hasNext();) {
-					Atzfahuofwmx fwmx = (Atzfahuofwmx) iter.next();
-					Atzhetonggz htgz = new Atzhetonggz();
-					htgz.setFahuotzdid(instance.getId());
-					htgz.setHetongid(instance.getHetongid());
-					htgz.setJihuasj(fwmx.getJihuawcrq());
-					if ("1".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("1"); // 到货
-					if ("2".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("5"); // 工程督导
-					if ("3".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("6"); // 开通
-					if ("4".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("2"); // 初验
-					if ("5".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("4"); // 到货
-					if ("6".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("7"); // 保修
-					if ("7".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("8"); // 终验
-					if ("8".equals(fwmx.getGongchengjd()))
-						htgz.setGenzonglx("9");
-					if (htgz.getGenzonglx() != null && !"".equals(htgz.getGenzonglx()))
-						dataset.add(htgz);
+			List<Atzchurukjhdmx> churukjhdmxList = new ArrayList();
+			// List<Atzfahuosbqdmx> fahuomxList =
+			// dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" +
+			// instance.getId());
+			for (Iterator iter = ids.iterator(); iter.hasNext();) {
+				String selectId = (String) iter.next();
+				Atzfahuosbqdmx fahuomx = (Atzfahuosbqdmx) dataset.getObject(Atzfahuosbqdmx.class,
+						Long.parseLong(selectId));
+				Atzchurukjhdmx churukjhmx = new Atzchurukjhdmx();
+				churukjhmx.setAtzchurukjhdid(churukjhd.getId());
+				// 维护出库计划中的销售编码ID
+				churukjhmx.setXiaoshoubmid(fahuomx.getXiaoshoubmid());
+				List<Atzwuliaojcxx> wuliaoList = dataset.getList("Atzwuliaojcxx",
+						"wuliaosjxz ='0' and xiaoshoubmid =" + fahuomx.getXiaoshoubmid() + " order by banbenpx asc");
+				if (wuliaoList != null && wuliaoList.size() > 0) {
+					Atzwuliaojcxx wuliao = (Atzwuliaojcxx) wuliaoList.get(0);
+					churukjhmx.setWuliaoid(wuliao.getId());
+					churukjhmx.setWuliaobm(wuliao.getWuliaobm());
+					churukjhmx.setWuliaoms(wuliao.getWuliaoms());
+					churukjhmx.setGuigedw(wuliao.getGuigedw());
+					churukjhmx.setDanwei(wuliao.getDanwei());
 				}
+				churukjhmx.setMeidwsl(fahuomx.getMeidwsl());
+				churukjhmx.setInitshuliang(fahuomx.getShuliang());
+				churukjhmx.setShuliang(fahuomx.getShuliang());
+				churukjhmx.setKuweiid(431139L);
+				churukjhmx.setWeicrksl(null);
+				churukjhmx.setLururq(new Date());
+				churukjhdmxList.add(churukjhmx);
 			}
-	*/
-			paramMap.put("danjulx", "10");
-			String rValue = execAdjustmentRule("A-生成编码规则-05", null, context, dataset, request, paramMap);
-			if (rValue.equals("请先设置编码规则") || rValue.equals("流水号溢出")) {
-				returnMsg.set(rValue, "出库计划单编码规则未设置或者流水号溢出，请联系管理员！");
-				return returnMsg;
-			} else if ("Error".equals(rValue)) {
-				returnMsg.set("ERROR", "出库计划单流水号溢出，请联系管理员！");
-				return returnMsg;
-			} else {
-				// 初始化单据编号、制单人、制单日期等信息
-				Atzchurukjhd churukjhd = new Atzchurukjhd();
-
-				churukjhd.setBianhao(rValue); // 编号
-				churukjhd.setLinshibh(rValue); // 临时编号
-				churukjhd.setDanjulx("1"); // 出入库单的单据类型，出库
-
-				Atzhetong hetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getHetongid());
-				if (hetong != null) {
-					if ("1".equals(hetong.getShifoujyht())) {
-						churukjhd.setRenwuzt("12"); // 维护任务主题“合同借用”
-						churukjhd.setChurukyy("53"); // 维护出入库原因为“合同借用发货”
-					} else {
-						churukjhd.setRenwuzt("11"); // 维护任务主题“合同发货”
-						churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
-					}
-				} else {
-					churukjhd.setRenwuzt("11"); // 维护任务主题“合同发货”
-					churukjhd.setChurukyy("3"); // 维护出入库原因为“合同发货”
-				}
-				/*
-				 * Long xiangmuid = hetong.getCbzx();
-				 * 
-				 * if (xiangmuid != null) { churukjhd.setXiangmuid(xiangmuid);//
-				 * 成本中心 } else { churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
-				 * }
-				 */
-				// 根据合同归属公司, 维护出库计划项目号
-				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs()).get(0);
-				if (xm != null) {
-					churukjhd.setXiangmuid(xm.getId());
-				}
-				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
-				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
-				churukjhd.setShifouxn("2"); // 是否虚拟出入库，维护否
-				churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
-				churukjhd.setChuruknr(instance.getZhuti());
-				churukjhd.setZhidanr("admin"); // 制单人,针对于系统自动产生的维护成admin
-				churukjhd.setZhidanrq(new Date()); // 制单日期
-				churukjhd.setShifouwc("2"); // 是否完成: 否
-				churukjhd.setShifoufsh("2");// 是否反审核：否
-				churukjhd.setChuruknr(instance.getBianhao() + " " + hetong.getHetongbh() + " " + hetong.getHetongmc());// 发货通知单编号(空格)合同编号(空格)合同名称
-				dataset.add(churukjhd);
-				/**
-				 * 此段插入代码维护业务支持联系单跟踪信息
-				 * 
-				 * @zjl
-				 */
-				// Long xmpzqdid=instance.getXmpzqdid();
-				// Long yewuzcdid=null;
-				/*
-				 * if(xmpzqdid！=null){ Atzxiangmupzqd
-				 * qd=(Atzxiangmupzqd)dataset.getObject(Atzxiangmupzqd.class,
-				 * xmpzqdid); if(qd!=null){ yewuzcdid=qd.getYewuzcd(); }
-				 * 
-				 * }
-				 */
-				if (yewuzcdid != null) {
-					Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
-					if (ywzc != null) {
-						ywzc.setYwzt("7");
-						Atzzhixinggcgz zxgz = new Atzzhixinggcgz();
-						zxgz.setYewuzcid(yewuzcdid);
-						zxgz.setDanjumc("3");
-						zxgz.setChukujhdid(churukjhd.getId());
-						dataset.add(zxgz);
-
-					}
-
-				}
-
-				List<Atzchurukjhdmx> churukjhdmxList = new ArrayList();
-				List<Atzfahuosbqdmx> fahuomxList = dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" + instance.getId());
-				if (fahuomxList != null && fahuomxList.size() > 0) {
-					for (Iterator iter = fahuomxList.iterator(); iter.hasNext();) {
-						Atzfahuosbqdmx fahuomx = (Atzfahuosbqdmx) iter.next();
-						Atzchurukjhdmx churukjhmx = new Atzchurukjhdmx();
-						churukjhmx.setAtzchurukjhdid(churukjhd.getId());
-						// 维护出库计划中的销售编码ID
-						churukjhmx.setXiaoshoubmid(fahuomx.getXiaoshoubmid());
-						List<Atzwuliaojcxx> wuliaoList = dataset.getList("Atzwuliaojcxx",
-								"wuliaosjxz ='0' and xiaoshoubmid =" + fahuomx.getXiaoshoubmid()
-										+ " order by banbenpx asc");
-						if (wuliaoList != null && wuliaoList.size() > 0) {
-							Atzwuliaojcxx wuliao = (Atzwuliaojcxx) wuliaoList.get(0);
-							churukjhmx.setWuliaoid(wuliao.getId());
-							churukjhmx.setWuliaobm(wuliao.getWuliaobm());
-							churukjhmx.setWuliaoms(wuliao.getWuliaoms());
-							churukjhmx.setGuigedw(wuliao.getGuigedw());
-							churukjhmx.setDanwei(wuliao.getDanwei());
-						}
-						churukjhmx.setMeidwsl(fahuomx.getMeidwsl());
-						churukjhmx.setInitshuliang(fahuomx.getShuliang());
-						churukjhmx.setShuliang(fahuomx.getShuliang());
-						churukjhmx.setKuweiid(431139L);
-						churukjhmx.setWeicrksl(null);
-						churukjhmx.setLururq(new Date());
-						churukjhdmxList.add(churukjhmx);
-					}
-				}
-				if (churukjhdmxList.size() > 0)
-					dataset.addAll(churukjhdmxList);
-			}
+			if (churukjhdmxList.size() > 0)
+				dataset.addAll(churukjhdmxList);
 		}
+		// 未选择的明细, 在发货通知单明细中删除, 维护设备清单池可下达发货通知单数量
+		context.set("deletefhmx", nList);
 		returnMsg.set("OK", "操作完成");
 		return returnMsg;
 	}
@@ -520,8 +474,11 @@ public class 发货通知单 extends RuleEngine {
 	private Object 提交(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
-		 * A-发货通知单-提交-12 功能： 发货通知单提交启动流程 说明： 发货通知单提交启动流程，判断能否提交，并启动流程 引用： 合同管理
-		 * 作者： 05 创建：2011-10-28 修改：2010-11-17 原因：添加回写设备清单明细未发货数量
+		 * A-发货通知单-提交-12
+		 */
+		/*
+		 * 功能： 发货通知单提交启动流程 说明： 发货通知单提交启动流程，判断能否提交，并启动流程 引用： 合同管理 作者： 05
+		 * 创建：2011-10-28 修改：2010-11-17 原因：添加回写设备清单明细未发货数量
 		 */
 		Long tdygId = (Long) request.getSession().getAttribute("teamEmployeeId");
 		logger.error("tdygId==========" + tdygId);
@@ -569,7 +526,7 @@ public class 发货通知单 extends RuleEngine {
 					.setJhfhsl(com.actiz.util.MathUtil.add(atzshebeiqdmx.getJhfhsl(), atzfahuosbqdmx.getShuliang()));
 			atzshebeiqdmx.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 			atzshebeiqdmx
-					.setWeifhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getWeifhsl(), atzshebeiqdmx.getJhfhsl()));
+					.setWeifhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getWeifhsl(), atzfahuosbqdmx.getShuliang()));
 			dataset.update(atzshebeiqdmx);
 		}
 		String windowId229 = null;

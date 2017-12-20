@@ -328,7 +328,7 @@ public class 项目调拨单 extends RuleEngine {
 			}
 		}
 		if (fhqdids.length() < 2) {
-			returnMsg.set("NO", "调入合同的配置清单中没有与可调拨设备相匹配的数据\\n调拨的设备需在调入合同的配置清单中才可以调拨");
+			returnMsg.set("NO", "调入合同的配置清单中没有与可调拨设备相匹配的数据<br>调拨的设备需在调入合同的配置清单中才可以调拨");
 			return returnMsg;
 		}
 		fhqdids = fhqdids.substring(0, fhqdids.length() - 1) + ")";

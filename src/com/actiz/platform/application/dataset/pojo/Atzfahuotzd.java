@@ -149,6 +149,16 @@ public class Atzfahuotzd implements Serializable,IPojo
   	        
       return this.fahuotzdlx;     	
    }
+ 	 	 private String fpjfhlx;
+	 public void setFpjfhlx(String fpjfhlx)
+	 {
+		  this.fpjfhlx = fpjfhlx;
+	 }
+   public String getFpjfhlx()
+   { 	    
+  	        
+      return this.fpjfhlx;     	
+   }
  	 	 private String gcxmjl;
 	 public void setGcxmjl(String gcxmjl)
 	 {

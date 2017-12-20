@@ -71,16 +71,6 @@ public class Atzhetong implements Serializable,IPojo
   	        
       return this.shoukuanqr;     	
    }
- 	 	 private Long czxiaoshoufz;
-	 public void setCzxiaoshoufz(Long czxiaoshoufz)
-	 {
-		  this.czxiaoshoufz = czxiaoshoufz;
-	 }
-   public Long getCzxiaoshoufz()
-   { 	    
-  	        
-      return this.czxiaoshoufz;     	
-   }
  	 	 private String chanpinlx;
 	 public void setChanpinlx(String chanpinlx)
 	 {
@@ -1170,16 +1160,6 @@ public class Atzhetong implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzhetong getBkbhtRef()
    {
      	return this.bkbhtRef;
-   }
- 
-	 private com.actiz.platform.application.dataset.pojo.Atzemployee czxiaoshoufzRef;
-	 public void setCzxiaoshoufzRef(com.actiz.platform.application.dataset.pojo.Atzemployee czxiaoshoufzRef)
-	 {
-		  this.czxiaoshoufzRef = czxiaoshoufzRef;
-	 }
-   public com.actiz.platform.application.dataset.pojo.Atzemployee getCzxiaoshoufzRef()
-   {
-     	return this.czxiaoshoufzRef;
    }
  
 	 private com.actiz.platform.application.dataset.pojo.Atzxiangmu cbzxRef;

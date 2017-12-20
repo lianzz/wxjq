@@ -229,6 +229,16 @@ public class Atzchurukjhdmx implements Serializable,IPojo
   	        
       return this.zaixianl;     	
    }
+ 	 	 private String zhixingf;
+	 public void setZhixingf(String zhixingf)
+	 {
+		  this.zhixingf = zhixingf;
+	 }
+   public String getZhixingf()
+   { 	    
+  	        
+      return this.zhixingf;     	
+   }
  	 	 private Double zhizaowzxl;
 	 public void setZhizaowzxl(Double zhizaowzxl)
 	 {

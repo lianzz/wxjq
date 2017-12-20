@@ -135,6 +135,16 @@ public class Atzshebeiqdmx implements Serializable,IPojo
   	        
       return this.pzmxid;     	
    }
+ 	 	 private Double shuliang;
+	 public void setShuliang(Double shuliang)
+	 {
+		  this.shuliang = shuliang;
+	 }
+   public Double getShuliang()
+   { 	    
+  	        
+      return this.shuliang;     	
+   }
  	 	 private Double jhtksl;
 	 public void setJhtksl(Double jhtksl)
 	 {
@@ -154,16 +164,6 @@ public class Atzshebeiqdmx implements Serializable,IPojo
    { 	    
   	        
       return this.tuikusl;     	
-   }
- 	 	 private Double shuliang;
-	 public void setShuliang(Double shuliang)
-	 {
-		  this.shuliang = shuliang;
-	 }
-   public Double getShuliang()
-   { 	    
-  	        
-      return this.shuliang;     	
    }
  	 	 private Double sjwfhsl;
 	 public void setSjwfhsl(Double sjwfhsl)

@@ -41,6 +41,16 @@ public class Atzhetongdb implements Serializable,IPojo
   	        
       return this.beizhu;     	
    }
+ 	 	 private String danjuzt;
+	 public void setDanjuzt(String danjuzt)
+	 {
+		  this.danjuzt = danjuzt;
+	 }
+   public String getDanjuzt()
+   { 	    
+  	        
+      return this.danjuzt;     	
+   }
  	 	 private String dblx;
 	 public void setDblx(String dblx)
 	 {
@@ -91,6 +101,94 @@ public class Atzhetongdb implements Serializable,IPojo
   	        
       return this.rujl;     	
    }
+ 	 	 private String lurur;
+	 public void setLurur(String lurur)
+	 {
+		  this.lurur = lurur;
+	 }
+   public String getLurur()
+   { 	    
+  	        
+      return this.lurur;     	
+   }
+ 	 	 private Long lururid;
+	 public void setLururid(Long lururid)
+	 {
+		  this.lururid = lururid;
+	 }
+   public Long getLururid()
+   { 	    
+  	        
+      return this.lururid;     	
+   }
+ 	 	 private Date lururq;
+	 public void setLururq(Date lururq)
+	 {
+		  this.lururq = lururq;
+	 }
+   public Date getLururq()
+   { 	    
+  	  	    if( this.lururq != null )
+	    {
+	        return (Date)new ActizDate( this.lururq.getTime() );
+	    }
+	          
+      return this.lururq;     	
+   }
+ 	 	 private String shenheyj;
+	 public void setShenheyj(String shenheyj)
+	 {
+		  this.shenheyj = shenheyj;
+	 }
+   public String getShenheyj()
+   { 	    
+  	        
+      return this.shenheyj;     	
+   }
+ 	 	 private String shenhezt;
+	 public void setShenhezt(String shenhezt)
+	 {
+		  this.shenhezt = shenhezt;
+	 }
+   public String getShenhezt()
+   { 	    
+  	        
+      return this.shenhezt;     	
+   }
+ 	 	 private String zuihouxgr;
+	 public void setZuihouxgr(String zuihouxgr)
+	 {
+		  this.zuihouxgr = zuihouxgr;
+	 }
+   public String getZuihouxgr()
+   { 	    
+  	        
+      return this.zuihouxgr;     	
+   }
+ 	 	 private Long zuihouxgrid;
+	 public void setZuihouxgrid(Long zuihouxgrid)
+	 {
+		  this.zuihouxgrid = zuihouxgrid;
+	 }
+   public Long getZuihouxgrid()
+   { 	    
+  	        
+      return this.zuihouxgrid;     	
+   }
+ 	 	 private Date zuihouxgrq;
+	 public void setZuihouxgrq(Date zuihouxgrq)
+	 {
+		  this.zuihouxgrq = zuihouxgrq;
+	 }
+   public Date getZuihouxgrq()
+   { 	    
+  	  	    if( this.zuihouxgrq != null )
+	    {
+	        return (Date)new ActizDate( this.zuihouxgrq.getTime() );
+	    }
+	          
+      return this.zuihouxgrq;     	
+   }
   
 	 private com.actiz.platform.application.dataset.pojo.Atzhetong chuhetongRef;
 	 public void setChuhetongRef(com.actiz.platform.application.dataset.pojo.Atzhetong chuhetongRef)
@@ -131,6 +229,26 @@ public class Atzhetongdb implements Serializable,IPojo
    {
      	return this.rujlRef;
    }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzemployee lururidRef;
+	 public void setLururidRef(com.actiz.platform.application.dataset.pojo.Atzemployee lururidRef)
+	 {
+		  this.lururidRef = lururidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzemployee getLururidRef()
+   {
+     	return this.lururidRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzemployee zuihouxgridRef;
+	 public void setZuihouxgridRef(com.actiz.platform.application.dataset.pojo.Atzemployee zuihouxgridRef)
+	 {
+		  this.zuihouxgridRef = zuihouxgridRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzemployee getZuihouxgridRef()
+   {
+     	return this.zuihouxgridRef;
+   }
   
 	private java.util.Set atzhetongdbmxSet;
 	public void setAtzhetongdbmxSet(java.util.Set atzhetongdbmxSet)
@@ -160,9 +278,5 @@ public class Atzhetongdb implements Serializable,IPojo
 	public void setLastmodifytime(Date lastmodifytime)
 	{
 		this.lastmodifytime = lastmodifytime;
-	}
-	public void setDanjuzt(String string) {
-		// TODO Auto-generated method stub
-		
 	} 
 }
