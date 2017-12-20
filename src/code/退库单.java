@@ -38,13 +38,11 @@ public class 退库单 extends RuleEngine {
 			return returnMsg;
 		}
 		if ("0".equals(shzt)) {
-
 			List<Atzhetongtkmx> tkmxs = dataset.getList("Atzhetongtkmx", "hetongtkid=" + instance.getId());
 			if (tkmxs == null || tkmxs.size() <= 0) {
 				returnMsg.set("NO", "无退库明细");
 				return returnMsg;
 			}
-
 			// 合同退库明细数量到发货通知单明细的退库数量
 			for (Iterator iterator = tkmxs.iterator(); iterator.hasNext();) {
 				Atzhetongtkmx atzhetongtkmx = (Atzhetongtkmx) iterator.next();
@@ -54,15 +52,17 @@ public class 退库单 extends RuleEngine {
 						"from Atzshebeiqdmx where hetongid=" + instance.getHetongid() + " and xiaoshoubmid="
 								+ fhqd.getXiaoshoubmid());
 				if (sbqd != null) {
+					//申请退库数量
 					sbqd.setJhtksl(com.actiz.util.MathUtil.add(sbqd.getJhtksl(), atzhetongtkmx.getShuliang()));
+					//可下达发货通知单数量
 					sbqd.setWeifhsl(com.actiz.util.MathUtil.add(sbqd.getWeifhsl(), atzhetongtkmx.getShuliang()));
 					dataset.update(sbqd);
 				}
 			}
 			Atzhetong atzhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getHetongid());
+			//合同发货状态为发货中
 			atzhetong.setFhzt("1");
 			dataset.update(atzhetong);
-
 			String tkbh = instance.getBianhao();
 			// 生成入库计划
 			paramMap.put("danjulx", "9");
@@ -83,7 +83,12 @@ public class 退库单 extends RuleEngine {
 
 				churukjhd.setRenwuzt("17"); // 维护任务主题“合同退库”
 				churukjhd.setChurukyy("10"); // 维护出入库原因为“合同退库”
-				churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu","guishugs="+atzhetong.getGuishugs()).get(0);
+				if (xm != null) {
+					churukjhd.setXiangmuid(xm.getId());
+				}else{
+					churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004
+				}
 				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
 				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
 				churukjhd.setShifouxn("2"); // 是否虚拟出入库，维护否
@@ -133,7 +138,9 @@ public class 退库单 extends RuleEngine {
 						churukjhmx.setWeicrksl(null);
 						churukjhmx.setLururq(new Date());
 						// 备注为sn
-						churukjhmx.setBeizhu(hetongtkmx.getSn());
+						if (hetongtkmx.getSn()!= null && !"".equals(hetongtkmx.getSn())) {
+							churukjhmx.setBeizhu("SN="+hetongtkmx.getSn());
+						}
 						churukjhdmxList.add(churukjhmx);
 					}
 				}
@@ -189,12 +196,6 @@ public class 退库单 extends RuleEngine {
 				return returnMsg;
 			}
 			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), tkmx.getShuliang()));
-			// 提交退库申请,维护发货清单状态
-			if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
-				fhqd.setZt("申请退库");
-			} else {
-				fhqd.setZt("申请退库,数量=" + tkmx.getShuliang());
-			}
 			dataset.update(fhqd);
 		}
 		// 提交流程
@@ -220,7 +221,7 @@ public class 退库单 extends RuleEngine {
 			returnMsg.set("NO", "无明细，请检查");
 			return returnMsg;
 		}
-		Long xiaoshoubmid = null;
+		//Long xiaoshoubmid = null;
 		for (int i = 0; i < tkmxs.size(); i++) {
 			Atzhetongtkmx tkmx = tkmxs.get(i);
 			if (tkmx.getSn() != null && !"".equals(tkmx.getSn())) {
@@ -238,6 +239,7 @@ public class 退库单 extends RuleEngine {
 				}
 			}
 		}
+		//生成编号
 		instance.setDanjuzt("1");
 		a.setCreateInfo(instance, request);
 		returnMsg.set("OK", "新增成功");

@@ -1672,23 +1672,37 @@ public class 出入库计划 extends RuleEngine {
 				logger.debug(hql);
 				Atzshebeiqdmx sbqd = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", hql);
 				logger.debug("sbqd=====" + sbqd.getId());
-				if (sbqd != null) {
-					sbqd.setTuikusl(com.actiz.util.MathUtil.add(sbqd.getTuikusl(), rkdmx.getShuliang()));
-					dataset.update(sbqd);
+				if (sbqd == null) {
+					returnMsg.set("NO", "合同退库, 第" + (i + 1) + "条明细在找不到合同设备清单信息,请检查物料或sn信息");
+					return returnMsg;
 				}
+				sbqd.setTuikusl(com.actiz.util.MathUtil.add(sbqd.getTuikusl(), rkdmx.getShuliang()));
+				dataset.update(sbqd);
 				Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
 				if (fhqd != null && sbqd != null) {
 					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), tkmx.getShuliang()));
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
-					fhqd.setSjtksl(com.actiz.util.MathUtil.add(fhqd.getSjtksl(), tkmx.getShuliang()));
+					/*fhqd.setSjtksl(com.actiz.util.MathUtil.add(fhqd.getSjtksl(), tkmx.getShuliang()));
 					if (sbqd.getTuikusl().compareTo(fhqd.getShuliang()) == 0) {
 						fhqd.setZt("已退库");
 					} else {
 						fhqd.setZt("部分退库,已退数量=" + sbqd.getTuikusl());
-					}
+					}*/
 					dataset.update(fhqd);
 				}
-
+				//新增一条退库清单记录
+				Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
+				nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
+				nfhqd.setHetongid(fhqd.getHetongid());
+				nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
+				nfhqd.setWuliaoid(fhqd.getWuliaoid());
+				nfhqd.setShuliang(0D);//调拨数量
+				nfhqd.setSn(fhqd.getSn());
+				nfhqd.setFahuosj(fhqd.getFahuosj());
+				nfhqd.setTkshuliang(0d);
+				nfhqd.setZt("已退库");
+				nfhqd.setSjtksl(rkdmx.getShuliang());
+				dataset.add(nfhqd);
 			}
 		}
 
