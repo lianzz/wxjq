@@ -31,6 +31,14 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			Map paramMap, Logger logger) throws Exception {
 		return "OK";
 	}
+	
+	private Object 变更(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * 
+		 */
+		return "OK";
+	}
 
 	private Object 项目配置清单_提交(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context,
 			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {

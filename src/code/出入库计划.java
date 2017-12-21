@@ -1682,12 +1682,11 @@ public class 出入库计划 extends RuleEngine {
 				if (fhqd != null && sbqd != null) {
 					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), tkmx.getShuliang()));
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
-					/*fhqd.setSjtksl(com.actiz.util.MathUtil.add(fhqd.getSjtksl(), tkmx.getShuliang()));
-					if (sbqd.getTuikusl().compareTo(fhqd.getShuliang()) == 0) {
-						fhqd.setZt("已退库");
-					} else {
-						fhqd.setZt("部分退库,已退数量=" + sbqd.getTuikusl());
-					}*/
+					if (fhqd.getShuliang().compareTo(0d) <= 0) {
+						fhqd.setBeizhu("已退库");
+					}else{
+						fhqd.setBeizhu("部分退库");
+					}
 					dataset.update(fhqd);
 				}
 				//新增一条退库清单记录
@@ -1696,12 +1695,14 @@ public class 出入库计划 extends RuleEngine {
 				nfhqd.setHetongid(fhqd.getHetongid());
 				nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
 				nfhqd.setWuliaoid(fhqd.getWuliaoid());
-				nfhqd.setShuliang(0D);//调拨数量
+				nfhqd.setShuliang(0D);
 				nfhqd.setSn(fhqd.getSn());
 				nfhqd.setFahuosj(fhqd.getFahuosj());
 				nfhqd.setTkshuliang(0d);
-				nfhqd.setZt("已退库");
+				nfhqd.setZt("2");
 				nfhqd.setSjtksl(rkdmx.getShuliang());
+				nfhqd.setTuihuosj(today);
+				nfhqd.setHetongtkid(tk.getId());
 				dataset.add(nfhqd);
 			}
 		}
@@ -2486,8 +2487,10 @@ public class 出入库计划 extends RuleEngine {
 					returnMsg.set("NO", message);
 					return returnMsg;
 				}
+				//已发货数量
 				atzshebeiqdmx
 						.setYifhsh(com.actiz.util.MathUtil.add(atzshebeiqdmx.getYifhsh(), atzchurukdmx.getShuliang()));
+				//实际未发货数量 = 已下达 - 已发货
 				atzshebeiqdmx
 						.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 				dataset.update(atzshebeiqdmx);
@@ -2500,8 +2503,9 @@ public class 出入库计划 extends RuleEngine {
 				fahuoqd.setShuliang(atzchurukdmx.getShuliang());
 				fahuoqd.setSn(atzchurukdmx.getSn());
 				fahuoqd.setTkshuliang(0d);
+				fahuoqd.setSjtksl(0d);
 				fahuoqd.setFahuosj(today);
-				fahuoqd.setZt("已发货");
+				fahuoqd.setZt("1");
 				fahuoqdList.add(fahuoqd);
 			}
 			dataset.addAll(fahuoqdList);
@@ -2523,14 +2527,10 @@ public class 出入库计划 extends RuleEngine {
 			// 发货通知单发货状态
 		}
 		// -----合同发货, 生成实际发货清单------end
-
 		Long ckdmxid = null; // 出库单明细ID
-
 		Atzchurukls ckls = null; // 出库流水
-
 		Double bencijhsl = null; // 本次计划数量
 		String cunfangwz = null; // 存放位置
-
 		// -----生成出库流水-----
 		for (int i = 0; i < ckdmxs.size(); i++) {
 			ckdmx = ckdmxs.get(i);
