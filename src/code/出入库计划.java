@@ -62,13 +62,15 @@ public class 出入库计划 extends RuleEngine {
 
 				rkjhdid = rkjhd.getId();
 				/*
-				rkjhsl = Double.parseDouble(dataset.sum("Atzchurukjhdmx", "shuliang", "atzchurukjhdid=" + rkjhdid));
-				rksl = Double.parseDouble(dataset.sum("Atzchurukdmx", "shuliang",
-						"atzchurukdid in (select id from Atzchurukd where danjulx='2' and churukjhdid=" + rkjhdid
-								+ ")"));
-
-				if (rkjhsl > rksl)*/
-					rkjhdids.append(rkjhdid + ",");
+				 * rkjhsl = Double.parseDouble(dataset.sum("Atzchurukjhdmx",
+				 * "shuliang", "atzchurukjhdid=" + rkjhdid)); rksl =
+				 * Double.parseDouble(dataset.sum("Atzchurukdmx", "shuliang",
+				 * "atzchurukdid in (select id from Atzchurukd where danjulx='2' and churukjhdid="
+				 * + rkjhdid + ")"));
+				 * 
+				 * if (rkjhsl > rksl)
+				 */
+				rkjhdids.append(rkjhdid + ",");
 			}
 		}
 
@@ -1684,12 +1686,12 @@ public class 出入库计划 extends RuleEngine {
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
 					if (fhqd.getShuliang().compareTo(0d) <= 0) {
 						fhqd.setBeizhu("已退库");
-					}else{
+					} else {
 						fhqd.setBeizhu("部分退库");
 					}
 					dataset.update(fhqd);
 				}
-				//新增一条退库清单记录
+				// 新增一条退库清单记录
 				Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
 				nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
 				nfhqd.setHetongid(fhqd.getHetongid());
@@ -2487,25 +2489,32 @@ public class 出入库计划 extends RuleEngine {
 					returnMsg.set("NO", message);
 					return returnMsg;
 				}
-				//已发货数量
+				// 已发货数量
 				atzshebeiqdmx
 						.setYifhsh(com.actiz.util.MathUtil.add(atzshebeiqdmx.getYifhsh(), atzchurukdmx.getShuliang()));
-				//实际未发货数量 = 已下达 - 已发货
+				// 实际未发货数量 = 已下达 - 已发货
 				atzshebeiqdmx
 						.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
 				dataset.update(atzshebeiqdmx);
 				// 生成实际发货清单
-				fahuoqd = new Atzfahuoqingdan();
-				fahuoqd.setFahuotzdid(fahuotzd.getId());
-				fahuoqd.setHetongid(fahuotzd.getHetongid());
-				fahuoqd.setWuliaoid(atzchurukdmx.getWuliaoid());
-				fahuoqd.setXiaoshoubmid(xiaoshoubm.getId());
-				fahuoqd.setShuliang(atzchurukdmx.getShuliang());
-				fahuoqd.setSn(atzchurukdmx.getSn());
-				fahuoqd.setTkshuliang(0d);
-				fahuoqd.setSjtksl(0d);
-				fahuoqd.setFahuosj(today);
-				fahuoqd.setZt("1");
+				fahuoqd = (Atzfahuoqingdan) dataset.getObjectByHql("Atzfahuoqingdan",
+						"from Atzfahuoqingdan where sn is null and zt='1' and wuliaoid=" + atzchurukdmx.getWuliaoid()
+								+ " and fahuotzdid=" + fahuotzd.getId());
+				if (fahuoqd == null) {
+					fahuoqd = new Atzfahuoqingdan();
+					fahuoqd.setFahuotzdid(fahuotzd.getId());
+					fahuoqd.setHetongid(fahuotzd.getHetongid());
+					fahuoqd.setWuliaoid(atzchurukdmx.getWuliaoid());
+					fahuoqd.setXiaoshoubmid(xiaoshoubm.getId());
+					fahuoqd.setShuliang(atzchurukdmx.getShuliang());
+					fahuoqd.setSn(atzchurukdmx.getSn());
+					fahuoqd.setTkshuliang(0d);
+					fahuoqd.setSjtksl(0d);
+					fahuoqd.setFahuosj(today);
+					fahuoqd.setZt("1");
+				} else {
+					fahuoqd.setShuliang(com.actiz.util.MathUtil.add(fahuoqd.getShuliang(), atzchurukdmx.getShuliang()));
+				}
 				fahuoqdList.add(fahuoqd);
 			}
 			dataset.addAll(fahuoqdList);

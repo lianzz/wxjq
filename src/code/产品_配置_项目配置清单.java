@@ -31,12 +31,23 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			Map paramMap, Logger logger) throws Exception {
 		return "OK";
 	}
-	
-	private Object 变更(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+
+	private Object 变更(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
-		 * 
+		 * AU-项目配置清单-变更-12
 		 */
+		List <Atzxiangmupzmx> subobjs = (List<Atzxiangmupzmx>)context.get("subobjs");
+		List <Atzxiangmupzmx> new_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_new");
+		List<Atzxiangmupzmx> update_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_update");
+		List<Atzxiangmupzmx> del_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_del");
+		Hashtable<Long,Atzxiangmupzmx> old_subobjs = (Hashtable <Long,Atzxiangmupzmx>)context.get("subobjs_old");
+		logger.debug("subobjs="+subobjs.size());
+		logger.debug("new_subobjs="+new_subobjs.size());
+		logger.debug("update_subobjs="+update_subobjs.size());
+		logger.debug("del_subobjs="+del_subobjs.size());
+		logger.debug("old_subobjs="+old_subobjs.size());
+		Atzxiangmupzmx old_obj = null;
 		return "OK";
 	}
 
@@ -126,8 +137,9 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
 		if (pzmxs != null && pzmxs.size() > 0) {
 			for (int i = 0; i < pzmxs.size(); i++) {
-				//检查部件号下物料是否全部停用
-				List wuliaoList = dataset.getList("Atzwuliaojcxx","wuliaosjxz ='0' and shifouqy='1' and xiaoshoubmid ="+pzmxs.get(i).getBujianh());
+				// 检查部件号下物料是否全部停用
+				List wuliaoList = dataset.getList("Atzwuliaojcxx",
+						"wuliaosjxz ='0' and shifouqy='1' and xiaoshoubmid =" + pzmxs.get(i).getBujianh());
 				if (wuliaoList == null || wuliaoList.size() <= 0) {
 					returnMsg.set("NO", "第" + (i + 1) + "行销售编码下没有已启用的物料，请检查");
 				}
@@ -437,16 +449,12 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				ywzcId = yewuzc.getId();
 			}
 			/*
-			if ("".equals(kehumc)) {
-				returnMsg.set("NO", "客户名称不能为空，请检查");
-				return returnMsg;
-			}
-			Atzkehu kehu = (Atzkehu) dataset.getObjectByHql("Atzkehu", "from Atzkehu where kehumc='" + kehumc + "'");
-			if (kehu == null) {
-				returnMsg.set("NO", "客户输入有误或客户不存在，请检查");
-				return returnMsg;
-			}
-			*/
+			 * if ("".equals(kehumc)) { returnMsg.set("NO", "客户名称不能为空，请检查");
+			 * return returnMsg; } Atzkehu kehu = (Atzkehu)
+			 * dataset.getObjectByHql("Atzkehu", "from Atzkehu where kehumc='" +
+			 * kehumc + "'"); if (kehu == null) { returnMsg.set("NO",
+			 * "客户输入有误或客户不存在，请检查"); return returnMsg; }
+			 */
 			if ("".equals(pzmc)) {
 				returnMsg.set("NO", "配置名称不能为空，请检查");
 				return returnMsg;
@@ -458,7 +466,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				Atzhetong ht = (Atzhetong) dataset.getObject(Atzhetong.class, yewuzc.getHetongid());
 				xiangmupzqd.setKehu(ht.getKehuid());
 			}
-			//xiangmupzqd.setKehu(kehu.getId());
+			// xiangmupzqd.setKehu(kehu.getId());
 			xiangmupzqd.setQingdanmc(pzmc);
 			xiangmupzqd.setDanjuzt("1");
 			a.setCreateInfo(xiangmupzqd, request);
@@ -558,10 +566,12 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				if (!ccflag) {
 					try {
 						wllist = (List<Atzwuliaojcxx>) dataset.getList("Atzwuliaojcxx",
-								"wuliaosjxz ='0' and shifouqy='1' and xiaoshoubmid =" + xiaoshoubm.getId() + " order by banbenpx desc");
+								"wuliaosjxz ='0' and shifouqy='1' and xiaoshoubmid =" + xiaoshoubm.getId()
+										+ " order by banbenpx desc");
 						if (wllist == null || wllist.size() <= 0) {
 							ccflag = true;
-							ccts.append(ccts.append("第").append(i + 1).append("行, 根据部件号“" + bujianhStr + "”查找物料信息,没有启用的物料,请检查数据;<br>"));
+							ccts.append(ccts.append("第").append(i + 1)
+									.append("行, 根据部件号“" + bujianhStr + "”查找物料信息,没有启用的物料,请检查数据;<br>"));
 						}
 						shengchancj = (Atzshengchancj) dataset
 								.getList("Atzshengchancj", "wuliaoid=" + wuliao.getId() + " order by youxianji").get(0);

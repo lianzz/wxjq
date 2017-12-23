@@ -353,8 +353,9 @@ public class 发货通知单 extends RuleEngine {
 			 * 成本中心 } else { churukjhd.setXiangmuid(1552L);// 项目ID，编号为103004 }
 			 */
 			// 根据合同归属公司, 维护出库计划项目号
-			Atzxiangmu xm = (Atzxiangmu) dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs()).get(0);
-			if (xm != null) {
+			List<Atzxiangmu> xmList= dataset.getList("Atzxiangmu", "guishugs=" + hetong.getGuishugs());
+			if (xmList != null && xmList.size() > 0) {
+				Atzxiangmu xm = xmList.get(0);
 				churukjhd.setXiangmuid(xm.getId());
 			} else {
 				churukjhd.setXiangmuid(1552L);// 默认103004项目号
@@ -733,7 +734,7 @@ public class 发货通知单 extends RuleEngine {
 			}
 			// 判断发货数量是否超过未发货数量
 			if (atzshebeiqdmx.getWeifhsl().compareTo(atzfahuosbqdmx.getShuliang()) < 0) {
-				returnMsg.set("NO", "第" + (i + 1) + "行发货数量超过总未发货数量");
+				returnMsg.set("NO", "第" + (i + 1) + "行发货数量超过发货通知单可下达数量");
 				return returnMsg;
 			}
 			// 维护设备清单已下达发货量/未发货量
