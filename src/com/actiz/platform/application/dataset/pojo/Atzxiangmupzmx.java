@@ -210,5 +210,9 @@ public class Atzxiangmupzmx implements Serializable,IPojo
 	public void setLastmodifytime(Date lastmodifytime)
 	{
 		this.lastmodifytime = lastmodifytime;
+	}
+	public void setNewid(Long id2) {
+		// TODO Auto-generated method stub
+		
 	} 
 }

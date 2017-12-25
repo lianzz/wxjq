@@ -47,7 +47,73 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		logger.debug("update_subobjs="+update_subobjs.size());
 		logger.debug("del_subobjs="+del_subobjs.size());
 		logger.debug("old_subobjs="+old_subobjs.size());
-		Atzxiangmupzmx old_obj = null;
+		Atzxiangmupzmx history = null;
+		List<Atzxiangmupzmx> historyList = new ArrayList<>();
+		boolean flag = true;
+		for (Iterator iterator = old_subobjs.values().iterator(); iterator.hasNext();) {
+			Atzxiangmupzmx old = (Atzxiangmupzmx) iterator.next();
+			flag = true;//true=记录被删除;false=记录被修改
+			for (Iterator iterator2 = subobjs.iterator(); iterator2.hasNext();) {
+				Atzxiangmupzmx subobj = (Atzxiangmupzmx) iterator2.next();
+				if (old.getBujianh().equals(subobj.getBujianh())){
+					flag = false;//找到部件号相同的数据
+					if (old.getShuliang().compareTo(subobj.getShuliang()) == 0) {
+						break;//部件号相同, 且数量相等
+					}else{
+						//部件号相同, 且数量不等, 记录变更信息
+						history = new Atzxiangmupzmx();
+						history.setXiangmupzqdid(old.getXiangmupzqdid());
+						history.setBujianh(old.getBujianh());
+						history.setShuliang(old.getShuliang());
+						history.setChangjia(old.getChangjia());
+						//变更信息
+						history.setBglx("u");
+						history.setShifouls("1");
+						history.setNewid(subobj.getId());
+						historyList.add(history);
+						break;
+					}
+				}
+			}
+			if (flag) {
+				//找不到部件号相同的数据, 则该明细被删除,记录删除信息
+				history = new Atzxiangmupzmx();
+				history.setXiangmupzqdid(old.getXiangmupzqdid());
+				history.setBujianh(old.getBujianh());
+				history.setShuliang(old.getShuliang());
+				history.setChangjia(old.getChangjia());
+				//变更信息
+				history.setBglx("d");
+				history.setShifouls("1");
+				//history.setNewid(subobj.getId());
+				historyList.add(history);
+			}
+		}
+		//是否有新增信息
+		for (Iterator iterator = subobjs.iterator(); iterator.hasNext();) {
+			Atzxiangmupzmx obj = (Atzxiangmupzmx) iterator.next();
+			flag = true;//为新增数据
+			for (Iterator iterator2 = old_subobjs.values().iterator(); iterator2.hasNext();) {
+				Atzxiangmupzmx old = (Atzxiangmupzmx) iterator2.next();
+				if (obj.getBujianh().equals(old.getBujianh())) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				//在old_subobjs中没有,则为新增
+				history = new Atzxiangmupzmx();
+				history.setXiangmupzqdid(obj.getXiangmupzqdid());
+				history.setBujianh(obj.getBujianh());
+				history.setShuliang(obj.getShuliang());
+				history.setChangjia(obj.getChangjia());
+				//变更信息
+				history.setBglx("a");
+				history.setShifouls("1");
+				history.setNewid(obj.getId());
+				historyList.add(history);
+			}
+		}
 		return "OK";
 	}
 
