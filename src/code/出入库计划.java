@@ -1682,8 +1682,8 @@ public class 出入库计划 extends RuleEngine {
 				dataset.update(sbqd);
 				Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
 				if (fhqd != null && sbqd != null) {
-					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), tkmx.getShuliang()));
-					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), tkmx.getShuliang()));
+					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), rkdmx.getShuliang()));
+					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), rkdmx.getShuliang()));
 					if (fhqd.getShuliang().compareTo(0d) <= 0) {
 						fhqd.setBeizhu("已退库");
 					} else {
@@ -1692,20 +1692,28 @@ public class 出入库计划 extends RuleEngine {
 					dataset.update(fhqd);
 				}
 				// 新增一条退库清单记录
-				Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
-				nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
-				nfhqd.setHetongid(fhqd.getHetongid());
-				nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
-				nfhqd.setWuliaoid(fhqd.getWuliaoid());
-				nfhqd.setShuliang(0D);
-				nfhqd.setSn(fhqd.getSn());
-				nfhqd.setFahuosj(fhqd.getFahuosj());
-				nfhqd.setTkshuliang(0d);
-				nfhqd.setZt("2");
-				nfhqd.setSjtksl(rkdmx.getShuliang());
-				nfhqd.setTuihuosj(today);
-				nfhqd.setHetongtkid(tk.getId());
-				dataset.add(nfhqd);
+				Atzfahuoqingdan nfhqd = (Atzfahuoqingdan) dataset.getObjectByHql("Atzfahuoqingdan",
+						"from Atzfahuoqingdan where sn is null and zt='2' and wuliaoid=" + rkdmx.getWuliaoid()
+						+ " and Hetongtkid=" + tk.getId());
+				if (nfhqd == null) {
+					nfhqd = new Atzfahuoqingdan();
+					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
+					nfhqd.setHetongid(fhqd.getHetongid());
+					nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
+					nfhqd.setWuliaoid(fhqd.getWuliaoid());
+					nfhqd.setShuliang(0D);
+					nfhqd.setSn(fhqd.getSn());
+					nfhqd.setFahuosj(fhqd.getFahuosj());
+					nfhqd.setTkshuliang(0d);
+					nfhqd.setZt("2");
+					nfhqd.setSjtksl(rkdmx.getShuliang());
+					nfhqd.setTuihuosj(today);
+					nfhqd.setHetongtkid(tk.getId());
+					dataset.add(nfhqd);
+				}else{
+					nfhqd.setShuliang(com.actiz.util.MathUtil.add(nfhqd.getShuliang(), rkdmx.getShuliang()));
+					dataset.update(nfhqd);
+				}
 			}
 		}
 

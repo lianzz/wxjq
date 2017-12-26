@@ -32,41 +32,34 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		return "OK";
 	}
 
-	private Object 变更(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+	private Object 变更提交(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
+
 		/**
 		 * AU-项目配置清单-变更-12
 		 */
-		List <Atzxiangmupzmx> subobjs = (List<Atzxiangmupzmx>)context.get("subobjs");
-		List <Atzxiangmupzmx> new_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_new");
-		List<Atzxiangmupzmx> update_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_update");
-		List<Atzxiangmupzmx> del_subobjs = (List<Atzxiangmupzmx>)context.get("subobjs_del");
-		Hashtable<Long,Atzxiangmupzmx> old_subobjs = (Hashtable <Long,Atzxiangmupzmx>)context.get("subobjs_old");
-		logger.debug("subobjs="+subobjs.size());
-		logger.debug("new_subobjs="+new_subobjs.size());
-		logger.debug("update_subobjs="+update_subobjs.size());
-		logger.debug("del_subobjs="+del_subobjs.size());
-		logger.debug("old_subobjs="+old_subobjs.size());
+		List<Atzxiangmupzmx> pzmxList = dataset.getList("Atzxiangmupzmx", "1=1 and xiangmupzqdid="+instance.getId());
+		List<Atzxiangmupzmx> oldpzmxList = dataset.getList("Atzxiangmupzmx", "1=1 and xiangmupzqdid="+instance.getId());
 		Atzxiangmupzmx history = null;
 		List<Atzxiangmupzmx> historyList = new ArrayList<>();
 		boolean flag = true;
-		for (Iterator iterator = old_subobjs.values().iterator(); iterator.hasNext();) {
+		for (Iterator iterator = oldpzmxList.iterator(); iterator.hasNext();) {
 			Atzxiangmupzmx old = (Atzxiangmupzmx) iterator.next();
-			flag = true;//true=记录被删除;false=记录被修改
-			for (Iterator iterator2 = subobjs.iterator(); iterator2.hasNext();) {
+			flag = true;// true=记录被删除;false=记录被修改
+			for (Iterator iterator2 = pzmxList.iterator(); iterator2.hasNext();) {
 				Atzxiangmupzmx subobj = (Atzxiangmupzmx) iterator2.next();
-				if (old.getBujianh().equals(subobj.getBujianh())){
-					flag = false;//找到部件号相同的数据
+				if (old.getBujianh().equals(subobj.getBujianh())) {
+					flag = false;// 找到部件号相同的数据
 					if (old.getShuliang().compareTo(subobj.getShuliang()) == 0) {
-						break;//部件号相同, 且数量相等
-					}else{
-						//部件号相同, 且数量不等, 记录变更信息
+						break;// 部件号相同, 且数量相等
+					} else {
+						// 部件号相同, 且数量不等, 记录变更信息
 						history = new Atzxiangmupzmx();
 						history.setXiangmupzqdid(old.getXiangmupzqdid());
 						history.setBujianh(old.getBujianh());
 						history.setShuliang(old.getShuliang());
 						history.setChangjia(old.getChangjia());
-						//变更信息
+						// 变更信息
 						history.setBglx("u");
 						history.setShifouls("1");
 						history.setNewid(subobj.getId());
@@ -76,23 +69,75 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				}
 			}
 			if (flag) {
-				//找不到部件号相同的数据, 则该明细被删除,记录删除信息
+				// 找不到部件号相同的数据, 则该明细被删除,记录删除信息
 				history = new Atzxiangmupzmx();
 				history.setXiangmupzqdid(old.getXiangmupzqdid());
 				history.setBujianh(old.getBujianh());
 				history.setShuliang(old.getShuliang());
 				history.setChangjia(old.getChangjia());
-				//变更信息
+				// 变更信息
 				history.setBglx("d");
 				history.setShifouls("1");
-				//history.setNewid(subobj.getId());
+				// history.setNewid(subobj.getId());
 				historyList.add(history);
 			}
 		}
-		//是否有新增信息
+		List<Atzxiangmupzmx> subobjs = (List<Atzxiangmupzmx>) context.get("subobjs");
+		List<Atzxiangmupzmx> new_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_new");
+		List<Atzxiangmupzmx> update_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_update");
+		List<Atzxiangmupzmx> del_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_del");
+		Hashtable<Long, Atzxiangmupzmx> old_subobjs = (Hashtable<Long, Atzxiangmupzmx>) context.get("subobjs_old");
+		logger.debug("subobjs=" + subobjs.size());
+		logger.debug("new_subobjs=" + new_subobjs.size());
+		logger.debug("update_subobjs=" + update_subobjs.size());
+		logger.debug("del_subobjs=" + del_subobjs.size());
+		logger.debug("old_subobjs=" + old_subobjs.size());
+		Atzxiangmupzmx history = null;
+		List<Atzxiangmupzmx> historyList = new ArrayList<>();
+		boolean flag = true;
+		for (Iterator iterator = old_subobjs.values().iterator(); iterator.hasNext();) {
+			Atzxiangmupzmx old = (Atzxiangmupzmx) iterator.next();
+			flag = true;// true=记录被删除;false=记录被修改
+			for (Iterator iterator2 = subobjs.iterator(); iterator2.hasNext();) {
+				Atzxiangmupzmx subobj = (Atzxiangmupzmx) iterator2.next();
+				if (old.getBujianh().equals(subobj.getBujianh())) {
+					flag = false;// 找到部件号相同的数据
+					if (old.getShuliang().compareTo(subobj.getShuliang()) == 0) {
+						break;// 部件号相同, 且数量相等
+					} else {
+						// 部件号相同, 且数量不等, 记录变更信息
+						history = new Atzxiangmupzmx();
+						history.setXiangmupzqdid(old.getXiangmupzqdid());
+						history.setBujianh(old.getBujianh());
+						history.setShuliang(old.getShuliang());
+						history.setChangjia(old.getChangjia());
+						// 变更信息
+						history.setBglx("u");
+						history.setShifouls("1");
+						history.setNewid(subobj.getId());
+						historyList.add(history);
+						break;
+					}
+				}
+			}
+			if (flag) {
+				// 找不到部件号相同的数据, 则该明细被删除,记录删除信息
+				history = new Atzxiangmupzmx();
+				history.setXiangmupzqdid(old.getXiangmupzqdid());
+				history.setBujianh(old.getBujianh());
+				history.setShuliang(old.getShuliang());
+				history.setChangjia(old.getChangjia());
+				// 变更信息
+				history.setBglx("d");
+				history.setShifouls("1");
+				// history.setNewid(subobj.getId());
+				historyList.add(history);
+			}
+		}
+		// 是否有新增信息
 		for (Iterator iterator = subobjs.iterator(); iterator.hasNext();) {
 			Atzxiangmupzmx obj = (Atzxiangmupzmx) iterator.next();
-			flag = true;//为新增数据
+			flag = true;// 为新增数据
 			for (Iterator iterator2 = old_subobjs.values().iterator(); iterator2.hasNext();) {
 				Atzxiangmupzmx old = (Atzxiangmupzmx) iterator2.next();
 				if (obj.getBujianh().equals(old.getBujianh())) {
@@ -101,13 +146,13 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				}
 			}
 			if (flag) {
-				//在old_subobjs中没有,则为新增
+				// 在old_subobjs中没有,则为新增
 				history = new Atzxiangmupzmx();
 				history.setXiangmupzqdid(obj.getXiangmupzqdid());
 				history.setBujianh(obj.getBujianh());
 				history.setShuliang(obj.getShuliang());
 				history.setChangjia(obj.getChangjia());
-				//变更信息
+				// 变更信息
 				history.setBglx("a");
 				history.setShifouls("1");
 				history.setNewid(obj.getId());
@@ -115,6 +160,62 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			}
 		}
 		return "OK";
+	}
+
+	private Object 变更(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * AU-项目配置清单-变更-12
+		 */
+		String hql = "";
+		// 明细中销售编码不能重复
+		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
+		if (pzmxs != null && pzmxs.size() > 0) {
+			for (int i = 0; i < pzmxs.size(); i++) {
+				hql = "xiangmupzqdid=" + instance.getId() + " and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
+						+ pzmxs.get(i).getId();
+				List list = dataset.getList("Atzxiangmupzmx", hql);
+				if (list != null && list.size() > 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行销售编码在该配置中已存在，请检查");
+					return returnMsg;
+				}
+				if (pzmxs.get(i).getShuliang() <= 0d) {
+					returnMsg.set("NO", "第" + (i + 1) + "行销售编码数量必须大于0，请检查");
+					return returnMsg;
+				}
+			}
+		}
+		a.setModifyInfo(instance, request);
+		returnMsg.set("OK", "变更成功");
+		return returnMsg;
+	}
+
+	private Object 修改(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * AU-项目配置清单-修改-12
+		 */
+		String hql = "";
+		// 明细中销售编码不能重复
+		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
+		if (pzmxs != null && pzmxs.size() > 0) {
+			for (int i = 0; i < pzmxs.size(); i++) {
+				hql = "xiangmupzqdid=" + instance.getId() + " and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
+						+ pzmxs.get(i).getId();
+				List list = dataset.getList("Atzxiangmupzmx", hql);
+				if (list != null && list.size() > 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行销售编码在该配置中已存在，请检查");
+					return returnMsg;
+				}
+				if (pzmxs.get(i).getShuliang() <= 0d) {
+					returnMsg.set("NO", "第" + (i + 1) + "行销售编码数量必须大于0，请检查");
+					return returnMsg;
+				}
+			}
+		}
+		a.setModifyInfo(instance, request);
+		returnMsg.set("OK", "修改成功");
+		return returnMsg;
 	}
 
 	private Object 项目配置清单_提交(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context,
@@ -198,7 +299,6 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		 */
 		String hql = "";
 		// 合同Id必须存在
-
 		// 明细中销售编码不能重复
 		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
 		if (pzmxs != null && pzmxs.size() > 0) {
