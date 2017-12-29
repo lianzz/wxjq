@@ -222,6 +222,7 @@ public class 退库单 extends RuleEngine {
 			return returnMsg;
 		}
 		//Long xiaoshoubmid = null;
+		String bianhao = null;
 		for (int i = 0; i < tkmxs.size(); i++) {
 			Atzhetongtkmx tkmx = tkmxs.get(i);
 			if (tkmx.getSn() != null && !"".equals(tkmx.getSn())) {
@@ -232,6 +233,10 @@ public class 退库单 extends RuleEngine {
 			} else {
 				Atzfahuoqingdan fahuoqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
 						tkmx.getFahuoqdid());
+				if (bianhao == null) {
+					Atzfahuotzd tzd = (Atzfahuotzd) dataset.getObject(Atzfahuotzd.class, fahuoqd.getFahuotzdid());
+					bianhao = tzd.getBianhao();
+				}
 				Double sysl = com.actiz.util.MathUtil.sub(fahuoqd.getShuliang(), fahuoqd.getTkshuliang());
 				if (tkmx.getShuliang().compareTo(sysl) > 0) {
 					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过已发货数量");
@@ -240,6 +245,10 @@ public class 退库单 extends RuleEngine {
 			}
 		}
 		//生成编号
+		if (bianhao != null) {
+			bianhao = bianhao.substring(0, bianhao.length()-1) + "R";
+		}
+		instance.setBianhao(bianhao);
 		instance.setDanjuzt("1");
 		a.setCreateInfo(instance, request);
 		returnMsg.set("OK", "新增成功");

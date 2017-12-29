@@ -51,6 +51,16 @@ public class Atzxiangmupzmx implements Serializable,IPojo
   	        
       return this.bglx;     	
    }
+ 	 	 private String danjuzt;
+	 public void setDanjuzt(String danjuzt)
+	 {
+		  this.danjuzt = danjuzt;
+	 }
+   public String getDanjuzt()
+   { 	    
+  	        
+      return this.danjuzt;     	
+   }
  	 	 private Long bujianh;
 	 public void setBujianh(Long bujianh)
 	 {
@@ -151,6 +161,16 @@ public class Atzxiangmupzmx implements Serializable,IPojo
   	        
       return this.xiangmupzqdid;     	
    }
+ 	 	 private Long newid;
+	 public void setNewid(Long newid)
+	 {
+		  this.newid = newid;
+	 }
+   public Long getNewid()
+   { 	    
+  	        
+      return this.newid;     	
+   }
  	 	 private Double zhekou;
 	 public void setZhekou(Double zhekou)
 	 {
@@ -191,7 +211,27 @@ public class Atzxiangmupzmx implements Serializable,IPojo
    {
      	return this.xiangmupzqdidRef;
    }
-   
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzxiangmupzmx newidRef;
+	 public void setNewidRef(com.actiz.platform.application.dataset.pojo.Atzxiangmupzmx newidRef)
+	 {
+		  this.newidRef = newidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzxiangmupzmx getNewidRef()
+   {
+     	return this.newidRef;
+   }
+  
+	private java.util.Set atzpzmxbgjlSet;
+	public void setAtzpzmxbgjlSet(java.util.Set atzpzmxbgjlSet)
+	{
+		 this.atzpzmxbgjlSet = atzpzmxbgjlSet;
+	}
+  public java.util.Set getAtzpzmxbgjlSet()
+  {
+     return this.atzpzmxbgjlSet;
+  }
+  
 				private Long actizcompanyid;
 		public Long getActizcompanyid() 
 		{
@@ -210,9 +250,5 @@ public class Atzxiangmupzmx implements Serializable,IPojo
 	public void setLastmodifytime(Date lastmodifytime)
 	{
 		this.lastmodifytime = lastmodifytime;
-	}
-	public void setNewid(Long id2) {
-		// TODO Auto-generated method stub
-		
 	} 
 }

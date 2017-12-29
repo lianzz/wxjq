@@ -9,6 +9,7 @@ import java.sql.*;
 import org.apache.log4j.Logger;
 import com.actiz.bcs.rule.application.engine.*;
 import com.actiz.bcs.rule.application.newengine.util.AProxy;
+import com.actiz.bcs.workflow.application.hbm.NodeDefine;
 import com.actiz.platform.application.dataset.pojo.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +33,159 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		return "OK";
 	}
 
+	private Object 变更审核(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * A-项目配置清单变更审核-12
+		 */
+		Long hetongid = instance.getHetongid();
+		if (dataset.getObject(Atzhetong.class, hetongid) == null) {
+			returnMsg.set("NO", "关联合同不存在, 无法更新设备清单.");
+			return returnMsg;
+		}
+		String shenhezt = instance.getShzt();
+		String shyj = instance.getShyj();
+		NodeDefine nodeDefine = getProcessNodeInfo(context);
+		if (nodeDefine == null) {
+			returnMsg.set("NO", "流程节点为空, 请联系系统管理员");
+			return returnMsg;
+		}
+		String nodeName = nodeDefine.getName();
+		//不通过
+		if ("1".equals(shenhezt)) {
+			if ( shyj== null || "".equals(shyj)) {
+				returnMsg.set("NO", "审核意见不能为空!");
+				return returnMsg;
+			}
+			boolean result = completeWorkflowTask(request, context);
+			if (!result) {
+				returnMsg.set("NO", "流程提交失败, 请联系系统管理员");
+				return returnMsg;
+			}else{
+				String empname = (String) request.getSession().getAttribute("employeeName");
+				// 新增流程审核记录
+				Atzlcshenhejl sh = new Atzlcshenhejl();
+				sh.setRenwulx(nodeName != null ? nodeName : "审核");
+				sh.setShenher(empname);
+				sh.setShenherq(new Date());
+				sh.setShenhezt(shenhezt);
+				sh.setShenheyj(shyj);
+				sh.setDanjuid(instance.getId());
+				sh.setYewudlx("14");
+				dataset.add(sh);
+			}
+			//删除历史记录
+			dataset.batchUpdate("Atzpzmxbgjl", "delete Atzpzmxbgjl where danjuzt='2' and pzid="+instance.getId());
+			instance.setDanjuzt("5");
+			returnMsg.set("OK", "提交成功");
+			return returnMsg;
+		}
+		//审核通过
+		if ("产品市场总监审核".equals(nodeName)) {
+			//获取历史记录
+			//变更设备清单
+			List<Atzpzmxbgjl> bgList = dataset.getList("Atzpzmxbgjl", "danjuzt='2' and pzid="+instance.getId());
+			Atzshebeiqdmx sbqd = null;
+			List<Atzshebeiqdmx> add_sbqds = new ArrayList<Atzshebeiqdmx>();
+			List<Atzshebeiqdmx> update_sbqds = new ArrayList<Atzshebeiqdmx>();
+			Atzxiaoshoubm xiaoshoubm = null;
+			for (Iterator iterator = bgList.iterator(); iterator.hasNext();) {
+				Atzpzmxbgjl bgjl = (Atzpzmxbgjl) iterator.next();
+				List list = dataset.getList("Atzshebeiqdmx", "hetongid="+hetongid+" and xiaoshoubmid="+bgjl.getBujianhao());
+				if (list != null && list.size() > 0) {
+					if (list.size() > 1) {
+						returnMsg.set("NO", "合同下的设备清单重复, 请联系系统管理员");
+						return returnMsg;
+					}
+					//清单中已有该编码
+					sbqd = (Atzshebeiqdmx) list.get(0);
+					//number = 变更后 - 变更前
+					// sbqd配置数量/可下达数量 = 原来数量 + number
+					double number = com.actiz.util.MathUtil.sub(bgjl.getHshuliang(), bgjl.getQshuliang());
+					double qshuliang = sbqd.getShuliang();
+					sbqd.setShuliang(com.actiz.util.MathUtil.add(qshuliang, number));
+					sbqd.setWeifhsl(com.actiz.util.MathUtil.add(qshuliang, number));
+					update_sbqds.add(sbqd);
+				}else{
+					//清单中没有, 新增记录
+					sbqd = new Atzshebeiqdmx();
+					sbqd.setXiaoshoubmid(bgjl.getBujianhao());
+					xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class, bgjl.getBujianhao());
+					if (xiaoshoubm != null) {
+						sbqd.setXiaoshoubm(xiaoshoubm.getBianma());
+						sbqd.setWuliaoms(xiaoshoubm.getWuliaoms());
+					}
+					sbqd.setDanwei(bgjl.getDanwei());
+					sbqd.setLururq(new Date());
+					sbqd.setHetongid(hetongid);
+					sbqd.setShuliang(bgjl.getHshuliang());
+					sbqd.setWeifhsl(bgjl.getHshuliang());
+					add_sbqds.add(sbqd);
+				}
+				bgjl.setDanjuzt("3");
+				dataset.update(bgjl);
+			}
+			dataset.addAll(add_sbqds);
+			dataset.updateAll(update_sbqds);
+			
+			//删除旧的快照
+			dataset.batchUpdate("Atzxiangmupzmx", "delete Atzxiangmupzmx where shifouls='1' and xiangmupzqdid="+instance.getId());
+			//保存最新快照
+			List<Atzxiangmupzmx> pzmxList = dataset.getList("Atzxiangmupzmx", "xiangmupzqdid="+instance.getId());
+			List<Atzxiangmupzmx> snapshots = new ArrayList<Atzxiangmupzmx>();
+			for (Iterator iterator = pzmxList.iterator(); iterator.hasNext();) {
+				Atzxiangmupzmx pzmx = (Atzxiangmupzmx) iterator.next();
+				Atzxiangmupzmx snapshot = new Atzxiangmupzmx();
+				snapshot.setXiangmupzqdid(pzmx.getXiangmupzqdid());
+				snapshot.setBujianh(pzmx.getBujianh());
+				snapshot.setShuliang(pzmx.getShuliang());
+				snapshot.setChangjia(pzmx.getChangjia());
+				snapshot.setMuluj(pzmx.getMuluj());
+				snapshot.setChandi(pzmx.getChandi());
+				snapshot.setDanjia(pzmx.getDanjia());
+				snapshot.setDanwei(pzmx.getDanwei());
+				snapshot.setZhekou(pzmx.getZhekou());
+				snapshot.setHeji(pzmx.getHeji());
+				snapshot.setBeizhu(pzmx.getBeizhu());
+				//快照数据
+				snapshot.setShifouls("1");
+				snapshots.add(snapshot);
+			}
+			dataset.addAll(snapshots);
+			
+			instance.setDanjuzt("3");
+		}
+		boolean result = completeWorkflowTask(request, context);
+		if (!result) {
+			returnMsg.set("NO", "流程提交失败, 请联系系统管理员");
+			return returnMsg;
+		}else{
+			String empname = (String) request.getSession().getAttribute("employeeName");
+			// 新增流程审核记录
+			Atzlcshenhejl sh = new Atzlcshenhejl();
+			sh.setRenwulx(nodeName != null ? nodeName : "审核");
+			sh.setShenher(empname);
+			sh.setShenherq(new Date());
+			sh.setShenhezt(shenhezt);
+			sh.setShenheyj(shyj);
+			sh.setDanjuid(instance.getId());
+			sh.setYewudlx("14");
+			dataset.add(sh);
+		}
+		returnMsg.set("OK", "提交成功");
+		return returnMsg;
+	}
+
 	private Object 变更提交(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
-
-		/**
-		 * AU-项目配置清单-变更-12
+		/*
+		 * A-项目配置清单-变更提交-12
 		 */
-		List<Atzxiangmupzmx> pzmxList = dataset.getList("Atzxiangmupzmx", "1=1 and xiangmupzqdid="+instance.getId());
-		List<Atzxiangmupzmx> oldpzmxList = dataset.getList("Atzxiangmupzmx", "1=1 and xiangmupzqdid="+instance.getId());
-		Atzxiangmupzmx history = null;
-		List<Atzxiangmupzmx> historyList = new ArrayList<>();
+		List<Atzxiangmupzmx> pzmxList = dataset.getList("Atzxiangmupzmx", "shifouls='2' and xiangmupzqdid=" + instance.getId());
+		List<Atzxiangmupzmx> oldpzmxList = dataset.getList("Atzxiangmupzmx",
+				"shifouls='1' and xiangmupzqdid="+instance.getId());
+		Atzpzmxbgjl history = null;
+		List<Atzpzmxbgjl> historyList = new ArrayList<Atzpzmxbgjl>();
 		boolean flag = true;
 		for (Iterator iterator = oldpzmxList.iterator(); iterator.hasNext();) {
 			Atzxiangmupzmx old = (Atzxiangmupzmx) iterator.next();
@@ -54,15 +198,18 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 						break;// 部件号相同, 且数量相等
 					} else {
 						// 部件号相同, 且数量不等, 记录变更信息
-						history = new Atzxiangmupzmx();
-						history.setXiangmupzqdid(old.getXiangmupzqdid());
-						history.setBujianh(old.getBujianh());
-						history.setShuliang(old.getShuliang());
+						history = new Atzpzmxbgjl();
+						history.setXiangmupzmxid(old.getId());
+						history.setPzid(old.getXiangmupzqdid());
+						history.setBujianhao(old.getBujianh());
+						history.setQshuliang(old.getShuliang());
+						history.setHshuliang(subobj.getShuliang());
 						history.setChangjia(old.getChangjia());
+						history.setChandi(old.getChandi());
+						history.setDanwei(old.getDanwei());
 						// 变更信息
+						history.setDanjuzt("2");
 						history.setBglx("u");
-						history.setShifouls("1");
-						history.setNewid(subobj.getId());
 						historyList.add(history);
 						break;
 					}
@@ -70,75 +217,27 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			}
 			if (flag) {
 				// 找不到部件号相同的数据, 则该明细被删除,记录删除信息
-				history = new Atzxiangmupzmx();
-				history.setXiangmupzqdid(old.getXiangmupzqdid());
-				history.setBujianh(old.getBujianh());
-				history.setShuliang(old.getShuliang());
+				history = new Atzpzmxbgjl();
+				history.setXiangmupzmxid(old.getId());
+				history.setPzid(old.getXiangmupzqdid());
+				history.setBujianhao(old.getBujianh());
+				history.setQshuliang(old.getShuliang());
+				history.setHshuliang(0d);
 				history.setChangjia(old.getChangjia());
+				history.setChandi(old.getChandi());
+				history.setDanwei(old.getDanwei());
 				// 变更信息
+				history.setDanjuzt("2");
 				history.setBglx("d");
-				history.setShifouls("1");
-				// history.setNewid(subobj.getId());
 				historyList.add(history);
 			}
 		}
-		List<Atzxiangmupzmx> subobjs = (List<Atzxiangmupzmx>) context.get("subobjs");
-		List<Atzxiangmupzmx> new_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_new");
-		List<Atzxiangmupzmx> update_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_update");
-		List<Atzxiangmupzmx> del_subobjs = (List<Atzxiangmupzmx>) context.get("subobjs_del");
-		Hashtable<Long, Atzxiangmupzmx> old_subobjs = (Hashtable<Long, Atzxiangmupzmx>) context.get("subobjs_old");
-		logger.debug("subobjs=" + subobjs.size());
-		logger.debug("new_subobjs=" + new_subobjs.size());
-		logger.debug("update_subobjs=" + update_subobjs.size());
-		logger.debug("del_subobjs=" + del_subobjs.size());
-		logger.debug("old_subobjs=" + old_subobjs.size());
-		Atzxiangmupzmx history = null;
-		List<Atzxiangmupzmx> historyList = new ArrayList<>();
-		boolean flag = true;
-		for (Iterator iterator = old_subobjs.values().iterator(); iterator.hasNext();) {
-			Atzxiangmupzmx old = (Atzxiangmupzmx) iterator.next();
-			flag = true;// true=记录被删除;false=记录被修改
-			for (Iterator iterator2 = subobjs.iterator(); iterator2.hasNext();) {
-				Atzxiangmupzmx subobj = (Atzxiangmupzmx) iterator2.next();
-				if (old.getBujianh().equals(subobj.getBujianh())) {
-					flag = false;// 找到部件号相同的数据
-					if (old.getShuliang().compareTo(subobj.getShuliang()) == 0) {
-						break;// 部件号相同, 且数量相等
-					} else {
-						// 部件号相同, 且数量不等, 记录变更信息
-						history = new Atzxiangmupzmx();
-						history.setXiangmupzqdid(old.getXiangmupzqdid());
-						history.setBujianh(old.getBujianh());
-						history.setShuliang(old.getShuliang());
-						history.setChangjia(old.getChangjia());
-						// 变更信息
-						history.setBglx("u");
-						history.setShifouls("1");
-						history.setNewid(subobj.getId());
-						historyList.add(history);
-						break;
-					}
-				}
-			}
-			if (flag) {
-				// 找不到部件号相同的数据, 则该明细被删除,记录删除信息
-				history = new Atzxiangmupzmx();
-				history.setXiangmupzqdid(old.getXiangmupzqdid());
-				history.setBujianh(old.getBujianh());
-				history.setShuliang(old.getShuliang());
-				history.setChangjia(old.getChangjia());
-				// 变更信息
-				history.setBglx("d");
-				history.setShifouls("1");
-				// history.setNewid(subobj.getId());
-				historyList.add(history);
-			}
-		}
+
 		// 是否有新增信息
-		for (Iterator iterator = subobjs.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = pzmxList.iterator(); iterator.hasNext();) {
 			Atzxiangmupzmx obj = (Atzxiangmupzmx) iterator.next();
 			flag = true;// 为新增数据
-			for (Iterator iterator2 = old_subobjs.values().iterator(); iterator2.hasNext();) {
+			for (Iterator iterator2 = oldpzmxList.iterator(); iterator2.hasNext();) {
 				Atzxiangmupzmx old = (Atzxiangmupzmx) iterator2.next();
 				if (obj.getBujianh().equals(old.getBujianh())) {
 					flag = false;
@@ -147,19 +246,55 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			}
 			if (flag) {
 				// 在old_subobjs中没有,则为新增
-				history = new Atzxiangmupzmx();
-				history.setXiangmupzqdid(obj.getXiangmupzqdid());
-				history.setBujianh(obj.getBujianh());
-				history.setShuliang(obj.getShuliang());
+				history = new Atzpzmxbgjl();
+				history.setXiangmupzmxid(obj.getId());
+				history.setPzid(obj.getXiangmupzqdid());
+				history.setBujianhao(obj.getBujianh());
+				history.setQshuliang(0d);
+				history.setHshuliang(obj.getShuliang());
 				history.setChangjia(obj.getChangjia());
+				history.setChandi(obj.getChandi());
+				history.setDanwei(obj.getDanwei());
 				// 变更信息
+				history.setDanjuzt("2");
 				history.setBglx("a");
-				history.setShifouls("1");
-				history.setNewid(obj.getId());
 				historyList.add(history);
 			}
 		}
-		return "OK";
+		dataset.addAll(historyList);
+
+		String windowId = context.getId();
+		Map dataMap = new HashMap();
+		Long shenher = instance.getShenher();
+		Bc_auth_usr shenher_usr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr",
+				"from Bc_auth_usr where team_employee_id=(select id from Atztdyg where yuangongid=" + shenher + ")");
+		if (shenher_usr != null) {
+			Long shenher_usr_id = shenher_usr.getId();
+			logger.debug("shenher_usr===" + shenher_usr.getLoginid() + "----" + shenher_usr.getEmployee_name());
+			dataMap.put("shenher", shenher_usr_id);
+		} else {
+			returnMsg.set("NO", "流程提交失败, 审核人账号出错,请联系管理员!");
+			return returnMsg;
+		}
+		Long result = WorkflowAppHelper.newProcessInstance(4141816L, dataMap, request, windowId);
+		// Long result = newWorkflowInstance(request, context);
+		if (result <= 0) {
+			returnMsg.set("NO", "流程提交失败，请联系系统管理员");
+			return returnMsg;
+		} else {
+			String empname = (String) request.getSession().getAttribute("employeeName");
+			// 新增流程审核记录
+			Atzlcshenhejl sh = new Atzlcshenhejl();
+			sh.setRenwulx("变更提交审核");
+			sh.setShenher(empname);
+			sh.setShenherq(new Date());
+			sh.setDanjuid(instance.getId());
+			sh.setYewudlx("14");
+			dataset.add(sh);
+		}
+		instance.setDanjuzt("2");
+		returnMsg.set("OK", "提交成功");
+		return returnMsg;
 	}
 
 	private Object 变更(Atzxiangmupzqd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
@@ -172,7 +307,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
 		if (pzmxs != null && pzmxs.size() > 0) {
 			for (int i = 0; i < pzmxs.size(); i++) {
-				hql = "xiangmupzqdid=" + instance.getId() + " and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
+				hql = "xiangmupzqdid=" + instance.getId() + " and shifouls='2' and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
 						+ pzmxs.get(i).getId();
 				List list = dataset.getList("Atzxiangmupzmx", hql);
 				if (list != null && list.size() > 0) {
@@ -200,7 +335,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 		List<Atzxiangmupzmx> pzmxs = (List<Atzxiangmupzmx>) context.get("subobjs");
 		if (pzmxs != null && pzmxs.size() > 0) {
 			for (int i = 0; i < pzmxs.size(); i++) {
-				hql = "xiangmupzqdid=" + instance.getId() + " and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
+				hql = "xiangmupzqdid=" + instance.getId() + " and shifouls='2' and bujianh=" + pzmxs.get(i).getBujianh() + " and id !="
 						+ pzmxs.get(i).getId();
 				List list = dataset.getList("Atzxiangmupzmx", hql);
 				if (list != null && list.size() > 0) {
@@ -245,7 +380,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			Atzxiangmupzmx pzmx = pzmxlist.get(i);
 			xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class, pzmx.getBujianh());
 			List list = dataset.getListByHql("Atzwuliaojcxx",
-					"from Atzwuliaojcxx where wuliaosjxz='0' and shenhezt='3' and xiaoshoubmid=" + xiaoshoubm.getId());
+					"from Atzwuliaojcxx where wuliaosjxz='0' and shifouqy='1' and shenhezt='3' and xiaoshoubmid=" + xiaoshoubm.getId());
 			if (list == null || list.size() <= 0) {
 				// 该销售编码下没有物料
 				flag = true;
@@ -333,6 +468,19 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 			return returnMsg;
 		}
 		instance.setBianhao(rValue);
+
+		// 配置清单审核人
+		List<Bc_auth_userrole> usrRoles = dataset.getListByHql("Bc_auth_userrole",
+				"from Bc_auth_userrole where role_id=(select id from Bc_auth_roles where name='WF-项目配置清单审核-产品经理')");
+		if (usrRoles != null && usrRoles.size() > 0) {
+			Atzemployee shenheren = (Atzemployee) dataset.getObjectByHql("Atzemployee",
+					"from Atzemployee where id=(select yuangongid from Atztdyg where id=(select team_employee_id from Bc_auth_usr where id="
+							+ usrRoles.get(0).getUser_id() + "))");
+			if (shenheren != null) {
+				instance.setShenher(shenheren.getId());
+			}
+		}
+
 		a.setCreateInfo(instance, request);
 		returnMsg.set("OK", "新增成功");
 		return returnMsg;
@@ -376,9 +524,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, yewuzcdid);
 				if (ywzc != null) {
 					ywzc.setYwzt("3");
-
 				}
-
 			}
 			// 审核已通过
 			instance.setDanjuzt("3");
@@ -401,18 +547,28 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				return returnMsg;
 			}
 			List<Atzxiangmupzmx> pzmxs = dataset.getListByHql("Atzxiangmupzmx",
-					"from Atzxiangmupzmx where xiangmupzqdid =" + instance.getId());
+					"from Atzxiangmupzmx where shifouls ='2' and xiangmupzqdid =" + instance.getId());
 			if (pzmxs == null || pzmxs.size() <= 0) {
 				returnMsg.set("NO", "该项目配置清单没有明细");
 				return returnMsg;
 			}
-			List<Atzshebeiqdmx> sbqds = new ArrayList<Atzshebeiqdmx>();
+			List<Atzshebeiqdmx> update_sbqds = new ArrayList<Atzshebeiqdmx>();
+			List<Atzshebeiqdmx> add_sbqds = new ArrayList<Atzshebeiqdmx>();
 			Atzshebeiqdmx sbqd = null;
 			Atzxiaoshoubm xiaoshoubm = null;
+			List<Atzxiangmupzmx> snapshots = new ArrayList<Atzxiangmupzmx>();
 			for (Atzxiangmupzmx pzmx : pzmxs) {
-				String bglx = pzmx.getBglx();
-				// bglx为空, 则初次审核的数据, 直接生成设备清单明细
-				if (bglx == null) {
+				List list = dataset.getList("Atzshebeiqdmx", "hetongid="+hetongid+" and xiaoshoubmid="+pzmx.getBujianh());
+				if (list != null && list.size() > 0) {
+					if (list.size() > 1) {
+						returnMsg.set("NO", "合同下的设备清单重复, 请联系系统管理员");
+						return returnMsg;
+					}
+					sbqd = (Atzshebeiqdmx) list.get(0);
+					sbqd.setWeifhsl(com.actiz.util.MathUtil.add(sbqd.getShuliang(), pzmx.getShuliang()));
+					sbqd.setShuliang(com.actiz.util.MathUtil.add(sbqd.getShuliang(), pzmx.getShuliang()));
+					update_sbqds.add(sbqd);
+				}else{
 					sbqd = new Atzshebeiqdmx();
 					sbqd.setXiaoshoubmid(pzmx.getBujianh());
 					xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class, pzmx.getBujianh());
@@ -423,66 +579,32 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					sbqd.setShuliang(pzmx.getShuliang());
 					sbqd.setDanwei(pzmx.getDanwei());
 					sbqd.setWeifhsl(pzmx.getShuliang());
-					sbqd.setYifhsh(0d);
-					sbqd.setJhfhsl(0d);
-					sbqd.setTuikusl(0d);
-					sbqd.setJhtksl(0d);
-					sbqd.setJhdtksl(0d);
-					sbqd.setSjwfhsl(0d);
 					sbqd.setLururq(new Date());
 					sbqd.setHetongid(hetongid);
-					sbqd.setPzmxid(pzmx.getId());
-					sbqds.add(sbqd);
-				} else if (bglx.equals("a")) {
-					// 新增的配置明细
-					sbqd = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx",
-							"from Atzshebeiqdmx where hetongid=" + hetongid + " and xiaoshoubmid=" + pzmx.getBujianh());
-					if (sbqd == null) {
-						sbqd = new Atzshebeiqdmx();
-						sbqd.setXiaoshoubmid(pzmx.getBujianh());
-						xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class, pzmx.getBujianh());
-						if (xiaoshoubm != null) {
-							sbqd.setXiaoshoubm(xiaoshoubm.getBianma());
-							sbqd.setWuliaoms(xiaoshoubm.getWuliaoms());
-						}
-						sbqd.setShuliang(pzmx.getShuliang());
-						sbqd.setDanwei(pzmx.getDanwei());
-						sbqd.setWeifhsl(pzmx.getShuliang());
-						sbqd.setYifhsh(0d);
-						sbqd.setJhfhsl(0d);
-						sbqd.setTuikusl(0d);
-						sbqd.setJhtksl(0d);
-
-						sbqd.setJhdtksl(0d);
-						sbqd.setSjwfhsl(0d);
-						sbqd.setLururq(new Date());
-						sbqd.setHetongid(hetongid);
-						sbqd.setPzmxid(pzmx.getId());
-						sbqds.add(sbqd);
-					} else {
-						sbqd.setShuliang(com.actiz.util.MathUtil.add(sbqd.getShuliang(), pzmx.getShuliang()));
-						sbqd.setWeifhsl(com.actiz.util.MathUtil.sub(sbqd.getShuliang(), sbqd.getJhfhsl()));
-						sbqds.add(sbqd);
-					}
-				} else if (bglx.equals("u")) {
-					// 修改的配置明细, 只能修改数量.
-					sbqd = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx",
-							"from Atzshebeiqdmx where hetongid=" + hetongid + " and xiaoshoubmid=" + pzmx.getBujianh());
-					if (sbqd != null) {
-						sbqd.setShuliang(pzmx.getShuliang());
-						sbqd.setWeifhsl(com.actiz.util.MathUtil.sub(sbqd.getShuliang(), sbqd.getJhfhsl()));
-						sbqds.add(sbqd);
-					}
-				} else if (bglx.equals("d")) {
-					// 删除的明细,已发货的不能删除.
-					sbqd = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx",
-							"from Atzshebeiqdmx where hetongid=" + hetongid + " and xiaoshoubmid=" + pzmx.getBujianh());
-					dataset.delete(sbqd);
+					//sbqd.setPzmxid(pzmx.getId());
+					add_sbqds.add(sbqd);
 				}
-				pzmx.setBglx("未变更");
-				dataset.update(pzmx);
+				
+				//保存快照信息
+				Atzxiangmupzmx snapshot = new Atzxiangmupzmx();
+				snapshot.setXiangmupzqdid(pzmx.getXiangmupzqdid());
+				snapshot.setBujianh(pzmx.getBujianh());
+				snapshot.setShuliang(pzmx.getShuliang());
+				snapshot.setChangjia(pzmx.getChangjia());
+				snapshot.setMuluj(pzmx.getMuluj());
+				snapshot.setChandi(pzmx.getChandi());
+				snapshot.setDanjia(pzmx.getDanjia());
+				snapshot.setDanwei(pzmx.getDanwei());
+				snapshot.setZhekou(pzmx.getZhekou());
+				snapshot.setHeji(pzmx.getHeji());
+				snapshot.setBeizhu(pzmx.getBeizhu());
+				//快照数据
+				snapshot.setShifouls("1");
+				snapshots.add(snapshot);
 			}
-			dataset.addAll(sbqds);
+			dataset.addAll(add_sbqds);
+			dataset.updateAll(update_sbqds);
+			dataset.addAll(snapshots);
 		}
 		returnMsg.set("OK", "提交成功");
 		return returnMsg;

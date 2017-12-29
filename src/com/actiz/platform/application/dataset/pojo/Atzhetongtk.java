@@ -61,6 +61,16 @@ public class Atzhetongtk implements Serializable,IPojo
   	        
       return this.danjuzt;     	
    }
+ 	 	 private Long fahuotzdid;
+	 public void setFahuotzdid(Long fahuotzdid)
+	 {
+		  this.fahuotzdid = fahuotzdid;
+	 }
+   public Long getFahuotzdid()
+   { 	    
+  	        
+      return this.fahuotzdid;     	
+   }
  	 	 private String glfahuotzd;
 	 public void setGlfahuotzd(String glfahuotzd)
 	 {
@@ -204,6 +214,16 @@ public class Atzhetongtk implements Serializable,IPojo
       return this.zuihouxgrq;     	
    }
   
+	 private com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef;
+	 public void setFahuotzdidRef(com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef)
+	 {
+		  this.fahuotzdidRef = fahuotzdidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzfahuotzd getFahuotzdidRef()
+   {
+     	return this.fahuotzdidRef;
+   }
+ 
 	 private com.actiz.platform.application.dataset.pojo.Atzhetong hetongidRef;
 	 public void setHetongidRef(com.actiz.platform.application.dataset.pojo.Atzhetong hetongidRef)
 	 {

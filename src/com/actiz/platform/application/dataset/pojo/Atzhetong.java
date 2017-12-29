@@ -61,6 +61,16 @@ public class Atzhetong implements Serializable,IPojo
   	        
       return this.beizhu;     	
    }
+ 	 	 private String htbhfh;
+	 public void setHtbhfh(String htbhfh)
+	 {
+		  this.htbhfh = htbhfh;
+	 }
+   public String getHtbhfh()
+   { 	    
+  	        
+      return this.htbhfh;     	
+   }
  	 	 private String shoukuanqr;
 	 public void setShoukuanqr(String shoukuanqr)
 	 {
