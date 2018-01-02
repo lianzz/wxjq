@@ -102,9 +102,9 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					//number = 变更后 - 变更前
 					// sbqd配置数量/可下达数量 = 原来数量 + number
 					double number = com.actiz.util.MathUtil.sub(bgjl.getHshuliang(), bgjl.getQshuliang());
-					double qshuliang = sbqd.getShuliang();
-					sbqd.setShuliang(com.actiz.util.MathUtil.add(qshuliang, number));
-					sbqd.setWeifhsl(com.actiz.util.MathUtil.add(qshuliang, number));
+					//double qshuliang = sbqd.getShuliang();
+					sbqd.setShuliang(com.actiz.util.MathUtil.add(sbqd.getShuliang(), number));
+					sbqd.setWeifhsl(com.actiz.util.MathUtil.add(sbqd.getWeifhsl(), number));
 					update_sbqds.add(sbqd);
 				}else{
 					//清单中没有, 新增记录
@@ -261,8 +261,12 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				historyList.add(history);
 			}
 		}
+		if (historyList == null || historyList.size() <= 0) {
+			returnMsg.set("NO", "该配置没有变更记录, 请变更后再提交");
+			return returnMsg;
+		}
 		dataset.addAll(historyList);
-
+		
 		String windowId = context.getId();
 		Map dataMap = new HashMap();
 		Long shenher = instance.getShenher();
@@ -771,6 +775,17 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				return returnMsg;
 			}
 			xiangmupzqd.setBianhao(rValue);
+			// 配置清单审核人
+			List<Bc_auth_userrole> usrRoles = dataset.getListByHql("Bc_auth_userrole",
+					"from Bc_auth_userrole where role_id=(select id from Bc_auth_roles where name='WF-项目配置清单审核-产品经理')");
+			if (usrRoles != null && usrRoles.size() > 0) {
+				Atzemployee shenheren = (Atzemployee) dataset.getObjectByHql("Atzemployee",
+						"from Atzemployee where id=(select yuangongid from Atztdyg where id=(select team_employee_id from Bc_auth_usr where id="
+								+ usrRoles.get(0).getUser_id() + "))");
+				if (shenheren != null) {
+					xiangmupzqd.setShenher(shenheren.getId());
+				}
+			}
 			dataset.add(xiangmupzqd);
 			// 项目配置清单编号(*) 部件号(*) 厂家编号 产地 单位 数量(*) 目录价 折扣 单价 合计 备注
 
@@ -861,6 +876,7 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 							ccts.append(ccts.append("第").append(i + 1)
 									.append("行, 根据部件号“" + bujianhStr + "”查找物料信息,没有启用的物料,请检查数据;<br>"));
 						}
+						wuliao = (Atzwuliaojcxx) wllist.get(0);
 						shengchancj = (Atzshengchancj) dataset
 								.getList("Atzshengchancj", "wuliaoid=" + wuliao.getId() + " order by youxianji").get(0);
 						if (shengchancj == null) {
@@ -897,7 +913,9 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 				return returnMsg;
 			}
 			dataset.addAll(xiangmupzmxs);
-
+			
+			
+			
 			returnMsg.set("OK", "导入成功！");
 			return returnMsg;
 		} catch (Exception e) {

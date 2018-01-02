@@ -1052,7 +1052,7 @@ public class 发货通知单 extends RuleEngine {
 		List<Fi_atzfahuosbqdmx_F56e7fca200000005zSub> fahuomxList = new ArrayList();
 		if (xiangmupzid != null) {
 			logger.debug("xiangmupzid===========" + xiangmupzid);
-			List<Atzxiangmupzmx> pzmxs = dataset.getList("Atzxiangmupzmx", "xiangmupzqdid=" + xiangmupzid);
+			List<Atzxiangmupzmx> pzmxs = dataset.getList("Atzxiangmupzmx", "shifouls='2' and xiangmupzqdid=" + xiangmupzid);
 			if (pzmxs != null && pzmxs.size() > 0) {
 				Atzxiaoshoubm xiaoshoubm = null;
 				for (Atzxiangmupzmx pzmx : pzmxs) {
