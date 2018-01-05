@@ -26,6 +26,149 @@ public class 退库单 extends RuleEngine {
 		return "OK";
 	}
 
+	private Object 重新编辑(Atzhetongtk instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * A-合同退库-重新编辑-12
+		 */
+		List<Atzhetongtkmx> tkmxs = (List<Atzhetongtkmx>) context.get("subobjs");
+		if (tkmxs == null || tkmxs.size() <= 0) {
+			returnMsg.set("NO", "无明细，请检查");
+			return returnMsg;
+		}
+		for (int i = 0; i < tkmxs.size(); i++) {
+			Atzhetongtkmx tkmx = tkmxs.get(i);
+			Atzfahuoqingdan fahuoqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
+			if (tkmx.getSn() != null && !"".equals(tkmx.getSn())) {
+				if (tkmx.getShuliang().compareTo(1D) != 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的sn不为空, 退库数量只能为1");
+					return returnMsg;
+				}
+			} else {
+				Double sysl = com.actiz.util.MathUtil.sub(fahuoqd.getShuliang(), fahuoqd.getTkshuliang());
+				if (tkmx.getShuliang().compareTo(sysl) > 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过可退库数量");
+					return returnMsg;
+				}
+			}
+		}
+		a.setModifyInfo(instance, request);
+		//提交流程
+		boolean result = completeWorkflowTask(request, context);
+		if (!result) {
+			logger.error("合同退库审核流程提交失败，请联系系统管理员");
+			returnMsg.set("NO", "合同退库审核流程提交失败，请联系系统管理员");
+			return returnMsg;
+		} else {
+			String empname = (String) request.getSession().getAttribute("employeeName");
+			// 新增流程审核记录
+			Atzlcshenhejl sh = new Atzlcshenhejl();
+			sh.setRenwulx("重新编辑");
+			sh.setShenher(empname);
+			sh.setShenherq(new Date());
+			sh.setDanjuid(instance.getId());
+			sh.setYewudlx("22");
+			dataset.add(sh);
+		}
+		returnMsg.set("OK", "提交成功");
+		return returnMsg;
+	}
+
+	private Object AU_合同退库(Atzhetongtk instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * AU-合同退库-12
+		 */
+		List<Atzhetongtkmx> tkmxs = (List<Atzhetongtkmx>) context.get("subobjs");
+		if (tkmxs == null || tkmxs.size() <= 0) {
+			returnMsg.set("NO", "无明细，请检查");
+			return returnMsg;
+		}
+		for (int i = 0; i < tkmxs.size(); i++) {
+			Atzhetongtkmx tkmx = tkmxs.get(i);
+			Atzfahuoqingdan fahuoqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
+			if (tkmx.getSn() != null && !"".equals(tkmx.getSn())) {
+				if (tkmx.getShuliang().compareTo(1D) != 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的sn不为空, 退库数量只能为1");
+					return returnMsg;
+				}
+			} else {
+				Double sysl = com.actiz.util.MathUtil.sub(fahuoqd.getShuliang(), fahuoqd.getTkshuliang());
+				if (tkmx.getShuliang().compareTo(sysl) > 0) {
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过可退库数量");
+					return returnMsg;
+				}
+			}
+		}
+		// instance.setDanjuzt("1");
+		a.setModifyInfo(instance, request);
+		returnMsg.set("OK", "修改成功");
+		return returnMsg;
+	}
+
+	private Object 发货清单选择按钮(Atzhetongtk instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * A-发货清单选择按钮-12
+		 */
+		String message = null; // 提示信息
+		String fhqdid = context.getString("atzfahuoqingdan.id");
+		if (fhqdid == null || "".equals(fhqdid.trim())) {
+			message = "错误代码: 1374389539328611<br/>选择异常, 请联系系统管理员！";
+			returnMsg.set("NO", message);
+			return returnMsg;
+		}
+		Long id = Long.parseLong(fhqdid);
+		Atzfahuoqingdan fhqd = null;
+		try {
+			fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, id);
+		} catch (Exception e) {
+			logger.error(e);
+			message = "错误代码: 1374389539328611<br/>系统运行异常, 请联系系统管理员！";
+		}
+		if (fhqd == null) {
+			message = "错误代码: 1374389539328611<br/>系统运行异常, 请联系系统管理员！";
+			returnMsg.set("NO", message);
+			return returnMsg;
+		}
+		// 设置发货清单id
+		context.set("fahuoqingdan.id", fhqd.getId());
+
+		Atzwuliaojcxx jcxx = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class, fhqd.getWuliaoid());
+		if (jcxx == null) {
+			message = "错误代码: 1374389539328611<br/>系统运行异常, 请联系系统管理员！";
+		}
+		if (message != null) {
+			returnMsg.set("NO", message);
+			return returnMsg;
+		}
+		String wuliaobm = jcxx.getWuliaobm();
+		String popWindowId = context.getString("pop.windowid");
+		String popField = context.getString("pop.field");
+		if (popField != null && popField.length() != 0)
+			popField += ".";
+		logger.debug(wuliaobm);
+		logger.debug(popWindowId);
+		logger.debug(popField);
+		context.setIntoWindow(request, popWindowId, popField + "selected.values", jcxx.getId());
+		context.setIntoWindow(request, popWindowId, popField + "selected.labels", wuliaobm);
+		return "OK";
+	}
+
+	private Object 退库修改选择发货清单(Atzhetongtk instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/*
+		 * A-退库修改选择发货清单
+		 */
+		String hetongtkid = (String) context.get("atzhetongtk.id");
+		logger.debug(hetongtkid);
+		if (hetongtkid != null) {
+			Atzhetongtk tk = (Atzhetongtk) dataset.getObject(Atzhetongtk.class, Long.parseLong(hetongtkid));
+			context.set("atzhetong.id", tk.getHetongid());
+		}
+		return "OK";
+	}
+
 	private Object 合同退库_审核2(Atzhetongtk instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
@@ -104,50 +247,64 @@ public class 退库单 extends RuleEngine {
 				churukjhd.setShifoufsh("2");// 是否反审核：否
 				dataset.add(churukjhd);
 
+				Map<Long, Atzchurukjhdmx> jhdmxMap = new HashMap<Long, Atzchurukjhdmx>();
 				List<Atzchurukjhdmx> churukjhdmxList = new ArrayList();
 				List<Atzhetongtkmx> hetongtkmxs = dataset.getList("Atzhetongtkmx", "hetongtkid=" + instance.getId());
 				if (hetongtkmxs != null && hetongtkmxs.size() > 0) {
 					for (Iterator iter = hetongtkmxs.iterator(); iter.hasNext();) {
 						Atzhetongtkmx hetongtkmx = (Atzhetongtkmx) iter.next();
-						Atzchurukjhdmx churukjhmx = new Atzchurukjhdmx();
-						churukjhmx.setAtzchurukjhdid(churukjhd.getId());
-						/*
-						 * List<Atzwuliaojcxx> wuliaoList =
-						 * dataset.getList("Atzwuliaojcxx",
-						 * "wuliaosjxz ='0' and xiaoshoubmid =" +
-						 * hetongtkmx.getXiaoshoubmid() +
-						 * " order by banbenpx desc"); if (wuliaoList != null &&
-						 * wuliaoList.size() > 0) { Atzwuliaojcxx wuliao =
-						 * (Atzwuliaojcxx) wuliaoList.get(0);
-						 * churukjhmx.setWuliaoid(wuliao.getId());
-						 * churukjhmx.setWuliaobm(wuliao.getWuliaobm());
-						 * churukjhmx.setWuliaoms(wuliao.getWuliaoms());
-						 * churukjhmx.setGuigedw(wuliao.getGuigedw());
-						 * churukjhmx.setDanwei(wuliao.getDanwei()); }
-						 */
-						churukjhmx.setXiaoshoubmid(hetongtkmx.getXiaoshoubmid());
-						Atzwuliaojcxx wuliao = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class,
-								hetongtkmx.getWuliaobmid());
-						churukjhmx.setWuliaoid(wuliao.getId());
-						churukjhmx.setWuliaobm(wuliao.getWuliaobm());
-						churukjhmx.setWuliaoms(wuliao.getWuliaoms());
-						churukjhmx.setGuigedw(wuliao.getGuigedw());
-						churukjhmx.setDanwei(wuliao.getDanwei());
-						// churukjhmx.setMeidwsl(fahuomx.getMeidwsl());
-						churukjhmx.setInitshuliang(hetongtkmx.getShuliang());
-						churukjhmx.setShuliang(hetongtkmx.getShuliang());
-						churukjhmx.setKuweiid(431139L);
-						churukjhmx.setWeicrksl(null);
-						churukjhmx.setLururq(new Date());
-						// 备注为sn
-						if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
-							churukjhmx.setBeizhu("SN=" + hetongtkmx.getSn());
+						if (jhdmxMap.containsKey(hetongtkmx.getWuliaobmid())) {
+							Atzchurukjhdmx jhdmx = jhdmxMap.get(hetongtkmx.getWuliaobmid());
+							jhdmx.setShuliang(
+									com.actiz.util.MathUtil.add(jhdmx.getShuliang(), hetongtkmx.getShuliang()));
+							if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
+								jhdmx.setBeizhu(jhdmx.getBeizhu() + "," + hetongtkmx.getSn());
+							}
+							dataset.update(jhdmx);
+						} else {
+							Atzchurukjhdmx churukjhmx = new Atzchurukjhdmx();
+							churukjhmx.setAtzchurukjhdid(churukjhd.getId());
+							/*
+							 * List<Atzwuliaojcxx> wuliaoList =
+							 * dataset.getList("Atzwuliaojcxx",
+							 * "wuliaosjxz ='0' and xiaoshoubmid =" +
+							 * hetongtkmx.getXiaoshoubmid() +
+							 * " order by banbenpx desc"); if (wuliaoList !=
+							 * null && wuliaoList.size() > 0) { Atzwuliaojcxx
+							 * wuliao = (Atzwuliaojcxx) wuliaoList.get(0);
+							 * churukjhmx.setWuliaoid(wuliao.getId());
+							 * churukjhmx.setWuliaobm(wuliao.getWuliaobm());
+							 * churukjhmx.setWuliaoms(wuliao.getWuliaoms());
+							 * churukjhmx.setGuigedw(wuliao.getGuigedw());
+							 * churukjhmx.setDanwei(wuliao.getDanwei()); }
+							 */
+							churukjhmx.setXiaoshoubmid(hetongtkmx.getXiaoshoubmid());
+							Atzwuliaojcxx wuliao = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class,
+									hetongtkmx.getWuliaobmid());
+							churukjhmx.setWuliaoid(wuliao.getId());
+							churukjhmx.setWuliaobm(wuliao.getWuliaobm());
+							churukjhmx.setWuliaoms(wuliao.getWuliaoms());
+							churukjhmx.setGuigedw(wuliao.getGuigedw());
+							churukjhmx.setDanwei(wuliao.getDanwei());
+							// churukjhmx.setMeidwsl(fahuomx.getMeidwsl());
+							churukjhmx.setInitshuliang(hetongtkmx.getShuliang());
+							churukjhmx.setShuliang(hetongtkmx.getShuliang());
+							churukjhmx.setKuweiid(431139L);
+							churukjhmx.setWeicrksl(null);
+							churukjhmx.setLururq(new Date());
+							// 备注为sn
+							if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
+								churukjhmx.setBeizhu("SN=" + hetongtkmx.getSn());
+							}
+
+							jhdmxMap.put(wuliao.getId(), churukjhmx);
+							dataset.add(churukjhmx);
 						}
-						churukjhdmxList.add(churukjhmx);
+						// churukjhdmxList.add(churukjhmx);
 					}
 				}
-				if (churukjhdmxList.size() > 0)
-					dataset.addAll(churukjhdmxList);
+				// if (churukjhdmxList.size() > 0)
+				// dataset.addAll(churukjhdmxList);
 			}
 			instance.setDanjuzt("3");
 			dataset.update(instance);
@@ -241,7 +398,7 @@ public class 退库单 extends RuleEngine {
 			} else {
 				Double sysl = com.actiz.util.MathUtil.sub(fahuoqd.getShuliang(), fahuoqd.getTkshuliang());
 				if (tkmx.getShuliang().compareTo(sysl) > 0) {
-					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过已发货数量");
+					returnMsg.set("NO", "第" + (i + 1) + "行物料明细的数量超过可退库数量");
 					return returnMsg;
 				}
 			}
@@ -249,9 +406,9 @@ public class 退库单 extends RuleEngine {
 		// 生成编号
 		if (bianhao != null) {
 			bianhao = bianhao.substring(0, bianhao.length() - 1) + "R";
-			List list = dataset.getList("Atzhetongtk", "bianhao='"+bianhao+"'");
+			List list = dataset.getList("Atzhetongtk", "bianhao='" + bianhao + "'");
 			if (list != null && list.size() > 0) {
-				bianhao = bianhao + (list.size()+1);
+				bianhao = bianhao + (list.size() + 1);
 			}
 		}
 		instance.setBianhao(bianhao);

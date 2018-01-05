@@ -232,15 +232,15 @@ public class 出入库计划 extends RuleEngine {
 						returnMsg.set("NO", "合同退库, 第" + (i + 1) + "条明细找不到退库单信息,请检查物料或sn信息");
 						return returnMsg;
 					}
-					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
-							tkmx.getFahuoqdid());
-					if (fhqd != null) {
-						if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
-							fhqd.setZt("计划退库");
-						} else {
-							fhqd.setZt("计划退库,数量=" + fhqd.getTkshuliang());
-						}
-					}
+//					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
+//							tkmx.getFahuoqdid());
+//					if (fhqd != null) {
+//						if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
+//							fhqd.setZt("计划退库");
+//						} else {
+//							fhqd.setZt("计划退库,数量=" + fhqd.getTkshuliang());
+//						}
+//					}
 					hql = "from Atzshebeiqdmx where hetongid=" + tk.getHetongid() + " and xiaoshoubmid="
 							+ tkmx.getXiaoshoubmid();
 					logger.debug(hql);
@@ -250,13 +250,10 @@ public class 出入库计划 extends RuleEngine {
 						sbqd.setJhdtksl(com.actiz.util.MathUtil.add(sbqd.getJhdtksl(), rkjhdmx.getShuliang()));
 						dataset.update(sbqd);
 					}
-
 				}
 			}
-
 			// end
 			instance.setDanjuzt("3"); // 单据状态: 审核已通过
-
 			dataset.update(instance);
 		} else {
 			instance.setDanjuzt("4"); // 单据状态: 审核未通过

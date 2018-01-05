@@ -120,6 +120,8 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					sbqd.setHetongid(hetongid);
 					sbqd.setShuliang(bgjl.getHshuliang());
 					sbqd.setWeifhsl(bgjl.getHshuliang());
+					sbqd.setSjwfhsl(0d);
+					sbqd.setJhdtksl(0d);
 					add_sbqds.add(sbqd);
 				}
 				bgjl.setDanjuzt("3");
@@ -583,6 +585,8 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 					sbqd.setShuliang(pzmx.getShuliang());
 					sbqd.setDanwei(pzmx.getDanwei());
 					sbqd.setWeifhsl(pzmx.getShuliang());
+					sbqd.setSjwfhsl(0d);
+					sbqd.setJhdtksl(0d);
 					sbqd.setLururq(new Date());
 					sbqd.setHetongid(hetongid);
 					//sbqd.setPzmxid(pzmx.getId());

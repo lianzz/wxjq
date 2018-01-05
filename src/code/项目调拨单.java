@@ -36,6 +36,7 @@ public class 项目调拨单 extends RuleEngine {
 			returnMsg.set("NO", "单据已提交,不能删除");
 			return returnMsg;
 		}
+		dataset.batchUpdate("Atzhetongdbmx", "delete Atzhetongdbmx where hetongdbid="+instance.getId());
 		dataset.delete(instance);
 		context.remove("atzhetongdb.id");
 		returnMsg.set("OK", "删除成功");
@@ -71,6 +72,18 @@ public class 项目调拨单 extends RuleEngine {
 			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), dbmx.getShuliang()));
 			dataset.update(fhqd);
 		}
+		//查找工程项目经理
+		Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getRuhetong());
+		String gcxmjl = ruhetong.getGcyszt();
+		if (gcxmjl == null) {
+			returnMsg.set("NO", "调入合同的工程项目经理没有维护,不能调拨");
+			return returnMsg;
+		}
+		Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name="+gcxmjl);
+		if (gcxmjlusr == null) {
+			returnMsg.set("NO", "调入合同的工程项目经理查找出错,请联系系统管理员");
+			return returnMsg;
+		}
 		// 获取大区经理usrid
 		Bc_auth_usr usr = null;
 		try {
@@ -95,6 +108,7 @@ public class 项目调拨单 extends RuleEngine {
 		}
 		Map map107 = new HashMap();
 		map107.put("daqu", usr.getId());
+		map107.put("gcxmjl", gcxmjlusr.getId());
 		// map107.put("kehujlUser",String.valueOf(user.getId()));
 		Long result370 = WorkflowAppHelper.newProcessInstance(4095188L, map107, request, windowId370);
 		if (result370 <= 0) {
@@ -151,16 +165,24 @@ public class 项目调拨单 extends RuleEngine {
 					//维护调出设备剩余数量
 					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), dbmx.getShuliang()));
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), dbmx.getShuliang()));
-					fhqd.setBeizhu("调出去处:" + ruhetong.getHetongbh());
-					if (fhqd.getShuliang().compareTo(dbmx.getShuliang()) > 0) {
-						//部分调拨,状态为部分调拨 
-						fhqd.setZt("部分调出");
-					}else{
-						//全部调拨,状态为调拨
-						fhqd.setZt("调出");
-					}
+					//fhqd.setBeizhu("调出去处:" + ruhetong.getHetongbh());
 					dataset.update(fhqd);
-					// 新增一条发货明细,维护来源合同,调拨数量,状态为调拨;
+					//新增一条发货明细,维护调出去向,调拨数量,状态为调出=4;
+					Atzfahuoqingdan cfhqd = new Atzfahuoqingdan();
+					cfhqd.setFahuotzdid(fhqd.getFahuotzdid());;
+					cfhqd.setHetongid(fhqd.getHetongid());
+					cfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
+					cfhqd.setWuliaoid(fhqd.getWuliaoid());
+					cfhqd.setSjtksl(dbmx.getShuliang());
+					cfhqd.setShuliang(0d);
+					cfhqd.setTkshuliang(0d);
+					cfhqd.setSn(fhqd.getSn());
+					cfhqd.setFahuosj(fhqd.getFahuosj());
+					cfhqd.setZt("4");
+					//cfhqd.setBeizhu("调入来源:"+chuhetong.getHetongbh());
+					cfhqd.setSjtksl(0d);
+					dataset.add(cfhqd);
+					// 新增一条发货明细,维护来源合同,调拨数量,状态为调入=3;
 					Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
 					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());;
 					nfhqd.setHetongid(fhqd.getHetongid());
@@ -170,7 +192,7 @@ public class 项目调拨单 extends RuleEngine {
 					nfhqd.setSn(fhqd.getSn());
 					nfhqd.setFahuosj(fhqd.getFahuosj());
 					nfhqd.setTkshuliang(0d);
-					nfhqd.setZt("调入");
+					nfhqd.setZt("3");
 					nfhqd.setBeizhu("调入来源:"+chuhetong.getHetongbh());
 					nfhqd.setSjtksl(0d);
 					dataset.add(nfhqd);
@@ -180,6 +202,20 @@ public class 项目调拨单 extends RuleEngine {
 				db.setDanjuzt("5");
 			}
 			dataset.update(db);
+		}else{
+			//设置工程项目经理
+			Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getRuhetong());
+			String gcxmjl = ruhetong.getGcyszt();
+			if (gcxmjl == null) {
+				returnMsg.set("NO", "调入合同的工程项目经理没有维护,不能调拨");
+				return returnMsg;
+			}
+			Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name="+gcxmjl);
+			if (gcxmjlusr == null) {
+				returnMsg.set("NO", "调入合同的工程项目经理查找出错,请联系系统管理员");
+				return returnMsg;
+			}
+			context.set("gcxmjl", gcxmjlusr.getId());
 		}
 		boolean result = completeWorkflowTask(request, context);
 		if (!result) {

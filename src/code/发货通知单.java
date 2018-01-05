@@ -179,11 +179,11 @@ public class 发货通知单 extends RuleEngine {
 		if (fhtzd.getXmpzqdid() != null) {
 			pzqd = (Atzxiangmupzqd) dataset.getObject(Atzxiangmupzqd.class, fhtzd.getXmpzqdid());
 			if (pzqd != null) {
-				message += "项目配置清单:" + pzqd.getBianhao() + "<br>";
+				message += "项目配置清单:" + pzqd.getBianhao() + "\n";
 			}
 		}
-		message += "发货通知单:" + fhtzd.getId() + "<br>";
-		message += "合同编号:" + hetong.getHetongbh() + "<br>销售编码:";
+		message += "发货通知单:" + fhtzd.getId() + "\n";
+		message += "合同编号:" + hetong.getHetongbh() + "\n销售编码:";
 		for (Atzfahuosbqdmx dfhmx : nList) {
 			// 设备清单已下达, 可下达
 			hql = "from Atzshebeiqdmx where xiaoshoubmid=" + dfhmx.getXiaoshoubmid() + "and hetongid="
@@ -201,7 +201,7 @@ public class 发货通知单 extends RuleEngine {
 			dfhmx.setFahuotzdid(null);
 			dataset.update(dfhmx);
 		}
-		message += "的物料库存不足, 请配置清单变更后重新发货。<br>工程中心反馈信息: " + fhtzd.getShenheyj();
+		message += "的物料库存不足, 请配置清单变更后重新发货。\n工程中心反馈信息: " + fhtzd.getShenheyj();
 		// 提醒流程,配置清单变更提醒角色 配置清单创建人 发货通知单提交人 合同销售经理
 		logger.debug(message);
 		List<Long> txrEmpIds = new ArrayList<Long>();
