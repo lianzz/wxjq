@@ -177,7 +177,7 @@ public class 出入库计划 extends RuleEngine {
 				rkjhdmx.setCunfangwz(ptkucun.getCunfangwz());
 
 			rkjhdmx.setWeicrksl(shuliang); // 未完成数量
-			if ("1".equals(instance.getZhixingf())) {
+			if ("1".equals(rkjhdmx.getZhixingf())) {
 				rkjhdmx.setWeicrksl(0d);
 				rkjhdmx.setZhizaowzxl(shuliang);
 			}
@@ -212,7 +212,6 @@ public class 出入库计划 extends RuleEngine {
 			} else {
 				instance.setSfxyjianyan("2"); // 是否需要检验: 否
 			}
-
 			/**
 			 * 入库计划原因为合同退库, 维护计划退库数量
 			 */
@@ -221,28 +220,24 @@ public class 出入库计划 extends RuleEngine {
 				for (int i = 0; i < rkjhdmxs.size(); i++) {
 					rkjhdmx = (Atzchurukjhdmx) rkjhdmxs.get(i);
 					Atzhetongtk tk = (Atzhetongtk) dataset.getObject(Atzhetongtk.class, instance.getHetongtkid());
-					String hql = "from Atzhetongtkmx where hetongtkid=" + instance.getHetongtkid() + " and wuliaobmid="
-							+ rkjhdmx.getWuliaoid();
-					if (rkjhdmx.getBeizhu() != null && !"".equals(rkjhdmx.getBeizhu())) {
-						hql = hql + " and sn='" + rkjhdmx.getBeizhu().trim() + "'";
-					}
-					logger.debug(hql);
-					Atzhetongtkmx tkmx = (Atzhetongtkmx) dataset.getObjectByHql("Atzhetongtkmx", hql);
-					if (tkmx == null) {
-						returnMsg.set("NO", "合同退库, 第" + (i + 1) + "条明细找不到退库单信息,请检查物料或sn信息");
-						return returnMsg;
-					}
-//					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class,
-//							tkmx.getFahuoqdid());
-//					if (fhqd != null) {
-//						if (fhqd.getShuliang().compareTo(fhqd.getTkshuliang()) == 0) {
-//							fhqd.setZt("计划退库");
-//						} else {
-//							fhqd.setZt("计划退库,数量=" + fhqd.getTkshuliang());
-//						}
-//					}
-					hql = "from Atzshebeiqdmx where hetongid=" + tk.getHetongid() + " and xiaoshoubmid="
-							+ tkmx.getXiaoshoubmid();
+					// String hql = "from Atzhetongtkmx where hetongtkid=" +
+					// instance.getHetongtkid() + " and wuliaobmid="
+					// + rkjhdmx.getWuliaoid();
+					// if (rkjhdmx.getBeizhu() != null &&
+					// !"".equals(rkjhdmx.getBeizhu())) {
+					// hql = hql + " and sn='" + rkjhdmx.getBeizhu().trim() +
+					// "'";
+					// }
+					// logger.debug(hql);
+					// Atzhetongtkmx tkmx = (Atzhetongtkmx)
+					// dataset.getObjectByHql("Atzhetongtkmx", hql);
+					// if (tkmx == null) {
+					// returnMsg.set("NO", "合同退库, 第" + (i + 1) +
+					// "条明细找不到退库单信息,请检查物料或sn信息");
+					// return returnMsg;
+					// }
+					String hql = "from Atzshebeiqdmx where hetongid=" + tk.getHetongid() + " and xiaoshoubmid="
+							+ rkjhdmx.getXiaoshoubmid();
 					logger.debug(hql);
 					Atzshebeiqdmx sbqd = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", hql);
 					logger.debug("sbqd=====" + sbqd.getId());
@@ -1691,7 +1686,7 @@ public class 出入库计划 extends RuleEngine {
 				// 新增一条退库清单记录
 				Atzfahuoqingdan nfhqd = (Atzfahuoqingdan) dataset.getObjectByHql("Atzfahuoqingdan",
 						"from Atzfahuoqingdan where sn is null and zt='2' and wuliaoid=" + rkdmx.getWuliaoid()
-						+ " and Hetongtkid=" + tk.getId());
+								+ " and Hetongtkid=" + tk.getId());
 				if (nfhqd == null) {
 					nfhqd = new Atzfahuoqingdan();
 					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
@@ -1707,7 +1702,7 @@ public class 出入库计划 extends RuleEngine {
 					nfhqd.setTuihuosj(today);
 					nfhqd.setHetongtkid(tk.getId());
 					dataset.add(nfhqd);
-				}else{
+				} else {
 					nfhqd.setShuliang(com.actiz.util.MathUtil.add(nfhqd.getShuliang(), rkdmx.getShuliang()));
 					dataset.update(nfhqd);
 				}
@@ -2464,7 +2459,9 @@ public class 出入库计划 extends RuleEngine {
 			fahuozj.setTongzhidxfrq(today); // 通知单下发日期
 			fahuozj.setZongxiangs(0); // 总箱数
 			fahuozj.setYunshugs("杭州新杰"); // 运输公司
-
+			Atzfahuotzd fahuotzd = (Atzfahuotzd) dataset.getObject(Atzfahuotzd.class, ckjhd.getFahuotzdid());
+			fahuozj.setFahuotzdid(fahuotzd.getId());
+			fahuozj.setHetongid(fahuotzd.getHetongid());
 			dataset.add(fahuozj);
 		}
 
@@ -2865,6 +2862,62 @@ public class 出入库计划 extends RuleEngine {
 		}
 		message = "【出库单】执行完成";
 		returnMsg.set("OK", message);
+		/**
+		 *
+		 * 此段代码用于保内更换设备，出库完成时，根据对应维保单的SN数据，去查找发货清单的信息，若查到，则更新
+		 * 
+		 * @zjl
+		 */
+		if ("5".equals(churukyy)) {
+			Atzchurukjhd wbckjh_06 = (Atzchurukjhd) dataset.getObject(Atzchurukjhd.class, instance.getChurukjhdid());
+			if (wbckjh_06 != null) {
+				Atzweibaosbsqd wbd_06 = (Atzweibaosbsqd) dataset.getObject(Atzweibaosbsqd.class,
+						wbckjh_06.getWeibaosqdid());
+				if (wbd_06 != null) {
+					boolean wb_flag = false;
+					List<Atzchurukdmx> wbckmxList_06 = dataset.getListByHql("Atzchurukdmx",
+							"from Atzchurukdmx where sn is not null and atzchurukdid=" + instance.getId());
+					for (Atzchurukdmx wbckmx_06 : wbckmxList_06) {
+						// 根据SN查找对应的维保明细
+						List<Atzshebeisqdmx> wbmxList_06 = dataset.getListByHql("Atzshebeisqdmx",
+								"from Atzshebeisqdmx where  weibaosbsqdi =" + wbd_06.getId() + " and snhao='"
+										+ wbckmx_06.getSn() + "'");
+						for (Atzshebeisqdmx wbmx_06 : wbmxList_06) {
+							// 查找维保明细对应的发货清单
+							Long wb_dy_hetongid = wbd_06.getHetong();
+							if (wb_dy_hetongid != null) {
+								List<Atzfahuoqingdan> wb_htfhqdList = dataset.getListByHql("Atzfahuoqingdan",
+										" from Atzfahuoqingdan where hetongid =" + wb_dy_hetongid + " and sn='"
+												+ wbmx_06.getSnhao() + "'");
+								if (wb_htfhqdList != null && wb_htfhqdList.size() > 0) {
+									Atzfahuoqingdan wb_htfhqd_06 = wb_htfhqdList.get(0);
+									if (wbckmx_06.getWuliaoid() != wb_htfhqd_06.getWuliaoid()) {
+										// 如果出库明细和维保对应合同发货清单物料不同，则需查看销售编码是否一致
+										// 如果销售编码不一致，则需要报错
+										Atzwuliaojcxx wb_wl1 = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class,
+												wbckmx_06.getWuliaoid());
+										Atzwuliaojcxx wb_wl2 = (Atzwuliaojcxx) dataset.getObject(Atzwuliaojcxx.class,
+												wb_htfhqd_06.getWuliaoid());
+										if (wb_wl1.getXiaoshoubmid() != wb_wl2.getXiaoshoubmid()) {
+											// 考虑到历史数据问题，暂时不报错
+										} else {
+											wb_htfhqd_06.setSn(wbckmx_06.getSn());
+											wb_htfhqd_06.setWuliaoid(wbckmx_06.getWuliaoid());
+										}
+									} else {
+										wb_htfhqd_06.setSn(wbckmx_06.getSn());
+										wb_htfhqd_06.setWuliaoid(wbckmx_06.getWuliaoid());
+									}
+									dataset.update(wb_htfhqd_06);
+
+								}
+							}
+						}
+					}
+				}
+
+			}
+		}
 		/**
 		 * 此段插入代码维护业务支持联系单跟踪信息
 		 * 

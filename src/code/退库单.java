@@ -36,6 +36,19 @@ public class 退库单 extends RuleEngine {
 			returnMsg.set("NO", "无明细，请检查");
 			return returnMsg;
 		}
+		//回滚已申请退库数量
+		Atzfahuoqingdan qdmx = null;
+		Hashtable<Long, Atzhetongtkmx> oldobjs = (Hashtable<Long, Atzhetongtkmx>) context.get("subobjs_old");
+		for (Iterator iterator = oldobjs.values().iterator(); iterator.hasNext();) {
+			Atzhetongtkmx oldmx = (Atzhetongtkmx) iterator.next();
+			qdmx = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, oldmx.getFahuoqdid());
+			if (qdmx == null) {
+				returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+				return returnMsg;
+			}
+			qdmx.setTkshuliang(com.actiz.util.MathUtil.sub(qdmx.getTkshuliang(), oldmx.getShuliang()));
+			dataset.update(qdmx);
+		}
 		for (int i = 0; i < tkmxs.size(); i++) {
 			Atzhetongtkmx tkmx = tkmxs.get(i);
 			Atzfahuoqingdan fahuoqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, tkmx.getFahuoqdid());
@@ -51,6 +64,9 @@ public class 退库单 extends RuleEngine {
 					return returnMsg;
 				}
 			}
+			//维护已申请数量
+			fahuoqd.setTkshuliang(com.actiz.util.MathUtil.add(fahuoqd.getTkshuliang(), tkmx.getShuliang()));
+			dataset.update(fahuoqd);
 		}
 		a.setModifyInfo(instance, request);
 		//提交流程
@@ -237,10 +253,10 @@ public class 退库单 extends RuleEngine {
 				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
 				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
 				churukjhd.setShifouxn("2"); // 是否虚拟出入库，维护否
-				churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
+				//churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
 				churukjhd.setHetongtkid(instance.getId());
 				// churukjhd.setChuruknr(instance.getBeizhu());
-				churukjhd.setChuruknr("退库编号:" + tkbh + " || " + instance.getBeizhu());
+				churukjhd.setChuruknr("退库编号:" + tkbh + " 合同编号: " +atzhetong.getHetongbh() + " " +atzhetong.getHetongmc());
 				churukjhd.setZhidanr("admin"); // 制单人,针对于系统自动产生的维护成admin
 				churukjhd.setZhidanrq(new Date()); // 制单日期
 				churukjhd.setShifouwc("2"); // 是否完成: 否
@@ -257,6 +273,7 @@ public class 退库单 extends RuleEngine {
 							Atzchurukjhdmx jhdmx = jhdmxMap.get(hetongtkmx.getWuliaobmid());
 							jhdmx.setShuliang(
 									com.actiz.util.MathUtil.add(jhdmx.getShuliang(), hetongtkmx.getShuliang()));
+							jhdmx.setInitshuliang(com.actiz.util.MathUtil.add(jhdmx.getInitshuliang(), hetongtkmx.getShuliang()));
 							if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
 								jhdmx.setBeizhu(jhdmx.getBeizhu() + "," + hetongtkmx.getSn());
 							}
@@ -296,7 +313,6 @@ public class 退库单 extends RuleEngine {
 							if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
 								churukjhmx.setBeizhu("SN=" + hetongtkmx.getSn());
 							}
-
 							jhdmxMap.put(wuliao.getId(), churukjhmx);
 							dataset.add(churukjhmx);
 						}
@@ -406,7 +422,7 @@ public class 退库单 extends RuleEngine {
 		// 生成编号
 		if (bianhao != null) {
 			bianhao = bianhao.substring(0, bianhao.length() - 1) + "R";
-			List list = dataset.getList("Atzhetongtk", "bianhao='" + bianhao + "'");
+			List list = dataset.getList("Atzhetongtk", "bianhao like '" + bianhao + "%'");
 			if (list != null && list.size() > 0) {
 				bianhao = bianhao + (list.size() + 1);
 			}

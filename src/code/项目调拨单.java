@@ -50,7 +50,12 @@ public class 项目调拨单 extends RuleEngine {
 		 */
 		instance.setDanjuzt("2");
 		//维护调出合同可退库调出数量
+		Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getRuhetong());
 		Atzhetong chuhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getChuhetong());
+		if (ruhetong == null) {
+			returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+			return returnMsg;
+		}
 		if (chuhetong == null) {
 			returnMsg.set("NO", "系统运行异常，请联系系统管理员");
 			return returnMsg;
@@ -59,6 +64,16 @@ public class 项目调拨单 extends RuleEngine {
 		List<Atzhetongdbmx> list = (List<Atzhetongdbmx>)dataset.getListByHql("Atzhetongdbmx", hql);
 		for (int i = 0; i < list.size(); i++) {
 			Atzhetongdbmx dbmx = list.get(i);
+			Atzshebeiqdmx qdmx = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", "from Atzshebeiqdmx where hetongid="+ruhetong.getId()+" and xiaoshoubmid="+dbmx.getXiaoshoubmid());
+			if (qdmx == null) {
+				returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+				return returnMsg;
+			}
+			logger.debug(qdmx.getWeifhsl()+"||"+dbmx.getShuliang());
+			if (qdmx.getWeifhsl().compareTo(dbmx.getShuliang()) < 0) {
+				returnMsg.set("NO", "第" + (i + 1) + "行物料明细的调拨数量("+dbmx.getShuliang()+")超过可下达发货通知单数量("+qdmx.getWeifhsl()+")");
+				return returnMsg;
+			}
 			Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, dbmx.getFahuoqdid());
 			if (fhqd == null) {
 				returnMsg.set("NO", "系统运行异常，请联系系统管理员");
@@ -66,20 +81,20 @@ public class 项目调拨单 extends RuleEngine {
 			}
 			double sysl = com.actiz.util.MathUtil.sub(fhqd.getShuliang(), fhqd.getTkshuliang());
 			if (dbmx.getShuliang().compareTo(sysl) > 0) {
-				returnMsg.set("NO", "第" + (i + 1) + "行物料明细的调拨数量超过剩余可调拨数量");
+				returnMsg.set("NO", "第" + (i + 1) + "行物料明细的调拨数量("+dbmx.getShuliang()+")超过剩余可调拨数量("+sysl+")");
 				return returnMsg;
 			}
 			fhqd.setTkshuliang(com.actiz.util.MathUtil.add(fhqd.getTkshuliang(), dbmx.getShuliang()));
 			dataset.update(fhqd);
 		}
 		//查找工程项目经理
-		Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getRuhetong());
-		String gcxmjl = ruhetong.getGcyszt();
+		String gcxmjl = ruhetong.getXiangmujl();
 		if (gcxmjl == null) {
 			returnMsg.set("NO", "调入合同的工程项目经理没有维护,不能调拨");
 			return returnMsg;
 		}
-		Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name="+gcxmjl);
+		logger.debug(gcxmjl);
+		Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name='"+gcxmjl+"'");
 		if (gcxmjlusr == null) {
 			returnMsg.set("NO", "调入合同的工程项目经理查找出错,请联系系统管理员");
 			return returnMsg;
@@ -122,7 +137,10 @@ public class 项目调拨单 extends RuleEngine {
 	private Object A_合同调拨审核_12(Atzlcshenhejl instance, IDataSet dataset, IDataContext context,
 			HttpServletRequest request, Map paramMap, Logger logger) throws Exception {
 		/**
-		 * A_合同调拨审核_12 大区经理审核/销售副总审核/工程项目经理确认
+		 * A_合同调拨审核_12
+		 */
+		/*
+		 * 大区经理审核/销售副总审核/工程项目经理确认
 		 */
 		String dbid = "" + context.get("atzhetongdb.id");
 		String shenhezt = instance.getShenhezt();
@@ -139,7 +157,7 @@ public class 项目调拨单 extends RuleEngine {
 		NodeDefine nd = getProcessNodeInfo(context);
 		String ndName = nd.getName();
 		if ("工程项目经理确认".equals(ndName)) {
-			if ("0".equals(shenheyj)) {
+			if ("0".equals(shenhezt)) {
 				Atzhetong chuhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getChuhetong());
 				Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getRuhetong());
 				// 完成调拨,统计数据
@@ -147,7 +165,7 @@ public class 项目调拨单 extends RuleEngine {
 				for (Atzhetongdbmx dbmx : dbmxList) {
 					// 维护调出合同设备清单调出数量, 可下达发货通知单数量, 发货清单数量
 					String hql = "from Atzshebeiqdmx where hetongid="+db.getChuhetong()+" and xiaoshoubmid="+dbmx.getXiaoshoubmid();
-					Atzshebeiqdmx qdmx = (Atzshebeiqdmx) dataset.getObject(Atzshebeiqdmx.class, hql);
+					Atzshebeiqdmx qdmx = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", hql);
 					if (qdmx != null) {
 						qdmx.setWeifhsl(com.actiz.util.MathUtil.add(qdmx.getWeifhsl(), dbmx.getShuliang()));
 						qdmx.setYichusl(com.actiz.util.MathUtil.add(qdmx.getYichusl(), dbmx.getShuliang()));
@@ -155,21 +173,21 @@ public class 项目调拨单 extends RuleEngine {
 					}
 					// 维护调入合同设备清单调入数量, 可下达发货通知单数量, 发货清单数量 , 调入来源合同号
 					hql = "from Atzshebeiqdmx where hetongid="+db.getRuhetong()+" and xiaoshoubmid="+dbmx.getXiaoshoubmid();
-					Atzshebeiqdmx qdmx1 = (Atzshebeiqdmx) dataset.getObject(Atzshebeiqdmx.class, hql);
+					Atzshebeiqdmx qdmx1 = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", hql);
 					if (qdmx1 != null) {
-						qdmx1.setWeifhsl(com.actiz.util.MathUtil.sub(qdmx.getWeifhsl(), dbmx.getShuliang()));
-						qdmx1.setYirusl(com.actiz.util.MathUtil.add(qdmx.getYirusl(), dbmx.getShuliang()));
+						qdmx1.setWeifhsl(com.actiz.util.MathUtil.sub(qdmx1.getWeifhsl(), dbmx.getShuliang()));
+						qdmx1.setYirusl(com.actiz.util.MathUtil.add(qdmx1.getYirusl(), dbmx.getShuliang()));
 						dataset.update(qdmx1);
 					}
 					Atzfahuoqingdan fhqd = (Atzfahuoqingdan) dataset.getObject(Atzfahuoqingdan.class, dbmx.getFahuoqdid());
 					//维护调出设备剩余数量
 					fhqd.setShuliang(com.actiz.util.MathUtil.sub(fhqd.getShuliang(), dbmx.getShuliang()));
 					fhqd.setTkshuliang(com.actiz.util.MathUtil.sub(fhqd.getTkshuliang(), dbmx.getShuliang()));
-					//fhqd.setBeizhu("调出去处:" + ruhetong.getHetongbh());
 					dataset.update(fhqd);
 					//新增一条发货明细,维护调出去向,调拨数量,状态为调出=4;
 					Atzfahuoqingdan cfhqd = new Atzfahuoqingdan();
-					cfhqd.setFahuotzdid(fhqd.getFahuotzdid());;
+					cfhqd.setFahuotzdid(fhqd.getFahuotzdid());
+					cfhqd.setHetongdbid(db.getId());
 					cfhqd.setHetongid(fhqd.getHetongid());
 					cfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
 					cfhqd.setWuliaoid(fhqd.getWuliaoid());
@@ -177,20 +195,20 @@ public class 项目调拨单 extends RuleEngine {
 					cfhqd.setShuliang(0d);
 					cfhqd.setTkshuliang(0d);
 					cfhqd.setSn(fhqd.getSn());
-					cfhqd.setFahuosj(fhqd.getFahuosj());
+					cfhqd.setTuihuosj(new java.util.Date());
 					cfhqd.setZt("4");
 					//cfhqd.setBeizhu("调入来源:"+chuhetong.getHetongbh());
-					cfhqd.setSjtksl(0d);
 					dataset.add(cfhqd);
 					// 新增一条发货明细,维护来源合同,调拨数量,状态为调入=3;
 					Atzfahuoqingdan nfhqd = new Atzfahuoqingdan();
-					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());;
-					nfhqd.setHetongid(fhqd.getHetongid());
+					nfhqd.setFahuotzdid(fhqd.getFahuotzdid());
+					cfhqd.setHetongdbid(db.getId());
+					nfhqd.setHetongid(ruhetong.getId());//维护合同为新的调入合同
 					nfhqd.setXiaoshoubmid(fhqd.getXiaoshoubmid());
 					nfhqd.setWuliaoid(fhqd.getWuliaoid());
 					nfhqd.setShuliang(dbmx.getShuliang());//调拨数量
 					nfhqd.setSn(fhqd.getSn());
-					nfhqd.setFahuosj(fhqd.getFahuosj());
+					nfhqd.setFahuosj(new java.util.Date());
 					nfhqd.setTkshuliang(0d);
 					nfhqd.setZt("3");
 					nfhqd.setBeizhu("调入来源:"+chuhetong.getHetongbh());
@@ -205,18 +223,19 @@ public class 项目调拨单 extends RuleEngine {
 		}else{
 			//设置工程项目经理
 			Atzhetong ruhetong = (Atzhetong) dataset.getObject(Atzhetong.class, db.getRuhetong());
-			String gcxmjl = ruhetong.getGcyszt();
+			String gcxmjl = ruhetong.getXiangmujl();
 			if (gcxmjl == null) {
 				returnMsg.set("NO", "调入合同的工程项目经理没有维护,不能调拨");
 				return returnMsg;
 			}
-			Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name="+gcxmjl);
+			Bc_auth_usr gcxmjlusr = (Bc_auth_usr) dataset.getObjectByHql("Bc_auth_usr", "from Bc_auth_usr where employee_name='"+gcxmjl+"'");
 			if (gcxmjlusr == null) {
-				returnMsg.set("NO", "调入合同的工程项目经理查找出错,请联系系统管理员");
+				returnMsg.set("NO", "调入合同的工程项目经理("+gcxmjl+")查找出错,请联系系统管理员");
 				return returnMsg;
 			}
 			context.set("gcxmjl", gcxmjlusr.getId());
 		}
+		context.set("shenhezt", shenhezt);
 		boolean result = completeWorkflowTask(request, context);
 		if (!result) {
 			logger.error("合同退库审核流程提交失败，请联系系统管理员");
@@ -310,6 +329,7 @@ public class 项目调拨单 extends RuleEngine {
 		db.setRuhetong(ruhetong.getId());
 		db.setChujl(chuhetong.getXiaoshoujl());
 		db.setRujl(ruhetong.getXiaoshoujl());
+		logger.debug(chuhetong.getDaqu()+"||"+ruhetong.getDaqu());
 		if (chuhetong.getDaqu().compareTo(ruhetong.getDaqu()) != 0) {
 			db.setDblx("2");
 		} else {
