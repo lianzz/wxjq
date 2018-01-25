@@ -29,6 +29,56 @@ public class 发货通知单 extends RuleEngine {
 		return "OK";
 	}
 
+	private Object 反审核(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * A-反审核发货通知单-05
+		 */
+		// 删除对应的自动生成的合同跟踪信息
+		List<Atzhetonggz> htgzList = dataset.getList("Atzhetonggz", "fahuotzdid =" + instance.getId());
+		if (htgzList != null && htgzList.size() > 0) {
+			dataset.deleteAll(htgzList);
+		}
+		// 删除对应的自动生成的未提交的出库计划单
+		Atzchurukjhd churukjhd = (Atzchurukjhd) dataset.getObjectByHql("Atzchurukjhd",
+				"from Atzchurukjhd where fahuotzdid =" + instance.getId());
+		if (churukjhd != null) {
+			if (churukjhd.getDanjuzt() != null && "1".equals(churukjhd.getDanjuzt())) {
+				List<Atzchurukjhdmx> jhdmxList = dataset.getList("Atzchurukjhdmx",
+						"atzchurukjhdid =" + churukjhd.getId());
+				if (jhdmxList != null && jhdmxList.size() > 0) {
+					dataset.deleteAll(jhdmxList);
+				}
+				dataset.delete(churukjhd);
+			} else {
+				returnMsg.set("NO", "该发货通知单所对应的出库计划单已经提交，因此不能反审核！");
+				return returnMsg;
+			}
+		}
+		// 发货通知单明细数量—维护设备清单明细 未发货数量
+		List<Atzfahuosbqdmx> fhtzdmx = dataset.getList("Atzfahuosbqdmx", "fahuotzdid=" + instance.getId());
+		Atzshebeiqdmx atzshebeiqdmx = null;
+		for (int i = 0; i < fhtzdmx.size(); i++) {
+			Atzfahuosbqdmx atzfahuosbqdmx = fhtzdmx.get(i);
+			atzshebeiqdmx = (Atzshebeiqdmx) dataset.getObjectByHql("Atzshebeiqdmx", "from Atzshebeiqdmx where hetongid="
+					+ instance.getHetongid() + " and xiaoshoubmid=" + atzfahuosbqdmx.getXiaoshoubmid());
+			if (atzshebeiqdmx == null) {
+				returnMsg.set("NO", "系统运行异常，请联系系统管理员");
+				return returnMsg;
+			}
+			// 维护设备清单已下达发货量/未发货量
+			atzshebeiqdmx
+					.setJhfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzfahuosbqdmx.getShuliang()));
+			atzshebeiqdmx.setSjwfhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getJhfhsl(), atzshebeiqdmx.getYifhsh()));
+			atzshebeiqdmx
+					.setWeifhsl(com.actiz.util.MathUtil.add(atzshebeiqdmx.getWeifhsl(), atzfahuosbqdmx.getShuliang()));
+			dataset.update(atzshebeiqdmx);
+		}
+		instance.setDanjuzt("1");
+		dataset.update(instance);
+		return "OK";
+	}
+
 	private Object 重新编辑(Atzfahuotzd instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
@@ -85,7 +135,7 @@ public class 发货通知单 extends RuleEngine {
 			atzshebeiqdmx
 					.setWeifhsl(com.actiz.util.MathUtil.sub(atzshebeiqdmx.getWeifhsl(), atzfahuosbqdmx.getShuliang()));
 			dataset.update(atzshebeiqdmx);
-			
+
 			atzfahuosbqdmx.setFahuotzdid(instance.getId());
 			// 维护冗余字段
 			Atzxiaoshoubm xiaoshoubm = (Atzxiaoshoubm) dataset.getObject(Atzxiaoshoubm.class,
@@ -112,11 +162,10 @@ public class 发货通知单 extends RuleEngine {
 		shenhejl.setAtzfahuotzdid(instance.getId());
 		shenhejl.setShenher(nodeDefine.getName() + "-" + (String) request.getSession().getAttribute("employeeName"));
 		shenhejl.setShenherq(new Date());
-		shenhejl.setShenhezt(instance.getShenhezt());
-		shenhejl.setShenheyj(instance.getShenheyj());
+		//shenhejl.setShenhezt(instance.getShenhezt());
+		//shenhejl.setShenheyj(instance.getShenheyj());
 		dataset.add(shenhejl);
-		
-		instance.setShenheyj(null);
+
 		returnMsg.set("OK", "操作成功");
 		return returnMsg;
 	}
@@ -275,7 +324,7 @@ public class 发货通知单 extends RuleEngine {
 				message += "项目配置清单:" + pzqd.getBianhao() + "\n";
 			}
 		}
-		message += "发货通知单:" + fhtzd.getId() + "\n";
+		message += "发货通知单:" + fhtzd.getBianhao() + "\n";
 		message += "合同编号:" + hetong.getHetongbh() + "\n销售编码:";
 		for (Atzfahuosbqdmx dfhmx : nList) {
 			// 设备清单已下达, 可下达
@@ -525,7 +574,7 @@ public class 发货通知单 extends RuleEngine {
 			if (churukjhdmxList.size() > 0)
 				dataset.addAll(churukjhdmxList);
 		}
-		
+
 		boolean result = completeWorkflowTask(request, context);
 		if (!result) {
 			logger.error("发货通知单审核流程提交失败，请联系系统管理员");
@@ -1190,6 +1239,15 @@ public class 发货通知单 extends RuleEngine {
 				 * "发货通知单流水号溢出，请联系管理员！"); return returnMsg; } else {
 				 * fahuotzd.setBianhao(rValue); }
 				 */
+				// 维护收货信息
+				Atzyewuzc ywzc = (Atzyewuzc) dataset.getObjectByHql("Atzyewuzc",
+						"from Atzyewuzc where id =(select yewuzcd from Atzxiangmupzqd where id=" + xiangmupzid + ")");
+				if (ywzc != null) {
+					fahuotzd.setShouhuolxr(ywzc.getShouhuolxr());
+					fahuotzd.setShouhuolxdh(ywzc.getShouhuolxdh());
+					fahuotzd.setDaohuodd(ywzc.getDaohuodd());
+					fahuotzd.setJutigznrbc(ywzc.getJianyaoneir());
+				}
 				// 维护销售经理
 				fahuotzd.setXiaoshoujlid(hetong.getXiaoshoujl());
 				Atzemployee xiaoshoujl = (Atzemployee) dataset.getObject(Atzemployee.class, hetong.getXiaoshoujl());

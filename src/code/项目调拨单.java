@@ -122,7 +122,7 @@ public class 项目调拨单 extends RuleEngine {
 			windowId370 = context.getId();
 		}
 		Map map107 = new HashMap();
-		map107.put("daqu", usr.getId());
+		map107.put("daqujl", usr.getId());
 		map107.put("gcxmjl", gcxmjlusr.getId());
 		// map107.put("kehujlUser",String.valueOf(user.getId()));
 		Long result370 = WorkflowAppHelper.newProcessInstance(4095188L, map107, request, windowId370);

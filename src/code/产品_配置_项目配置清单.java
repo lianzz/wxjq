@@ -28,12 +28,12 @@ public class 产品_配置_项目配置清单 extends RuleEngine {
 	AProxy a = new AProxy();
 	AProxy A = a;
 
-	private Object methodName(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+	public Object methodName(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		return "OK";
 	}
 	
-	private Object 变更按钮(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+	public Object A变更按钮(Object instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {
 		/**
 		 * AJ-项目配置清单-变更按钮-12

@@ -61,6 +61,16 @@ public class Atzyewuzc implements Serializable,IPojo
   	        
       return this.danjuzt;     	
    }
+ 	 	 private String daohuodd;
+	 public void setDaohuodd(String daohuodd)
+	 {
+		  this.daohuodd = daohuodd;
+	 }
+   public String getDaohuodd()
+   { 	    
+  	        
+      return this.daohuodd;     	
+   }
  	 	 private String gongzuol;
 	 public void setGongzuol(String gongzuol)
 	 {
@@ -232,6 +242,26 @@ public class Atzyewuzc implements Serializable,IPojo
    { 	    
   	        
       return this.shifougb;     	
+   }
+ 	 	 private String shouhuolxdh;
+	 public void setShouhuolxdh(String shouhuolxdh)
+	 {
+		  this.shouhuolxdh = shouhuolxdh;
+	 }
+   public String getShouhuolxdh()
+   { 	    
+  	        
+      return this.shouhuolxdh;     	
+   }
+ 	 	 private String shouhuolxr;
+	 public void setShouhuolxr(String shouhuolxr)
+	 {
+		  this.shouhuolxr = shouhuolxr;
+	 }
+   public String getShouhuolxr()
+   { 	    
+  	        
+      return this.shouhuolxr;     	
    }
  	 	 private String suoshuhy;
 	 public void setSuoshuhy(String suoshuhy)

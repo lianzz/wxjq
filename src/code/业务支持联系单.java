@@ -22,6 +22,27 @@ public class 业务支持联系单 extends RuleEngine {
 			Map paramMap, Logger logger) throws Exception {
 		return "OK";
 	}
+	
+	private Object 收货信息选择按钮(Atzyewuzc instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
+			Map paramMap, Logger logger) throws Exception {
+		/**
+		 * A_业务支持联系单收货信息选择按钮_12
+		 */
+		String ywzcid = context.getString("atzyewuzc.id");
+		Atzyewuzc ywzc = (Atzyewuzc) dataset.getObject(Atzyewuzc.class, Long.parseLong(ywzcid));
+		if (ywzc == null) {
+			return "NO";
+		}
+		context.set("ywzc.id", ywzc.getId());
+		
+		String popWindowId = context.getString("pop.windowid");
+		String popField = context.getString("pop.field");
+		if (popField != null && popField.length() != 0)
+			popField += ".";
+		context.setIntoWindow(request, popWindowId, popField + "selected.values", ywzc.getShouhuolxr());
+		context.setIntoWindow(request, popWindowId, popField + "selected.labels", ywzc.getShouhuolxr());
+		return "OK";
+	}
 
 	private Object 修改(Atzyewuzc instance, IDataSet dataset, IDataContext context, HttpServletRequest request,
 			Map paramMap, Logger logger) throws Exception {

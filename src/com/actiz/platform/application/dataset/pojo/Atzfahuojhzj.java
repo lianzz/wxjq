@@ -51,6 +51,16 @@ public class Atzfahuojhzj implements Serializable,IPojo
   	        
       return this.churukdid;     	
    }
+ 	 	 private Long fahuotzdid;
+	 public void setFahuotzdid(Long fahuotzdid)
+	 {
+		  this.fahuotzdid = fahuotzdid;
+	 }
+   public Long getFahuotzdid()
+   { 	    
+  	        
+      return this.fahuotzdid;     	
+   }
  	 	 private Long gongchengid;
 	 public void setGongchengid(Long gongchengid)
 	 {
@@ -60,6 +70,16 @@ public class Atzfahuojhzj implements Serializable,IPojo
    { 	    
   	        
       return this.gongchengid;     	
+   }
+ 	 	 private Long hetongid;
+	 public void setHetongid(Long hetongid)
+	 {
+		  this.hetongid = hetongid;
+	 }
+   public Long getHetongid()
+   { 	    
+  	        
+      return this.hetongid;     	
    }
  	 	 private String huoyundbh;
 	 public void setHuoyundbh(String huoyundbh)
@@ -182,6 +202,20 @@ public class Atzfahuojhzj implements Serializable,IPojo
 	    }
 	          
       return this.tongzhidxfrq;     	
+   }
+ 	 	 private Date xcfhsj;
+	 public void setXcfhsj(Date xcfhsj)
+	 {
+		  this.xcfhsj = xcfhsj;
+	 }
+   public Date getXcfhsj()
+   { 	    
+  	  	    if( this.xcfhsj != null )
+	    {
+	        return (Date)new ActizDate( this.xcfhsj.getTime() );
+	    }
+	          
+      return this.xcfhsj;     	
    }
  	 	 private Date yqysgsdhrq;
 	 public void setYqysgsdhrq(Date yqysgsdhrq)
@@ -316,6 +350,16 @@ public class Atzfahuojhzj implements Serializable,IPojo
      	return this.churukdidRef;
    }
  
+	 private com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef;
+	 public void setFahuotzdidRef(com.actiz.platform.application.dataset.pojo.Atzfahuotzd fahuotzdidRef)
+	 {
+		  this.fahuotzdidRef = fahuotzdidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzfahuotzd getFahuotzdidRef()
+   {
+     	return this.fahuotzdidRef;
+   }
+ 
 	 private com.actiz.platform.application.dataset.pojo.Atzkehugc gongchengidRef;
 	 public void setGongchengidRef(com.actiz.platform.application.dataset.pojo.Atzkehugc gongchengidRef)
 	 {
@@ -324,6 +368,16 @@ public class Atzfahuojhzj implements Serializable,IPojo
    public com.actiz.platform.application.dataset.pojo.Atzkehugc getGongchengidRef()
    {
      	return this.gongchengidRef;
+   }
+ 
+	 private com.actiz.platform.application.dataset.pojo.Atzhetong hetongidRef;
+	 public void setHetongidRef(com.actiz.platform.application.dataset.pojo.Atzhetong hetongidRef)
+	 {
+		  this.hetongidRef = hetongidRef;
+	 }
+   public com.actiz.platform.application.dataset.pojo.Atzhetong getHetongidRef()
+   {
+     	return this.hetongidRef;
    }
   
 	private java.util.Set atzqianfasbmxSet;

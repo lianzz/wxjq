@@ -36,7 +36,7 @@ public class 退库单 extends RuleEngine {
 			returnMsg.set("NO", "无明细，请检查");
 			return returnMsg;
 		}
-		//回滚已申请退库数量
+		// 回滚已申请退库数量
 		Atzfahuoqingdan qdmx = null;
 		Hashtable<Long, Atzhetongtkmx> oldobjs = (Hashtable<Long, Atzhetongtkmx>) context.get("subobjs_old");
 		for (Iterator iterator = oldobjs.values().iterator(); iterator.hasNext();) {
@@ -64,12 +64,12 @@ public class 退库单 extends RuleEngine {
 					return returnMsg;
 				}
 			}
-			//维护已申请数量
+			// 维护已申请数量
 			fahuoqd.setTkshuliang(com.actiz.util.MathUtil.add(fahuoqd.getTkshuliang(), tkmx.getShuliang()));
 			dataset.update(fahuoqd);
 		}
 		a.setModifyInfo(instance, request);
-		//提交流程
+		// 提交流程
 		boolean result = completeWorkflowTask(request, context);
 		if (!result) {
 			logger.error("合同退库审核流程提交失败，请联系系统管理员");
@@ -253,10 +253,11 @@ public class 退库单 extends RuleEngine {
 				churukjhd.setDanjuzt("1"); // 初始化单据状态“未提交”
 				churukjhd.setDanjusc("2"); // 单据的生成方式，通过上级单据生成
 				churukjhd.setShifouxn("2"); // 是否虚拟出入库，维护否
-				//churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
+				// churukjhd.setFahuotzdid(instance.getId()); // 维护发货通知单ID
 				churukjhd.setHetongtkid(instance.getId());
 				// churukjhd.setChuruknr(instance.getBeizhu());
-				churukjhd.setChuruknr("退库编号:" + tkbh + " 合同编号: " +atzhetong.getHetongbh() + " " +atzhetong.getHetongmc());
+				churukjhd.setChuruknr("退库编号:" + tkbh + " 合同编号: " + atzhetong.getHetongbh() + " "
+						+ atzhetong.getHetongmc() + "||" + instance.getBeizhu());
 				churukjhd.setZhidanr("admin"); // 制单人,针对于系统自动产生的维护成admin
 				churukjhd.setZhidanrq(new Date()); // 制单日期
 				churukjhd.setShifouwc("2"); // 是否完成: 否
@@ -273,7 +274,8 @@ public class 退库单 extends RuleEngine {
 							Atzchurukjhdmx jhdmx = jhdmxMap.get(hetongtkmx.getWuliaobmid());
 							jhdmx.setShuliang(
 									com.actiz.util.MathUtil.add(jhdmx.getShuliang(), hetongtkmx.getShuliang()));
-							jhdmx.setInitshuliang(com.actiz.util.MathUtil.add(jhdmx.getInitshuliang(), hetongtkmx.getShuliang()));
+							jhdmx.setInitshuliang(
+									com.actiz.util.MathUtil.add(jhdmx.getInitshuliang(), hetongtkmx.getShuliang()));
 							if (hetongtkmx.getSn() != null && !"".equals(hetongtkmx.getSn())) {
 								jhdmx.setBeizhu(jhdmx.getBeizhu() + "," + hetongtkmx.getSn());
 							}
@@ -374,6 +376,8 @@ public class 退库单 extends RuleEngine {
 			dataset.update(fhqd);
 		}
 		// 提交流程
+		Atzhetong ht = (Atzhetong) dataset.getObject(Atzhetong.class, instance.getHetongid());
+		context.set("xiaoshoujl", ""+ht.getXiaoshoujl());
 		Long result = newWorkflowInstance(request, context);
 		if (result <= 0) {
 			returnMsg.set("NO", "流程提交失败，请联系系统管理员");
